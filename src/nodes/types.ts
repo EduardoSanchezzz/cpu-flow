@@ -1,34 +1,13 @@
 import type { Node, BuiltInNode } from '@xyflow/react';
 
-export type PositionLoggerNode = Node<{ label: string, value: number }, 'position-logger'>;
-export type AppNode = BuiltInNode | PositionLoggerNode | testReadNode |
-TextNode | ResultNode | UppercaseNode | PCNode | AdderNode | ClockNode | AddyAdderNode|
+export type AppNode = BuiltInNode | PCNode | ClockNode | AddyAdderNode|
 AddyMuxNode;
-
-
-export type testReadNode = Node<{ label: string, value: number }, 'testReadNode'>;
-
-export type ResultNode = Node<{}, 'result'>;
-export type UppercaseNode = Node<{ text: string }, 'uppercase'>;
-
-// add type and istype
-export type TextNode = Node<{ text: string }, 'text'>;
-export function isTextNode(node: any): node is TextNode | UppercaseNode {
-  return node.type === 'text' || node.type === 'uppercase';
-}
-export type TextNode1 = Node<{ text: string }, 'text1'>;
-export function isTextNode1(node: any): node is UppercaseNode {
-  return node.type === 'uppercase';
-}
 
 export type PCNode = Node<{label: string, address: number}, 'pc'>;
 export function isPCNode(node: any): node is PCNode {
     return node.type === 'pc';
 }
-export type AdderNode = Node<{label: string, out: number}, 'Adder'>;
-export function isAdderNode(node: any): node is AdderNode {
-    return node.type === 'Adder';
-}
+
 export type AddyAdderNode = Node<{out: number}, 'addy-adder'>;
 export function isAddyAdderNode(node: any): node is AddyAdderNode {
     return node.type === 'addy-adder';

@@ -5,41 +5,6 @@ export type dataEdge = Edge<{sourceId:string, outputName: string, value:number},
 export type AppEdge = dataEdge;
 
 export const initialEdges: AppEdge[] = [
-  { id: 'a->c', source: 'a', target: 'c', animated: true },
-  { id: 'b->d', source: 'b', target: 'd' },
-  { id: 'c->d', source: 'c', target: 'd', animated: true },
-  { id: 'b->e', source: 'b', target: 'e', animated: true },
-  {
-    id: 'e1-3',
-    source: '1',
-    target: '3',
-  },
-  {
-    id: 'e3-5',
-    source: '3',
-    target: '5',
-  },
-  {
-    id: 'e5-4',
-    source: '5',
-    target: '4',
-  },
-  {
-    id: 'e2-4',
-    source: '2',
-    target: '4',
-  },
-  {
-    id: 'e6-7',
-    source: '6',
-    target: '7',
-  },
-  {
-    id: 'e8-6',
-    source: '8',
-    target: '6',
-    targetHandle: 'clock',
-  },
   {
     id: 'clock',
     source: '8',
@@ -73,6 +38,5 @@ export const initialEdges: AppEdge[] = [
 ];
 
 export const edgeTypes = {
-  // Add your custom edge types here!
   'data': DataEdge
 } satisfies EdgeTypes;
