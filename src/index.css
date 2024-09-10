@@ -1,5 +1,6 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: 'Zen Kaku Gothic Antique';
   line-height: 1.5;
   font-weight: 400;
 }
@@ -9,4 +10,80 @@ body,
 #root {
   height: 100%;
   margin: 0;
+}
+
+.container {
+  height: min-content;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 
+    "inputs control outputs"
+    "name name name";
+}
+.bg {
+  grid-area: 1 / 1 / last-line / 5
+}
+.inputs, .outputs {
+  display:  flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #747474;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 130%;
+  letter-spacing: 0.05em;
+
+  margin-top: 15px;
+  width: min-content;
+
+}
+.inputs {
+  grid-area: inputs;
+  text-align: left;
+  margin-left: 10px;
+}
+.label {
+  max-width: 100%;
+  white-space: initial;
+}
+
+.outputs {
+  grid-area: outputs;
+  justify-self: end;
+  text-align: right;
+  margin-right: 10px;
+  align-items: end;
+}
+.name {
+  grid-area: name;
+  justify-self: end;
+  align-self: end;
+  margin-bottom: 15px;
+  margin-right: 10px;
+  
+  font-size: 15px;
+  line-height: 130%;
+  text-align: right;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+
+  max-width: 70%;
+  white-space: initial;
+
+}
+.control {
+  grid-area: control;
+}
+
+.pc .name {
+  background: linear-gradient(82.65deg, #00BF8F -6.45%, #001510 102.23%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+.pc.container {
+  max-width: 97px;
 }

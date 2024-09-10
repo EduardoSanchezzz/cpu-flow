@@ -1,13 +1,10 @@
-import { useCallback } from 'react';
 import {
   ReactFlow,
   Background,
   Controls,
   MiniMap,
-  addEdge,
   useNodesState,
   useEdgesState,
-  type OnConnect,
 } from '@xyflow/react';
 
 import '@xyflow/react/dist/style.css';
@@ -17,11 +14,7 @@ import { initialEdges, edgeTypes } from './edges';
 
 export default function App() {
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const onConnect: OnConnect = useCallback(
-    (connection) => setEdges((edges) => addEdge(connection, edges)),
-    [setEdges]
-  );
+  const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
   return (
     <ReactFlow
@@ -31,8 +24,11 @@ export default function App() {
       edges={edges}
       edgeTypes={edgeTypes}
       onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
       fitView
+      nodesDraggable={false}
+      nodesConnectable={false}
+      // elementsSelectable={false}
+      nodesFocusable={false}
     >
       <Background />
       <MiniMap />
