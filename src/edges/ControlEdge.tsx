@@ -1,11 +1,11 @@
-import { BaseEdge, EdgeLabelRenderer, EdgeProps, getSimpleBezierPath, getSmoothStepPath, getStraightPath, useHandleConnections, useNodesData, useReactFlow } from '@xyflow/react';
+import { BaseEdge, EdgeLabelRenderer, EdgeProps, getSmoothStepPath, getStraightPath, useHandleConnections, useNodesData, useReactFlow } from '@xyflow/react';
 import { AppNode } from '../nodes/types';
 import { useEffect } from 'react';
-import { dataEdge } from './index';
+import { controlEdge } from './index';
 
-export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, source, sourceHandleId, data }: EdgeProps<dataEdge> ) {
+export default function ControlEdge({ id, sourceX, sourceY, targetX, targetY, source, sourceHandleId, data }: EdgeProps<controlEdge> ) {
   const { updateEdgeData } = useReactFlow();
-    const [edgePath, labelX, labelY] = getSimpleBezierPath({
+    const [edgePath] = getStraightPath({
     sourceX,
     sourceY,
     targetX,
@@ -28,7 +28,7 @@ export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, sourc
  
   return (
     <>
-      <BaseEdge id={id} path={edgePath} />
+      <BaseEdge id={id} path={edgePath} style = {{stroke: '#9dd6f5'}} />
       <EdgeLabelRenderer>
         <div
           style={{
@@ -39,7 +39,7 @@ export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, sourc
             borderRadius: 5,
             fontSize: 10,
             fontWeight: 400,
-            color: '#999',
+            color: '#79a5ed',
           }}
           className="nodrag nopan"
         >

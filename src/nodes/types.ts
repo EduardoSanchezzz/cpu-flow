@@ -1,27 +1,98 @@
 import type { Node, BuiltInNode } from '@xyflow/react';
 
 export type AppNode = BuiltInNode | PCNode | ClockNode | AddyAdderNode|
-AddyMuxNode;
+AddyMuxNode | InstMemNode | InstDecodeNode | RegListNode | AluMuxNode |
+AluNode | ControlNode | DataMuxNode | AluControlNode | DataMemNode | DisplayNode |
+InstDisplayNode;
 
-export type PCNode = Node<{label: string, address: number}, 'pc'>;
+export type PCNode = Node<{label: string, address: string}, 'pc'>;
 export function isPCNode(node: any): node is PCNode {
     return node.type === 'pc';
 }
 
-export type AddyAdderNode = Node<{out: number}, 'addy-adder'>;
+export type AddyAdderNode = Node<{out: string}, 'addy-adder'>;
 export function isAddyAdderNode(node: any): node is AddyAdderNode {
     return node.type === 'addy-adder';
 }
 
-export type AddyMuxNode = Node<{out: number}, 'addy-mux'>;
+export type AddyMuxNode = Node<{out: string}, 'addy-mux'>;
 export function isAddyMuxNode(node: any): node is AddyMuxNode {
     return node.type === 'addy-mux';
 }
 
-export type ClockNode = Node<{label: string, clk: number}, 'Clock'>;
+export type ClockNode = Node<{label: string, clk: number}, 'clock'>;
 export function isClockNode(node: any): node is ClockNode {
-    return node.type === 'Clock';
+    return node.type === 'clock';
 }
+
+export type InstMemNode = Node<{label: string, instruction: string, instructions: number[]}, 'inst-mem'>;
+export function isInstMemNode(node:any): node is InstMemNode {
+  return node.type === 'inst-mem';
+}
+
+export type InstDecodeNode = Node<{
+  label: string, 
+  readAddress1: string,
+  readAddress2: string,
+  writeAddress: string,
+  opcode: string,
+  funct3: string,
+  funct7: string,
+  immVal: string,
+}, 'inst-decode'>;
+export function isInstDecodeNode(node:any): node is InstDecodeNode {
+  return node.type === 'inst-decode';
+}
+
+export type RegListNode = Node<{
+  label: string, 
+  readData1: string,
+  readData2: string,
+  regList: number[],
+}, 'reg-list'>;
+export function isRegListNode(node:any): node is RegListNode {
+  return node.type === 'reg-list';
+}
+
+export type AluMuxNode = Node<{out: string}, 'alu-mux'>;
+export function isAluMuxNode(node: any): node is AluMuxNode {
+    return node.type === 'alu-mux';
+}
+export type AluNode = Node<{out: string}, 'alu'>;
+export function isAluNode(node: any): node is AluNode {
+    return node.type === 'alu';
+}
+
+export type ControlNode = Node<{
+  label: string, 
+  branch: string,
+  regWrite: string,
+  memRead: string,
+  memToReg: string,
+  memWrite: string,
+  size: string,
+  aluSrc: string,
+}, 'control'>;
+export function isControlNode(node:any): node is ControlNode {
+  return node.type === 'control';
+}
+export type DataMuxNode = Node<{out: string}, 'data-mux'>;
+export function isDataMuxNode(node: any): node is DataMuxNode {
+    return node.type === 'data-mux';
+}
+export type AluControlNode = Node<{label:string, aluCode: string}, 'alu-control'>;
+export function isAluControlNode(node: any): node is AluControlNode {
+    return node.type === 'alu-control';
+}
+
+export type DataMemNode = Node<{label:string, readDataMem: string, dataMem: string[]}, 'data-mem'>;
+export function isDataMemNode(node: any): node is DataMemNode {
+    return node.type === 'data-mem';
+}
+export type DisplayNode = Node<{}, 'display'>;
+export type InstDisplayNode = Node<{}, 'inst-display'>;
+
+
 // {structure of data in initialization}, 'name of type' - need to update node types in index too
 
 

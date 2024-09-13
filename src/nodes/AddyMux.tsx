@@ -12,7 +12,7 @@ import { isAddyAdderNode, type AppNode, AddyMuxNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
 
-function AddyMux({ id, data }: NodeProps<AddyMuxNode>) {
+function AddyMux({ id }: NodeProps<AddyMuxNode>) {
   const { updateNodeData } = useReactFlow();
 
   // inputs
@@ -42,41 +42,64 @@ function AddyMux({ id, data }: NodeProps<AddyMuxNode>) {
   // end inputs
 
   // update outputs
+  // FIX
+  const addyAdderIn = AddyAdderNode[0]?.data.out;
+  const branchAdderIn = 'x';
+  const controlIn = '0';
   useEffect(() => {
-    const output = !false ? AddyAdderNode[0]?.data.out : branchAdderNode[0].data.out;
-    updateNodeData(id, { out: output });
-  }, [AddyAdderNode]);
+
+    if (controlIn == 'x') {
+      updateNodeData(id, { out: 'x' });
+      return;
+    }
+
+    const controlInNum = parseInt(controlIn);
+    const output = !controlInNum ? addyAdderIn : branchAdderIn;
+
+    // this one should never be high impedance honestly except at initial
+    const forcedOutput = output == 'x' ? '0' : output;
+
+    updateNodeData(id, { out: forcedOutput });
+  }, [addyAdderIn, branchAdderIn, controlIn]);
 
   return (
     <div
-      className='container addy-mux'
+      className='container mux'
     >
       <div className='bg'>
         <img src={bgSvg}></img>
       </div>
       <div className='control'>
         <Handle
+          className='handle'
           type="target"
           position={Position.Bottom}
           id="branch-and-out"
-          style={{transform: 'translate(-50%, -200%)'}}
         />
       </div>
       <div className='inputs'>
-        <Handle
-          type="target"
-          position={Position.Left}
-          id="addy-adder-out"
-        />
-        <Handle
-          type="target"
-          position={Position.Left}
-          id="branch-adder-out"
-        />
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
+            id="addy-adder-out"
+          />
+        </div>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
+            id="branch-adder-out"
+          />
+        </div>
       </div>
-      {/* {data.compdata} */}
       <div className='outputs'>
-        <Handle type="source" position={Position.Right}/>
+        <div className="port">
+          <Handle
+            className='handle' type="source" position={Position.Right} id='next-address' />
+        </div>
       </div>
     </div>
   );

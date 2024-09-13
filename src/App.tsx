@@ -28,7 +28,7 @@ export default function App() {
       nodesDraggable={false}
       nodesConnectable={false}
       // elementsSelectable={false}
-      nodesFocusable={false}
+      // nodesFocusable={false}
     >
       <Background />
       <MiniMap />

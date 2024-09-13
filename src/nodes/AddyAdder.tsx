@@ -26,29 +26,57 @@ function component_name({ id }: NodeProps<AddyAdderNode>) {
   // end inputs
 
   // update outputs
+  const pcIn = pcNode[0]?.data.address;
   useEffect(() => {
-    const output = pcNode[0]?.data.address + 4;
+    if (pcIn == 'x') {
+      updateNodeData(id, { out: 'x' });
+      return;
+    }
+
+    const pcInNum = parseInt(pcIn);
+    const outputNum = pcInNum + 32;
+
+    const output = outputNum.toString();
     updateNodeData(id, { out: output });
-  }, [pcNode]);
+  }, [pcIn]);
 
   return (
     <div
-      className='adder'
+      className='adder container'
     >
       <div className='bg'>
         <img src={bgSvg}></img>
       </div>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id="address"
-      />
-      <Handle
-        type="target"
-        position={Position.Left}
-        id="addy-adder-4"
-      />
-      <Handle type="source" position={Position.Right} />
+      <div className='inputs'>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
+            id="address"
+          />
+        </div>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
+            id="addy-adder-4"
+          />
+        </div>
+
+      </div>
+      <div className='outputs'>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="source"
+            position={Position.Right}
+            id='addy-adder-out'
+          />
+        </div>
+
+      </div>
     </div>
   );
 }

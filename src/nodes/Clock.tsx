@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
 
-function Clock({ id, data }: NodeProps<Node<{ label:string, clk: number }>>) {
+function Clock({ id, data }: NodeProps<Node<{ label: string, clk: number }>>) {
   const { updateNodeData } = useReactFlow();
 
   return (
@@ -22,7 +22,12 @@ function Clock({ id, data }: NodeProps<Node<{ label:string, clk: number }>>) {
           value={data.clk}
         >Step </button>
       </div>
-      <Handle type="source" position={Position.Right} />
+      <Handle
+        className='handle' type="source" 
+        position={Position.Bottom}
+        style={{position: 'absolute'}}
+        id='clk'
+      />
     </div>
   );
 }

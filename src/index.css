@@ -17,17 +17,20 @@ body,
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   grid-template-rows: 1fr auto;
-  grid-template-areas: 
+  grid-template-areas:
     "inputs control outputs"
     "name name name";
 }
+
 .bg {
   grid-area: 1 / 1 / last-line / 5
 }
-.inputs, .outputs {
-  display:  flex;
+
+.inputs,
+.outputs {
+  display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   color: #747474;
   font-style: normal;
   font-weight: 500;
@@ -36,43 +39,89 @@ body,
   letter-spacing: 0.05em;
 
   margin-top: 15px;
-  width: min-content;
+  /* width: min-content; */
 
 }
+
+.mux .inputs,
+.mux .outputs {
+  margin: 0;
+}
+
+.adder .inputs,
+.adder .outputs {
+  margin: 0;
+}
+
+.control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .inputs {
   grid-area: inputs;
   text-align: left;
-  margin-left: 10px;
+  margin-left: 2px;
 }
+
+.handle {
+  /* top:0; */
+  position: relative;
+}
+
 .label {
   max-width: 100%;
   white-space: initial;
+}
+
+.outputs .port {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.inputs .port {
+  display: flex;
+  flex-direction: row;
 }
 
 .outputs {
   grid-area: outputs;
   justify-self: end;
   text-align: right;
-  margin-right: 10px;
+  margin-right: 2px;
   align-items: end;
 }
+
+/* .outputs > .handle {
+  transform: translate(100%, -50%);
+} */
+.data-mem .outputs>.handle {
+  transform: translate(500%, -50%);
+}
+
+.reg-list .outputs>.handle {
+  transform: translate(500%, -50%);
+}
+
 .name {
   grid-area: name;
   justify-self: end;
   align-self: end;
   margin-bottom: 15px;
   margin-right: 10px;
-  
+
   font-size: 15px;
   line-height: 130%;
   text-align: right;
   letter-spacing: 0.05em;
   font-weight: 700;
 
-  max-width: 70%;
+  max-width: 60%;
   white-space: initial;
 
 }
+
 .control {
   grid-area: control;
 }
@@ -84,6 +133,142 @@ body,
   background-clip: text;
   text-fill-color: transparent;
 }
+
 .pc.container {
   max-width: 97px;
+}
+
+.inst-mem.container, .data-mem.container {
+  max-width: 131px;
+}
+
+.inst-mem .name, .data-mem .name {
+  background: linear-gradient(82.65deg, #E9C2F7 -6.45%, #5197E9 79.95%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.inst-decode.container{
+  max-width: 144px;
+}
+
+.inst-decode .name {
+  background: linear-gradient(74.71deg, rgba(253, 208, 163, 0.843137) -7.68%, #FD95FF 81.26%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+
+}
+
+.control-node.container {
+  max-width: 144px;
+}
+
+.control-node .name {
+background: linear-gradient(51.95deg, #909090 42.51%, #9B99FF 79.58%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+}
+.reg-list.container {
+  max-width: 144px;
+}
+
+.reg-list .name {
+background: linear-gradient(82.65deg, #F7E5C2 -6.45%, #49D2B9 66.37%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+}
+
+.alu-control.container {
+  max-width: 144px;
+}
+
+.alu-control .name {
+background: linear-gradient(51.95deg, #909090 42.51%, #9B99FF 79.58%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+}
+
+.display {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  font-size: 12px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 1%;
+}
+.reg-display li {
+  list-style-type: none;
+  background-color: #ececec;
+  border-radius: 5%;
+  text-align: center;
+  padding: 2px;
+  width: 70px;
+  margin: 1px;
+}
+.reg-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2px;
+}
+.data-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: #ececec;
+  border-radius: 2%;
+  padding: 2px;
+  margin: 1px;
+}
+.data-display li {
+  list-style-type: none;
+  text-align: center;
+  width: 65px;
+}
+.inst-display {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 3%;
+}
+.inst-display-inst {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin: 8px;
+}
+.inst-display-inst select {
+  border: none;
+  padding: 5px;
+  background-color: #ececec;
+  width: 60px;
+  border-radius: 5%;
+}
+.inst-display-inst input {
+  border: none;
+  padding: 5px;
+  background-color: #ececec;
+  width: 50px;
+  text-align: right;
+  border-radius: 5%;
+}
+.inst-param {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: #909090;
 }
