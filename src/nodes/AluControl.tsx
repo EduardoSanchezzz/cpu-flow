@@ -37,14 +37,14 @@ function AluControl({ id, data }: NodeProps<AluControlNode>) {
     }
     const type = TYPES.get(parseInt(opcode));
 
-    const rId = funct7 + funct3 + opcode;
-    const regId = funct3 + opcode;
+    const rId = (parseInt(funct7) << 10) + (parseInt(funct3) << 7) + parseInt(opcode);
+    const regId = (parseInt(funct3) << 7) + parseInt(opcode);
 
     const instId = type === 'R' ? rId : regId;
 
-    const { op } = { ...INSTRUCTIONS[parseInt(instId)] };
+    const { op } = { ...INSTRUCTIONS[instId] };
     
-    console.log(instId, INSTRUCTIONS[parseInt(instId)])
+    console.log({funct7, funct3, opcode})
     const aluCode = op.toString();
 
     updateNodeData(id, { aluCode });

@@ -11,6 +11,7 @@ import {
 import { type AppNode, DataMemNode, isControlNode, isAluNode, isRegListNode, isClockNode } from './types';
 
 import bgSvg from '../assets/DataMem.svg';
+import { convertToNBitString, makeDecStrNBitsLong } from '../utils';
 
 function DataMem({ id, data }: NodeProps<DataMemNode>) {
   const { updateNodeData } = useReactFlow();
@@ -68,13 +69,14 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
     if (memRead == '1') {
       if ((addressNum % 8) != 0) {
         console.log('address not byte aligned ' + address);
-        // return;
+        return;
       }
       let readDataMem = '';
       for (let i = 0; i < sizeNum; ++i) {
-        readDataMem = data.dataMem[index + i] + readDataMem;
+        readDataMem = makeDecStrNBitsLong(data.dataMem[index + i], 8) + readDataMem;
         console.log(readDataMem)
       }
+      readDataMem = parseInt(readDataMem, 2).toString()
       updateNodeData(id, { readDataMem });
     }
 
@@ -100,8 +102,8 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
 
     for (let i = 0; i < sizeNum; ++i) {
       const writeDataByte = (writeDataNum >> (8 * i)) & 0b1111_1111;
+      console.log(writeDataByte);
       newDataMem[index + i] = writeDataByte.toString();
-      updateNodeData(id, {});
     }
 
     updateNodeData(id, {
