@@ -176,6 +176,5 @@ export const INSTRUCTIONS:Record<number, INST> =  {
         size: '4',
     }
 }
-const test = 'hello'
 
 export const INST_NAMES = Object.fromEntries(Object.entries(INSTRUCTIONS).map(([key, value])=> {return [value.name, key]}));
