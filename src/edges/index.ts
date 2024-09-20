@@ -2,7 +2,7 @@ import type { Edge, EdgeTypes } from '@xyflow/react';
 import DataEdge from './DataEdge';
 import ControlEdge from './ControlEdge';
 
-export type dataEdge = Edge<{outputName: string, value:string}, 'data'>;
+export type dataEdge = Edge<{outputName: string, value:string, offsetX:number, offsetY:number}, 'data'>;
 export type controlEdge = Edge<{outputName: string, value:string}, 'control'>;
 export type AppEdge = dataEdge | controlEdge;
 
@@ -21,7 +21,7 @@ export const initialEdges: AppEdge[] = [
     target: 'addy-adder',
     sourceHandle: 'address',
     targetHandle: 'address',
-    data: {value: '', outputName: 'address'}
+    data: {value: '', outputName: 'address', offsetX: 15, offsetY: -200}
   },
   {
     id: 'addy-adder_addy-mux',
@@ -30,7 +30,7 @@ export const initialEdges: AppEdge[] = [
     target: 'addy-mux',
     sourceHandle: 'addy-adder-out',
     targetHandle: 'addy-adder-out',
-    data: {value: '', outputName: 'out'}
+    data: {value: '', outputName: 'out', offsetX: 15, offsetY: -30}
   },
   {
     id: 'addy-mux_pc',
@@ -39,7 +39,7 @@ export const initialEdges: AppEdge[] = [
     target: 'pc',
     sourceHandle: 'next-address',
     targetHandle: 'next-address',
-    data: {value: '', outputName: 'out'}
+    data: {value: '', outputName: 'out', offsetX: 15, offsetY: -70}
   },
   {
     id: 'pc_inst-mem',
@@ -48,7 +48,7 @@ export const initialEdges: AppEdge[] = [
     target: 'inst-mem',
     sourceHandle: 'address',
     targetHandle: 'address',
-    data: {value: '', outputName: 'address'} 
+    data: {value: '', outputName: 'address', offsetX: 15, offsetY: 0 },
   },
   {
     id: 'inst-mem_inst-decode',
@@ -57,7 +57,7 @@ export const initialEdges: AppEdge[] = [
     target: 'inst-decode',
     sourceHandle: 'instruction',
     targetHandle: 'instruction',
-    data: {value: '', outputName: 'instruction'}
+    data: {value: '', outputName: 'instruction', offsetX: 15, offsetY: 0}
   },
   {
     id: 'inst-decode_reg-list1',
@@ -66,7 +66,7 @@ export const initialEdges: AppEdge[] = [
     target: 'reg-list',
     sourceHandle: 'read-reg1',
     targetHandle: 'read-reg1',
-    data: {value: '', outputName: 'readAddress1'}
+    data: {value: '', outputName: 'readAddress1', offsetX: 15, offsetY: 0}
   },
   {
     id: 'inst-decode_reg-list2',
@@ -75,7 +75,7 @@ export const initialEdges: AppEdge[] = [
     target: 'reg-list',
     sourceHandle: 'read-reg2',
     targetHandle: 'read-reg2',
-    data: {value: '', outputName: 'readAddress2'}
+    data: {value: '', outputName: 'readAddress2', offsetX: 15, offsetY: 0}
   },
   {
     id: 'inst-decode_reg-list3',
@@ -84,7 +84,7 @@ export const initialEdges: AppEdge[] = [
     target: 'reg-list',
     sourceHandle: 'write-reg',
     targetHandle: 'write-reg',
-    data: {value: '', outputName: 'writeAddress'}
+    data: {value: '', outputName: 'writeAddress', offsetX: 15, offsetY: 0}
   },
   {
     id: 'reg-list_alu-mux',
@@ -93,7 +93,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-mux',
     sourceHandle: 'read-data2',
     targetHandle: 'read-data2',
-    data: {value: '', outputName: 'readData2'}
+    data: {value: '', outputName: 'readData2', offsetX: 15, offsetY: 0}
   },
   {
     id: 'inst-decode_alu-mux',
@@ -102,7 +102,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-mux',
     sourceHandle: 'imm-val',
     targetHandle: 'imm-val',
-    data: {value: '', outputName: 'immVal'}
+    data: {value: '', outputName: 'immVal', offsetX: 45, offsetY: 40}
   },
   {
     id: 'reg-list_alu',
@@ -111,7 +111,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu',
     sourceHandle: 'read-data1',
     targetHandle: 'read-data1',
-    data: {value: '', outputName: 'readData1'}
+    data: {value: '', outputName: 'readData1', offsetX: 15, offsetY: 0}
   },
   {
     id: 'alu-mux_alu',
@@ -120,7 +120,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu',
     sourceHandle: 'alu-mux-out',
     targetHandle: 'alu-mux-out',
-    data: {value: '', outputName: 'out'}
+    data: {value: '', outputName: 'out', offsetX: 5, offsetY: 0}
   },
   {
     id: 'inst-mem_control',
@@ -129,7 +129,7 @@ export const initialEdges: AppEdge[] = [
     target: 'control',
     sourceHandle: 'instruction',
     targetHandle: 'instruction',
-    data: {value: '', outputName: 'instruction'}
+    data: {value: '', outputName: 'instruction', offsetX: 15, offsetY: 0}
   },
   {
     id: 'control_reg-list',
@@ -147,7 +147,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-mux',
     sourceHandle: 'alu-src',
     targetHandle: 'alu-src',
-    data: {value: '', outputName: 'aluSrc'},
+    data: {value: '', outputName: 'aluSrc'}
   },
   {
     id: 'control_data-mux',
@@ -156,7 +156,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'mem-to-reg',
     targetHandle: 'mem-to-reg',
-    data: {value: '', outputName: 'memToReg'}
+    data: {value: '', outputName: 'memToReg',}
   },
   {
     id: 'control_data-mem1',
@@ -165,7 +165,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mem',
     sourceHandle: 'mem-read',
     targetHandle: 'mem-read',
-    data: {value: '', outputName: 'memRead'}
+    data: {value: '', outputName: 'memRead',}
   },
   {
     id: 'control_data-mem2',
@@ -174,7 +174,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mem',
     sourceHandle: 'mem-write',
     targetHandle: 'mem-write',
-    data: {value: '', outputName: 'memWrite'}
+    data: {value: '', outputName: 'memWrite',}
   },
   {
     id: 'control_data-mem3',
@@ -183,7 +183,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mem',
     sourceHandle: 'size',
     targetHandle: 'size',
-    data: {value: '', outputName: 'size'}
+    data: {value: '', outputName: 'size',}
   },
   {
     id: 'alu_data-mux',
@@ -192,7 +192,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'alu-out',
     targetHandle: 'alu-out',
-    data: {value: '', outputName: 'out'}
+    data: {value: '', outputName: 'out', offsetX: 15, offsetY: -130}
   },
   {
     id: 'alu_data-mem',
@@ -201,7 +201,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mem',
     sourceHandle: 'alu-out',
     targetHandle: 'alu-out',
-    data: {value: '', outputName: 'out'}
+    data: {value: '', outputName: 'out', offsetX: 15, offsetY: 0}
   },
   {
     id: 'reg-list_data-mem',
@@ -210,7 +210,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mem',
     sourceHandle: 'read-data2',
     targetHandle: 'read-data2',
-    data: {value: '', outputName: 'readData2'}
+    data: {value: '', outputName: 'readData2', offsetX: 5, offsetY: 125}
   },
   {
     id: 'data-mem_data-mux',
@@ -219,7 +219,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'read-data-mem',
     targetHandle: 'read-data-mem',
-    data: {value: '', outputName: 'readDataMem'}
+    data: {value: '', outputName: 'readDataMem', offsetX: 5, offsetY: 0}
   },
   {
     id: 'data-mux_reg-list',
@@ -228,7 +228,7 @@ export const initialEdges: AppEdge[] = [
     target: 'reg-list',
     sourceHandle: 'write-data',
     targetHandle: 'write-data',
-    data: {value: '', outputName: 'out'}
+    data: {value: '', outputName: 'out', offsetX: 15, offsetY: 170}
   },
   {
     id: 'inst-decode_alu-control1',
@@ -237,7 +237,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-control',
     sourceHandle: 'opcode',
     targetHandle: 'opcode',
-    data: {value: '', outputName: 'opcode'}
+    data: {value: '', outputName: 'opcode', offsetX: 33, offsetY: 193}
   },
   {
     id: 'inst-decode_alu-control2',
@@ -246,7 +246,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-control',
     sourceHandle: 'funct3',
     targetHandle: 'funct3',
-    data: {value: '', outputName: 'funct3'}
+    data: {value: '', outputName: 'funct3', offsetX: 25, offsetY: 190}
   },
   {
     id: 'inst-decode_alu-control3',
@@ -255,7 +255,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-control',
     sourceHandle: 'funct7',
     targetHandle: 'funct7',
-    data: {value: '', outputName: 'funct7'}
+    data: {value: '', outputName: 'funct7', offsetX: 16, offsetY: 190}
   },
   {
     id: 'alu-control',
@@ -264,7 +264,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu',
     sourceHandle: 'alu-code',
     targetHandle: 'alu-code',
-    data: {value: '', outputName: 'aluCode'}
+    data: {value: '', outputName: 'aluCode', offsetX: 0, offsetY: 0}
   },
 ];
 

@@ -5,12 +5,15 @@ import { dataEdge } from './index';
 
 export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, source, sourceHandleId, data }: EdgeProps<dataEdge> ) {
   const { updateEdgeData } = useReactFlow();
-    const [edgePath, labelX, labelY] = getSimpleBezierPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-  });
+  const offsetX = data?.offsetX ?? 15;
+  const offsetY = data?.offsetY ?? 100;
+
+  const [path0] = getStraightPath({sourceX, sourceY, targetX: sourceX+offsetX, targetY:sourceY});
+  const [path1] = getStraightPath({sourceX:sourceX+offsetX, sourceY, targetX: sourceX+offsetX, targetY:sourceY+offsetY});
+  const [path2] = getStraightPath({sourceX:sourceX+offsetX, sourceY:sourceY+offsetY, targetX: targetX-offsetX, targetY:sourceY + offsetY});
+  const [path3] = getStraightPath({sourceX:targetX-offsetX, sourceY:sourceY + offsetY, targetX:targetX-offsetX, targetY});
+  const [path4] = getStraightPath({sourceX:targetX-offsetX, sourceY:targetY, targetX, targetY});
+  const path = path0 + path1 + path2 + path3 + path4;
   const connections = useHandleConnections({
     type: 'source',
     nodeId: source,
@@ -28,16 +31,16 @@ export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, sourc
  
   return (
     <>
-      <BaseEdge id={id} path={edgePath} />
+      <BaseEdge id={id} path={path} />
       <EdgeLabelRenderer>
         <div
           style={{
             position: 'absolute',
-            transform: `translate(0%, -50%) translate(${sourceX}px,${sourceY}px)`,
+            transform: `translate(0%, -60%) translate(${sourceX}px,${sourceY}px)`,
             background: '#fefefe',
             padding: 2,
             borderRadius: 5,
-            fontSize: 10,
+            fontSize: 15,
             fontWeight: 400,
             color: '#999',
           }}

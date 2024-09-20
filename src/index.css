@@ -44,8 +44,12 @@ body,
 }
 
 .mux .inputs,
-.mux .outputs {
+.mux .outputs, .alu .inputs, .alu .outputs {
   margin: 0;
+}
+.alu .inputs {
+  justify-content: center;
+  gap: 95px;
 }
 
 .adder .inputs,
@@ -91,17 +95,6 @@ body,
   text-align: right;
   margin-right: 2px;
   align-items: end;
-}
-
-/* .outputs > .handle {
-  transform: translate(100%, -50%);
-} */
-.data-mem .outputs>.handle {
-  transform: translate(500%, -50%);
-}
-
-.reg-list .outputs>.handle {
-  transform: translate(500%, -50%);
 }
 
 .name {

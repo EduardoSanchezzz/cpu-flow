@@ -75,7 +75,7 @@ export const initialNodes: AppNode[] = [
       funct7: 'x' ,
       immVal: 'x',
      },
-    position: { x: 350, y: 400 },
+    position: { x: 320, y: 400 },
   },
   {
     id: 'reg-list',
@@ -112,7 +112,7 @@ export const initialNodes: AppNode[] = [
       size: 'x' ,
       branch: 'x',
      },
-    position: { x: 350, y: 100 },
+    position: { x: 320, y: 100 },
   },
   {
     id: 'data-mux',
@@ -130,7 +130,7 @@ export const initialNodes: AppNode[] = [
     id: 'data-mem',
     type: 'data-mem',
     data: { label: 'Data Memory', readDataMem: 'x', dataMem: DATAMEM },
-    position: { x: 950, y: 400 },
+    position: { x: 940, y: 420 },
   },
   {
     id: 'display',

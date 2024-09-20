@@ -75,6 +75,7 @@ function AddyMux({ id }: NodeProps<AddyMuxNode>) {
           type="target"
           position={Position.Bottom}
           id="branch-and-out"
+          style={{position: 'absolute', transform: 'translate(0%, -255%)'}}
         />
       </div>
       <div className='inputs'>

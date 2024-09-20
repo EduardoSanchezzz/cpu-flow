@@ -30,9 +30,10 @@ export default function App() {
       // elementsSelectable={false}
       // nodesFocusable={false}
     >
-      <Background />
+      {/* <Background /> */}
       <MiniMap />
-      <Controls />
+      <Controls 
+      showInteractive={false}/>
     </ReactFlow>
   );
 }

@@ -90,7 +90,7 @@ function Alu({ id, data }: NodeProps<AluNode>) {
             type="target"
             position={Position.Bottom}
             id="alu-code"
-            style={{position: 'absolute'}}
+            style={{position: 'absolute', transform: 'translate(0%, -255%)'}}
           />
         </div>
       </div>
