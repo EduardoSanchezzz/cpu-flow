@@ -5,12 +5,21 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isInstMemNode, type AppNode } from './types';
+import { isClockNode, isInstMemNode, type AppNode } from './types';
 
 import { convertToNBitString, INST_NAMES, INSTRUCTIONS, TYPES } from '../utils';
 
 function InstDisplay() {
   const { updateNodeData } = useReactFlow();
+
+  const clockConnections = useHandleConnections({
+    type: 'source',
+    id: 'clk',
+    nodeId: 'clock'
+  });
+  const clockNodesData = useNodesData<AppNode>(clockConnections.map((connection) => connection.source),);
+  const clockNode = clockNodesData.filter(isClockNode);
+  const step = clockNode[0]?.data.step;
 
   // inputs
   const connections = useHandleConnections({
@@ -41,7 +50,7 @@ function InstDisplay() {
       INSTRUCTIONS
       {instructions.map((inst, i) => {
         return (
-          <div key={i}>
+          <div key={i} style={{padding:'2px', backgroundColor: i == step ? '#d6eaff' : ''}}>
             <Instruction
               instruction={inst}
               updateInstruction={updateInsts}

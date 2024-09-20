@@ -20,7 +20,7 @@ export function isAddyMuxNode(node: any): node is AddyMuxNode {
     return node.type === 'addy-mux';
 }
 
-export type ClockNode = Node<{label: string, clk: number}, 'clock'>;
+export type ClockNode = Node<{label: string, clk: number, step: number}, 'clock'>;
 export function isClockNode(node: any): node is ClockNode {
     return node.type === 'clock';
 }

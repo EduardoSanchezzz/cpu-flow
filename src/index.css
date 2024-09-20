@@ -44,9 +44,12 @@ body,
 }
 
 .mux .inputs,
-.mux .outputs, .alu .inputs, .alu .outputs {
+.mux .outputs,
+.alu .inputs,
+.alu .outputs {
   margin: 0;
 }
+
 .alu .inputs {
   justify-content: center;
   gap: 95px;
@@ -131,11 +134,13 @@ body,
   max-width: 97px;
 }
 
-.inst-mem.container, .data-mem.container {
+.inst-mem.container,
+.data-mem.container {
   max-width: 131px;
 }
 
-.inst-mem .name, .data-mem .name {
+.inst-mem .name,
+.data-mem .name {
   background: linear-gradient(82.65deg, #E9C2F7 -6.45%, #5197E9 79.95%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -143,7 +148,7 @@ body,
   text-fill-color: transparent;
 }
 
-.inst-decode.container{
+.inst-decode.container {
   max-width: 144px;
 }
 
@@ -161,23 +166,24 @@ body,
 }
 
 .control-node .name {
-background: linear-gradient(51.95deg, #909090 42.51%, #9B99FF 79.58%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-text-fill-color: transparent;
+  background: linear-gradient(51.95deg, #909090 42.51%, #9B99FF 79.58%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 
 }
+
 .reg-list.container {
   max-width: 144px;
 }
 
 .reg-list .name {
-background: linear-gradient(82.65deg, #F7E5C2 -6.45%, #49D2B9 66.37%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-text-fill-color: transparent;
+  background: linear-gradient(82.65deg, #F7E5C2 -6.45%, #49D2B9 66.37%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 
 }
 
@@ -186,11 +192,11 @@ text-fill-color: transparent;
 }
 
 .alu-control .name {
-background: linear-gradient(51.95deg, #909090 42.51%, #9B99FF 79.58%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-text-fill-color: transparent;
+  background: linear-gradient(51.95deg, #909090 42.51%, #9B99FF 79.58%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 
 }
 
@@ -204,6 +210,7 @@ text-fill-color: transparent;
   padding: 20px;
   border-radius: 1%;
 }
+
 .reg-display li {
   list-style-type: none;
   background-color: #ececec;
@@ -213,12 +220,14 @@ text-fill-color: transparent;
   width: 70px;
   margin: 1px;
 }
+
 .reg-display {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   gap: 2px;
 }
+
 .data-display {
   display: flex;
   flex-direction: row;
@@ -228,22 +237,26 @@ text-fill-color: transparent;
   padding: 2px;
   margin: 1px;
 }
+
 .data-display li {
   list-style-type: none;
   text-align: center;
   width: 65px;
 }
+
 .inst-display {
   background-color: #f8f8f8;
   padding: 20px;
   border-radius: 3%;
 }
+
 .inst-display-inst {
   display: flex;
   flex-direction: row;
   gap: 5px;
   margin: 8px;
 }
+
 .inst-display-inst select {
   border: none;
   padding: 5px;
@@ -251,6 +264,7 @@ text-fill-color: transparent;
   width: 60px;
   border-radius: 5%;
 }
+
 .inst-display-inst input {
   border: none;
   padding: 5px;
@@ -259,9 +273,33 @@ text-fill-color: transparent;
   text-align: right;
   border-radius: 5%;
 }
+
 .inst-param {
   display: flex;
   flex-direction: column;
   font-size: 12px;
   color: #909090;
+}
+
+.clock {
+  background: #f8f8f8;
+  color: #222;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 5%;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  border: 1px dotted #adadad;
+}
+
+.clock button {
+  padding: 20px 15px; 
+  border: 0; 
+  background-color: #f4f2f2;
+  border-radius: 5%;
+}
+.clock button:hover {
+  background-color: #e3e3e3;
+  cursor: pointer;
 }

@@ -6,7 +6,7 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isDataMemNode, isRegListNode, type AppNode, } from './types';
+import { isDataMemNode, isInstDecodeNode, isRegListNode, type AppNode, } from './types';
 
 function Display() {
   // inputs
@@ -17,6 +17,15 @@ function Display() {
   });
   const regNodesData = useNodesData<AppNode>(regConnections.map((connection) => connection.source),);
   const regNode = regNodesData.filter(isRegListNode);
+
+  const instDecodeConnections = useHandleConnections({
+    type: 'target',
+    id: 'read-reg1',
+    nodeId: 'reg-list'
+  });
+  const instDecodeData = useNodesData<AppNode>(instDecodeConnections.map((connection) => connection.source),);
+
+  const instDecodeNode = instDecodeData.filter(isInstDecodeNode);
 
   const dataMemConnections = useHandleConnections({
     type: 'target',
@@ -30,6 +39,9 @@ function Display() {
 
   const regList = regNode[0]?.data.regList;
   const dataMem = dataMemNode[0]?.data.dataMem;
+
+  const reg1 = parseInt(instDecodeNode[0]?.data.readAddress1)
+  const reg2 = parseInt(instDecodeNode[0]?.data.readAddress2)
 
   const display8BitBinary = (decStr:string):string => {
     if (!decStr) {return '';}
@@ -57,7 +69,7 @@ function Display() {
           return (
             <div className='reg-display'>
               x{i}
-            <li key={i}>0x{display32BitHex(item)}</li>
+            <li style={{backgroundColor: i == reg1 ? '#d6eaff' : i == reg2 ? '#d6eaff' : ''}}key={i}>0x{display32BitHex(item)}</li>
             </div>
           );
         })}

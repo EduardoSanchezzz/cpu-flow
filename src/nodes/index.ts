@@ -36,7 +36,7 @@ export const initialNodes: AppNode[] = [
   {
     id: 'clock',
     type: 'clock',
-    data: { label: 'Clock', clk: 0 },
+    data: { label: 'Clock', clk: 0, step:-1 },
     position: { x: 0, y: 0 },
   },
   {
