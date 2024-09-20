@@ -1,7 +1,5 @@
 import { memo } from 'react';
 import {
-  Handle,
-  Position,
   useHandleConnections,
   useNodesData,
 } from '@xyflow/react';
@@ -83,7 +81,7 @@ function Display() {
               <li key={i+3}>{display8BitBinary(dataMem[i+3])}</li>
               <li key={i+2}>{display8BitBinary(dataMem[i+2])}</li>
               <li key={i+1}>{display8BitBinary(dataMem[i+1])}</li>
-              <li key={i}>{display8BitBinary(dataMem[i])}</li>
+              <li key={i}>{display8BitBinary(item)}</li>
             </div>
           );
         })}

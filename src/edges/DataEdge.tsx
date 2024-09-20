@@ -1,4 +1,4 @@
-import { BaseEdge, EdgeLabelRenderer, EdgeProps, getSimpleBezierPath, getSmoothStepPath, getStraightPath, useHandleConnections, useNodesData, useReactFlow } from '@xyflow/react';
+import { BaseEdge, EdgeLabelRenderer, EdgeProps, getStraightPath, useHandleConnections, useNodesData, useReactFlow } from '@xyflow/react';
 import { AppNode } from '../nodes/types';
 import { useEffect } from 'react';
 import { dataEdge } from './index';

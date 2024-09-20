@@ -24,21 +24,21 @@ function AddyMux({ id }: NodeProps<AddyMuxNode>) {
 
   const AddyAdderNode = addyAdderNodesData.filter(isAddyAdderNode);
 
-  const branchAdderConnections = useHandleConnections({
-    type: 'target',
-    id: 'branch-adder-out'
-  });
-  const branchAdderNodesData = useNodesData<AppNode>(branchAdderConnections.map((connection) => connection.source),);
-
-  const branchAdderNode = branchAdderNodesData.filter(isAddyAdderNode);
+  // const branchAdderConnections = useHandleConnections({
+  //   type: 'target',
+  //   id: 'branch-adder-out'
+  // });
+  // const branchAdderNodesData = useNodesData<AppNode>(branchAdderConnections.map((connection) => connection.source),);
+// 
+  // const branchAdderNode = branchAdderNodesData.filter(isAddyAdderNode);
   
-  const ControlConnections = useHandleConnections({
-    type: 'target',
-    id: 'branch-and-out'
-  });
-  const ControlNodesData = useNodesData<AppNode>(ControlConnections.map((connection) => connection.source),);
+  // const ControlConnections = useHandleConnections({
+  //   type: 'target',
+  //   id: 'branch-and-out'
+  // });
+  // const ControlNodesData = useNodesData<AppNode>(ControlConnections.map((connection) => connection.source),);
 
-  const ControlNode = ControlNodesData.filter(isAddyAdderNode);
+  // const ControlNode = ControlNodesData.filter(isAddyAdderNode);
   // end inputs
 
   // update outputs
@@ -48,10 +48,10 @@ function AddyMux({ id }: NodeProps<AddyMuxNode>) {
   const controlIn = '0';
   useEffect(() => {
 
-    if (controlIn == 'x') {
-      updateNodeData(id, { out: 'x' });
-      return;
-    }
+    // if (controlIn == 'x') {
+    //   updateNodeData(id, { out: 'x' });
+    //   return;
+    // }
 
     const controlInNum = parseInt(controlIn);
     const output = !controlInNum ? addyAdderIn : branchAdderIn;

@@ -1,6 +1,5 @@
 import {
   ReactFlow,
-  Background,
   Controls,
   MiniMap,
   useNodesState,
@@ -30,7 +29,6 @@ export default function App() {
       // elementsSelectable={false}
       // nodesFocusable={false}
     >
-      {/* <Background /> */}
       <MiniMap />
       <Controls 
       showInteractive={false}/>

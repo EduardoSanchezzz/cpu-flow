@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
+import { Position, NodeProps, Handle, useReactFlow } from '@xyflow/react';
 import { ClockNode } from './types';
 
 function Clock({ id, data }: NodeProps<ClockNode>) {

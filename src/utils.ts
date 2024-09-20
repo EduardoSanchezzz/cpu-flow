@@ -104,7 +104,7 @@ const STORE_CTRL:CTRL = {
     branch: '0',
     size: 'x'
 }
-const BRANCHCTRL:CTRL = {
+const BRANCH_CTRL:CTRL = {
     aluSrc: '0',
     memToReg: 'x',
     memRead: '0',
@@ -174,7 +174,15 @@ export const INSTRUCTIONS:Record<number, INST> =  {
         name: 'SW',
         op: ALUCODES.getCode('ADD'),
         size: '4',
+    },
+
+    // branch
+    0b000_1100011: {
+        ...BRANCH_CTRL,
+        name: 'BEQ',
+        op: ALUCODES.getCode('SUB'),
     }
+
 }
 
 export const INST_NAMES = Object.fromEntries(Object.entries(INSTRUCTIONS).map(([key, value])=> {return [value.name, key]}));

@@ -75,12 +75,12 @@ function Instruction({
   updateInstruction: (i: number, inst: number) => void,
   index: number
 }) {
-  const [opcode, setOpcode] = useState<number | null>(null);
+  // const [opcode, setOpcode] = useState<number | null>(null);
   const [rd, setRd] = useState<number | null>(null);
   const [rs1, setRs1] = useState<number | null>(null);
   const [rs2, setRs2] = useState<number | null>(null);
-  const [f3, setF3] = useState<number | null>(null);
-  const [f7, setF7] = useState<number | null>(null);
+  // const [f3, setF3] = useState<number | null>(null);
+  // const [f7, setF7] = useState<number | null>(null);
   const [imm, setImm] = useState<number | null>(null);
   const [name, setName] = useState<string | null>(null);
 
@@ -104,34 +104,34 @@ function Instruction({
     switch (type) {
       case 'R':
         setName(INSTRUCTIONS[rId].name)
-        setOpcode(op);
+        // setOpcode(op);
         setRd(r0);
-        setF3(funct3);
+        // setF3(funct3);
         setRs1(r1);
         setRs2(r2);
-        setF7(funct7);
+        // setF7(funct7);
         setImm(null)
         break;
       case 'I':
         setName(INSTRUCTIONS[regId].name)
-        setOpcode(op);
+        // setOpcode(op);
         setRd(r0);
-        setF3(funct3);
+        // setF3(funct3);
         setRs1(r1);
         setImm((instruction & 0b1111_1111_1111_00000_000_00000_000_0000) >> 20);
-        setF7(null);
+        // setF7(null);
         setRs2(null);
         break;
       case 'S':
         setName(INSTRUCTIONS[regId].name)
         const imm1 = (instruction & 0b000_0000_00000_00000_000_11111_000_0000) >> 7;
         const imm2 = (instruction & 0b111_1111_00000_00000_000_00000_000_0000) >> 20;
-        setOpcode(op);
-        setF3(funct3);
+        // setOpcode(op);
+        // setF3(funct3);
         setRs1(r1);
         setRs2(r2);
         setImm(imm1 + imm2);
-        setF7(null);
+        // setF7(null);
         setRd(null);
         break;
     }

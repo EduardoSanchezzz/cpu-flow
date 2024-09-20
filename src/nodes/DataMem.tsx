@@ -11,7 +11,7 @@ import {
 import { type AppNode, DataMemNode, isControlNode, isAluNode, isRegListNode, isClockNode } from './types';
 
 import bgSvg from '../assets/DataMem.svg';
-import { convertToNBitString, makeDecStrNBitsLong } from '../utils';
+import { makeDecStrNBitsLong } from '../utils';
 
 function DataMem({ id, data }: NodeProps<DataMemNode>) {
   const { updateNodeData } = useReactFlow();
@@ -61,7 +61,6 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
     }
 
     const addressNum = parseInt(address);
-    const writeDataNum = parseInt(writeData);
     const sizeNum = parseInt(size);
 
     const index = addressNum / 8;

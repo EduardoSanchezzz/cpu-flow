@@ -13,7 +13,7 @@ import { isAluMuxNode, isRegListNode, type AppNode, AluNode, isAluControlNode } 
 import bgSvg from '../assets/ALU.svg';
 import { ALUCODES } from '../utils';
 
-function Alu({ id, data }: NodeProps<AluNode>) {
+function Alu({ id }: NodeProps<AluNode>) {
   const { updateNodeData } = useReactFlow();
 
   // inputs
