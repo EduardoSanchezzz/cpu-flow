@@ -16,6 +16,10 @@ import AluControl from './AluControl';
 import DataMem from './DataMem';
 import Display from './Display';
 import InstDisplay from './InstDisplay';
+import BranchShift from './BranchShift';
+import BranchControl from './BranchControl';
+import BranchAdder from './BranchAdder';
+import JumpMux from './JumpMux';
 
 const INSTRUCTIONS = [
   0b0000000_00001_00000_000_00010_0110011, //add x0 + x1 to x2
@@ -55,7 +59,7 @@ export const initialNodes: AppNode[] = [
     id: 'addy-mux',
     type: 'addy-mux',
     data: { out: '0' },
-    position: { x: 800, y: 0 },
+    position: { x: 1100, y: 0 },
   },
   {
     id: 'inst-mem',
@@ -96,7 +100,7 @@ export const initialNodes: AppNode[] = [
   {
     id: 'alu',
     type: 'alu',
-    data: { out: '' },
+    data: { out: '', zero: '', sign: '' },
     position: { x: 800, y: 400 },
   },
 
@@ -106,11 +110,12 @@ export const initialNodes: AppNode[] = [
     data: { label: 'Control Unit',
       aluSrc: 'x',
       memRead: 'x',
-      memToReg: 'x',
+      toReg: 'x',
       memWrite: 'x',
       regWrite: 'x',
       size: 'x' ,
       branch: 'x',
+      jump: 'x',
      },
     position: { x: 320, y: 100 },
   },
@@ -143,7 +148,31 @@ export const initialNodes: AppNode[] = [
     type: 'inst-display',
     position: { x: 0, y: 500 },
     data: {}
-  }
+  },
+  {
+    id: 'branch-control',
+    type: 'branch-control',
+    data: { label: 'Branch Control', branchSelect: 'x' },
+    position: { x: 970, y: 150 },
+  },
+  {
+    id: 'branch-shift',
+    type: 'branch-shift',
+    data: { label: 'Branch Shift', out: 'x' },
+    position: { x: 700, y: 40 },
+  },
+  {
+    id: 'jump-mux',
+    type: 'jump-mux',
+    data: { out: 'x' },
+    position: { x: 800, y: 30 },
+  },
+  {
+    id: 'branch-adder',
+    type: 'branch-adder',
+    data: { out: 'x' },
+    position: { x: 950, y: 50 },
+  },
 
 ];
 
@@ -163,5 +192,9 @@ export const nodeTypes = {
   'alu-control': AluControl,
   'data-mem': DataMem,
   'display': Display,
-  'inst-display': InstDisplay
+  'inst-display': InstDisplay,
+  'branch-shift': BranchShift,
+  'branch-control': BranchControl,
+  'branch-adder': BranchAdder,
+  'jump-mux': JumpMux,
 } satisfies NodeTypes;

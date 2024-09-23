@@ -3,7 +3,7 @@ import type { Node, BuiltInNode } from '@xyflow/react';
 export type AppNode = BuiltInNode | PCNode | ClockNode | AddyAdderNode|
 AddyMuxNode | InstMemNode | InstDecodeNode | RegListNode | AluMuxNode |
 AluNode | ControlNode | DataMuxNode | AluControlNode | DataMemNode | DisplayNode |
-InstDisplayNode;
+InstDisplayNode | BranchControlNode | BranchShiftNode | JumpMuxNode | BranchAdderNode;
 
 export type PCNode = Node<{label: string, address: string}, 'pc'>;
 export function isPCNode(node: any): node is PCNode {
@@ -58,7 +58,7 @@ export type AluMuxNode = Node<{out: string}, 'alu-mux'>;
 export function isAluMuxNode(node: any): node is AluMuxNode {
     return node.type === 'alu-mux';
 }
-export type AluNode = Node<{out: string}, 'alu'>;
+export type AluNode = Node<{out: string, zero: string, sign: string}, 'alu'>;
 export function isAluNode(node: any): node is AluNode {
     return node.type === 'alu';
 }
@@ -68,10 +68,11 @@ export type ControlNode = Node<{
   branch: string,
   regWrite: string,
   memRead: string,
-  memToReg: string,
+  toReg: string,
   memWrite: string,
   size: string,
   aluSrc: string,
+  jump: string,
 }, 'control'>;
 export function isControlNode(node:any): node is ControlNode {
   return node.type === 'control';
@@ -88,6 +89,22 @@ export function isAluControlNode(node: any): node is AluControlNode {
 export type DataMemNode = Node<{label:string, readDataMem: string, dataMem: string[]}, 'data-mem'>;
 export function isDataMemNode(node: any): node is DataMemNode {
     return node.type === 'data-mem';
+}
+export type BranchControlNode = Node<{label:string, branchSelect: string,}, 'branch-control'>;
+export function isBranchControlNode(node: any): node is BranchControlNode {
+    return node.type === 'branch-control';
+}
+export type JumpMuxNode = Node<{out: string,}, 'jump-mux'>;
+export function isJumpMuxNode(node: any): node is JumpMuxNode {
+    return node.type === 'jump-mux';
+}
+export type BranchShiftNode = Node<{label:string, out: string,}, 'branch-shift'>;
+export function isBranchShiftNode(node: any): node is BranchShiftNode {
+    return node.type === 'branch-shift';
+}
+export type BranchAdderNode = Node<{out: string,}, 'branch-adder'>;
+export function isBranchAdderNode(node: any): node is BranchAdderNode {
+    return node.type === 'branch-adder';
 }
 export type DisplayNode = Node<{}, 'display'>;
 export type InstDisplayNode = Node<{}, 'inst-display'>;

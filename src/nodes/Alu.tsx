@@ -47,7 +47,7 @@ function Alu({ id }: NodeProps<AluNode>) {
   useEffect(() => {
 
     if (input1 == 'x' || input2 == 'x' || aluCode == 'x') {
-      updateNodeData(id, { out: 'x' });
+      updateNodeData(id, { out: 'x', zero: 'x', sign: 'x' });
       return;
     }
     const inputNum1 = parseInt(input1);
@@ -73,7 +73,9 @@ function Alu({ id }: NodeProps<AluNode>) {
     }
 
     const output = outputNum.toString();
-    updateNodeData(id, { out: output });
+    const zero = outputNum == 0 ? '1' : '0';
+    const sign = outputNum < 0 ? '1' : '0';
+    updateNodeData(id, { out: output, zero, sign });
   }, [input1, input2, aluCode]);
 
   return (
@@ -113,6 +115,22 @@ function Alu({ id }: NodeProps<AluNode>) {
         </div>
       </div>
       <div className='outputs'>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="source"
+            position={Position.Right}
+            id="alu-zero"
+          />
+        </div>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="source"
+            position={Position.Right}
+            id="alu-sign"
+          />
+        </div>
         <div className="port">
           <Handle
             className='handle'

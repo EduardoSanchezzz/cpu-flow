@@ -41,15 +41,15 @@ function Display() {
   const reg1 = parseInt(instDecodeNode[0]?.data.readAddress1)
   const reg2 = parseInt(instDecodeNode[0]?.data.readAddress2)
 
-  const display8BitBinary = (decStr:string):string => {
-    if (!decStr) {return '';}
-    let out = parseInt(decStr).toString(2)
-    while (out.length < 8) {
+  const display2BitHex = (decStr: string): string => {
+    if (!decStr) { return ''; }
+    let out = parseInt(decStr).toString(16)
+    while (out.length < 2) {
       out = '0' + out;
     }
     return out;
   }
-  const display32BitHex = (dec:number):string => {
+  const display32BitHex = (dec: number): string => {
     let out = dec.toString(16)
     while (out.length < 8) {
       out = '0' + out;
@@ -63,11 +63,11 @@ function Display() {
     >
       <div>
         REG
-        {regList.map((item, i) => { 
+        {regList.map((item, i) => {
           return (
-            <div className='reg-display'>
+            <div className='reg-display' key={i + 'reg'}>
               x{i}
-            <li style={{backgroundColor: i == reg1 ? '#d6eaff' : i == reg2 ? '#d6eaff' : ''}}key={i}>0x{display32BitHex(item)}</li>
+              <li style={{ backgroundColor: i == reg1 ? '#d6eaff' : i == reg2 ? '#d6eaff' : '' }} key={i}>0x{display32BitHex(item)}</li>
             </div>
           );
         })}
@@ -75,13 +75,16 @@ function Display() {
       <div>
         DATA
         {dataMem.map((item, i) => {
-          if ((i % 4) != 0) {return;} 
+          if ((i % 4) != 0) { return; }
           return (
-            <div className='data-display'>
-              <li key={i+3}>{display8BitBinary(dataMem[i+3])}</li>
-              <li key={i+2}>{display8BitBinary(dataMem[i+2])}</li>
-              <li key={i+1}>{display8BitBinary(dataMem[i+1])}</li>
-              <li key={i}>{display8BitBinary(item)}</li>
+            <div className="data-display-container" key={i + 'data-container'}>
+              <div className='data-display' key={i + 'data'}>
+                <li key={i + 3}>{display2BitHex(dataMem[i + 3])}</li>
+                <li key={i + 2}>{display2BitHex(dataMem[i + 2])}</li>
+                <li key={i + 1}>{display2BitHex(dataMem[i + 1])}</li>
+                <li key={i}>{display2BitHex(item)}</li>
+              </div>
+              <div key={i + 'data-index'}>{i * 8}</div>
             </div>
           );
         })}

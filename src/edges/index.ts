@@ -156,7 +156,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'mem-to-reg',
     targetHandle: 'mem-to-reg',
-    data: {value: '', outputName: 'memToReg',}
+    data: {value: '', outputName: 'toReg',}
   },
   {
     id: 'control_data-mem1',
@@ -192,7 +192,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'alu-out',
     targetHandle: 'alu-out',
-    data: {value: '', outputName: 'out', offsetX: 15, offsetY: -130}
+    data: {value: '', outputName: 'out', offsetX: 18, offsetY: -130}
   },
   {
     id: 'alu_data-mem',
@@ -201,7 +201,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mem',
     sourceHandle: 'alu-out',
     targetHandle: 'alu-out',
-    data: {value: '', outputName: 'out', offsetX: 15, offsetY: 0}
+    data: {value: '', outputName: 'out', offsetX: 18, offsetY: -10}
   },
   {
     id: 'reg-list_data-mem',
@@ -258,13 +258,121 @@ export const initialEdges: AppEdge[] = [
     data: {value: '', outputName: 'funct7', offsetX: 16, offsetY: 190}
   },
   {
-    id: 'alu-control',
+    id: 'alu-control_alu',
     type: 'data',
     source: 'alu-control',
     target: 'alu',
     sourceHandle: 'alu-code',
     targetHandle: 'alu-code',
     data: {value: '', outputName: 'aluCode', offsetX: 0, offsetY: 0}
+  },
+  {
+    id: 'branch-control_addy-mux',
+    type: 'data',
+    source: 'branch-control',
+    target: 'addy-mux',
+    sourceHandle: 'branch-select',
+    targetHandle: 'branch-select',
+    data: {value: '', outputName: 'branchSelect', offsetX: 0, offsetY: 0}
+  },
+  {
+    id: 'alu_branch-control',
+    type: 'data',
+    source: 'alu',
+    target: 'branch-control',
+    sourceHandle: 'alu-zero',
+    targetHandle: 'alu-zero',
+    data: {value: '', outputName: 'zero', offsetX: 12, offsetY: -270}
+  },
+  {
+    id: 'alu_branch-control1',
+    type: 'data',
+    source: 'alu',
+    target: 'branch-control',
+    sourceHandle: 'alu-sign',
+    targetHandle: 'alu-sign',
+    data: {value: '', outputName: 'sign', offsetX: 16, offsetY: -290}
+  },
+  {
+    id: 'control_branch-control',
+    type: 'control',
+    source: 'control',
+    target: 'branch-control',
+    sourceHandle: 'branch',
+    targetHandle: 'branch',
+    data: {value: '', outputName: 'branch',}
+  },
+  {
+    id: 'control_jump-mux',
+    type: 'control',
+    source: 'control',
+    target: 'jump-mux',
+    sourceHandle: 'jump',
+    targetHandle: 'jump',
+    data: {value: '', outputName: 'jump',}
+  },
+  {
+    id: 'jump-mux_branch-adder',
+    type: 'data',
+    source: 'jump-mux',
+    target: 'branch-adder',
+    sourceHandle: 'jump-mux-out',
+    targetHandle: 'jump-mux-out',
+    data: {value: '', outputName: 'out', offsetX: 30, offsetY: 0}
+  },
+  {
+    id: 'pc_branch-adder',
+    type: 'data',
+    source: 'pc',
+    target: 'branch-adder',
+    sourceHandle: 'address',
+    targetHandle: 'address',
+    data: {value: '', outputName: 'address', offsetX: 15, offsetY: -200}
+  },
+  {
+    id: 'branch-adder_addy-mux',
+    type: 'data',
+    source: 'branch-adder',
+    target: 'addy-mux',
+    sourceHandle: 'branch-adder-out',
+    targetHandle: 'branch-adder-out',
+    data: {value: '', outputName: 'out', offsetX: 30, offsetY: 0}
+  },
+  {
+    id: 'branch-shift_jump-mux',
+    type: 'data',
+    source: 'branch-shift',
+    target: 'jump-mux',
+    sourceHandle: 'branch-shift-out',
+    targetHandle: 'branch-shift-out',
+    data: {value: '', outputName: 'out', offsetX: 15, offsetY: 0}
+  },
+  {
+    id: 'inst-decode_branch-shift',
+    type: 'data',
+    source: 'inst-decode',
+    target: 'branch-shift',
+    sourceHandle: 'imm-val',
+    targetHandle: 'imm-val',
+    data: {value: '', outputName: 'immVal', offsetX: 45, offsetY: -470}
+  },
+  {
+    id: 'alu_jump-mux',
+    type: 'data',
+    source: 'alu',
+    target: 'jump-mux',
+    sourceHandle: 'alu-out',
+    targetHandle: 'alu-out',
+    data: {value: '', outputName: 'out', offsetX: 18, offsetY: -300}
+  },
+  {
+    id: 'alu_data-mux1',
+    type: 'data',
+    source: 'alu',
+    target: 'data-mux',
+    sourceHandle: 'alu-sign',
+    targetHandle: 'alu-sign',
+    data: {value: '', outputName: 'sign', offsetX: 15, offsetY: -70}
   },
 ];
 

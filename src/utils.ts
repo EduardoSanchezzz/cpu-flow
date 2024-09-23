@@ -57,12 +57,13 @@ TYPES.set(B_OP, 'B');
 
 type CTRL = {
     aluSrc: string,
-    memToReg: string,
+    toReg: string,
     memRead: string,
     memWrite: string,
     regWrite: string,
     branch: string,
     size: string,
+    jump: string,
 }
 interface INST extends CTRL {
     name:string,
@@ -76,42 +77,62 @@ export const ALUCODES = new TwoWayMap({
     'ADD': 0b0010,
     'SUB': 0b0110,
 });
+export const BRANCHCODES = new TwoWayMap({
+    'nobranch': 0b000,
+    'zero': 0b0001,
+    'notzero': 0b0010,
+    'signbit': 0b0011,
+    'notsignbit': 0b0100,
+    'jump': 0b111,
+});
+export const TOREGCODES = new TwoWayMap({
+    'alu': 0b000,
+    'data': 0b0001,
+    'slt': 0b0010,
+    'jump': 0b0011,
+    'lui': 0b0100,
+    'auipc': 0b101,
+});
 
 const R_CTRL:CTRL = {
     aluSrc: '0',
-    memToReg: '0',
+    toReg: '0',
     memRead: '0',
     memWrite: '0',
     regWrite: '1',
     branch: '0',
     size: 'x',
+    jump: '0',
 }
 const LOAD_CTRL:CTRL = {
     aluSrc: '1',
-    memToReg: '1',
+    toReg: '1',
     memRead: '1',
     memWrite: '0',
     regWrite: '1',
     branch: '0',
-    size: 'x'
+    size: 'x',
+    jump: '0',
 }
 const STORE_CTRL:CTRL = {
     aluSrc: '1',
-    memToReg: 'x',
+    toReg: 'x',
     memRead: '0',
     memWrite: '1',
     regWrite: '0',
     branch: '0',
-    size: 'x'
+    size: 'x',
+    jump: '0',
 }
 const BRANCH_CTRL:CTRL = {
     aluSrc: '0',
-    memToReg: 'x',
+    toReg: 'x',
     memRead: '0',
     memWrite: '0',
     regWrite: '0',
     branch: '1',
     size: 'x',
+    jump: '0',
 }
 
 export const INSTRUCTIONS:Record<number, INST> =  {

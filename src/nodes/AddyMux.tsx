@@ -8,7 +8,7 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isAddyAdderNode, type AppNode, AddyMuxNode } from './types';
+import { isAddyAdderNode, type AppNode, AddyMuxNode, isBranchAdderNode, isBranchControlNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
 
@@ -24,28 +24,28 @@ function AddyMux({ id }: NodeProps<AddyMuxNode>) {
 
   const AddyAdderNode = addyAdderNodesData.filter(isAddyAdderNode);
 
-  // const branchAdderConnections = useHandleConnections({
-  //   type: 'target',
-  //   id: 'branch-adder-out'
-  // });
-  // const branchAdderNodesData = useNodesData<AppNode>(branchAdderConnections.map((connection) => connection.source),);
-// 
-  // const branchAdderNode = branchAdderNodesData.filter(isAddyAdderNode);
-  
-  // const ControlConnections = useHandleConnections({
-  //   type: 'target',
-  //   id: 'branch-and-out'
-  // });
-  // const ControlNodesData = useNodesData<AppNode>(ControlConnections.map((connection) => connection.source),);
+  const branchAdderConnections = useHandleConnections({
+    type: 'target',
+    id: 'branch-adder-out'
+  });
+  const branchAdderNodesData = useNodesData<AppNode>(branchAdderConnections.map((connection) => connection.source),);
 
-  // const ControlNode = ControlNodesData.filter(isAddyAdderNode);
+  const branchAdderNode = branchAdderNodesData.filter(isBranchAdderNode);
+  
+  const ControlConnections = useHandleConnections({
+    type: 'target',
+    id: 'branch-select'
+  });
+  const ControlNodesData = useNodesData<AppNode>(ControlConnections.map((connection) => connection.source),);
+
+  const ControlNode = ControlNodesData.filter(isBranchControlNode);
   // end inputs
 
   // update outputs
   // FIX
   const addyAdderIn = AddyAdderNode[0]?.data.out;
-  const branchAdderIn = 'x';
-  const controlIn = '0';
+  const branchAdderIn = branchAdderNode[0]?.data.out;
+  const select = ControlNode[0]?.data.branchSelect;
   useEffect(() => {
 
     // if (controlIn == 'x') {
@@ -53,14 +53,14 @@ function AddyMux({ id }: NodeProps<AddyMuxNode>) {
     //   return;
     // }
 
-    const controlInNum = parseInt(controlIn);
-    const output = !controlInNum ? addyAdderIn : branchAdderIn;
+    const selectNum = parseInt(select);
+    const output = !selectNum ? addyAdderIn : branchAdderIn;
 
     // this one should never be high impedance honestly except at initial
     const forcedOutput = output == 'x' ? '0' : output;
 
     updateNodeData(id, { out: forcedOutput });
-  }, [addyAdderIn, branchAdderIn, controlIn]);
+  }, [addyAdderIn, branchAdderIn, select]);
 
   return (
     <div
@@ -74,7 +74,7 @@ function AddyMux({ id }: NodeProps<AddyMuxNode>) {
           className='handle'
           type="target"
           position={Position.Bottom}
-          id="branch-and-out"
+          id="branch-select"
           style={{position: 'absolute', transform: 'translate(0%, -255%)'}}
         />
       </div>

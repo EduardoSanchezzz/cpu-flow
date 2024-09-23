@@ -8,41 +8,41 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isPCNode, type AppNode, AddyAdderNode } from './types';
+import { type AppNode, BranchShiftNode, isInstDecodeNode } from './types';
 
-import bgSvg from '../assets/Adder.svg';
+import bgSvg from '../assets/Circle.svg';
 
-function AddyAdder({ id }: NodeProps<AddyAdderNode>) {
+function BranchShift({ id }: NodeProps<BranchShiftNode>) {
   const { updateNodeData } = useReactFlow();
 
   // inputs
-  const connections1 = useHandleConnections({
+  const instDecodeConnections = useHandleConnections({
     type: 'target',
-    id: 'address'
+    id: 'imm-val'
   });
-  const nodesData1 = useNodesData<AppNode>(connections1.map((connection) => connection.source),);
+  const instDecodeData = useNodesData<AppNode>(instDecodeConnections.map((connection) => connection.source),);
 
-  const pcNode = nodesData1.filter(isPCNode);
+  const instDecodeNode = instDecodeData.filter(isInstDecodeNode);
   // end inputs
 
   // update outputs
-  const pcIn = pcNode[0]?.data.address;
+  const imm = instDecodeNode[0]?.data.immVal;
   useEffect(() => {
-    if (pcIn == 'x') {
+    if (imm == 'x') {
       updateNodeData(id, { out: 'x' });
       return;
     }
 
-    const pcInNum = parseInt(pcIn);
-    const outputNum = pcInNum + 32;
+    const immNum = parseInt(imm);
+    const outputNum = immNum * 2;
 
     const output = outputNum.toString();
     updateNodeData(id, { out: output });
-  }, [pcIn]);
+  }, [imm]);
 
   return (
     <div
-      className='adder container'
+      className='shift container'
     >
       <div className='bg'>
         <img src={bgSvg}></img>
@@ -53,15 +53,7 @@ function AddyAdder({ id }: NodeProps<AddyAdderNode>) {
             className='handle'
             type="target"
             position={Position.Left}
-            id="address"
-          />
-        </div>
-        <div className="port">
-          <Handle
-            className='handle'
-            type="target"
-            position={Position.Left}
-            id="addy-adder-4"
+            id="imm-val"
           />
         </div>
 
@@ -72,7 +64,7 @@ function AddyAdder({ id }: NodeProps<AddyAdderNode>) {
             className='handle'
             type="source"
             position={Position.Right}
-            id='addy-adder-out'
+            id='branch-shift-out'
           />
         </div>
 
@@ -81,4 +73,4 @@ function AddyAdder({ id }: NodeProps<AddyAdderNode>) {
   );
 }
 
-export default memo(AddyAdder);
+export default memo(BranchShift);

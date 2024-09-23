@@ -11,6 +11,7 @@ import {
 import { isAluNode, type AppNode, DataMuxNode, isControlNode, isDataMemNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
+import { TOREGCODES } from '../utils';
 
 function DataMux({ id }: NodeProps<DataMuxNode>) {
   const { updateNodeData } = useReactFlow();
@@ -24,7 +25,6 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
 
   const aluNode = aluNodesData1.filter(isAluNode);
 
-  // FIX data
   const dataMemConnections = useHandleConnections({
     type: 'target',
     id: 'read-data-mem'
@@ -41,9 +41,13 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
 
   const controlNode = controlNodesData.filter(isControlNode);
 
-  const input0 = aluNode[0]?.data.out;
-  const input1 = dataMemNode[0]?.data.readDataMem;
-  const select = controlNode[0]?.data.memToReg;
+  const alu = aluNode[0]?.data.out;
+  const data = dataMemNode[0]?.data.readDataMem;
+  const slt = aluNode[0]?.data.sign;
+  const jump = '0';
+  const lui = '0';
+  const auipc = '0';
+  const select = controlNode[0]?.data.toReg;
   // end inputs
 
   // update outputs
@@ -53,10 +57,32 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
       return;
     }
     const selectNum = parseInt(select);
+    let output;
 
-    const output = !selectNum ? input0 : input1;
+    switch(TOREGCODES.getName(selectNum)) {
+      case 'alu':
+        output = alu;
+        break;
+      case 'data':
+        output = data;
+        break;
+      case 'slt':
+        output = slt;
+        break;
+      case 'jump':
+        output = jump;
+        break;
+      case 'lui':
+        output = lui;
+        break;
+      case 'auipc':
+        output = auipc;
+        break;
+      default:
+        output= 'err'
+    }
     updateNodeData(id, { out: output });
-  }, [input0, input1, select]);
+  }, [alu, data, select]);
 
   return (
     <div
@@ -88,6 +114,38 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
             type="target"
             position={Position.Left}
             id="read-data-mem"
+          />
+        </div>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
+            id="alu-sign"
+          />
+        </div>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
+            id="addy-adder-out"
+          />
+        </div>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
+            id="lui"
+          />
+        </div>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
+            id="auipc"
           />
         </div>
       </div>

@@ -34,10 +34,11 @@ function Control({ id, data }: NodeProps<ControlNode>) {
         branch: 'x',
         regWrite: 'x',
         memRead: 'x',
-        memToReg: 'x',
+        toReg: 'x',
         memWrite: 'x',
         size: 'x',
         aluSrc: 'x',
+        jump: 'x',
       });
       return;
     }
@@ -53,9 +54,9 @@ function Control({ id, data }: NodeProps<ControlNode>) {
     const type = TYPES.get(opcodeNum);
     const instId = type === 'R' ? rId : regId;
 
-    const { aluSrc, memRead, memToReg, memWrite, size, branch, regWrite } = { ...INSTRUCTIONS[instId] }
+    const { aluSrc, memRead, toReg, memWrite, size, branch, regWrite, jump } = { ...INSTRUCTIONS[instId] }
 
-    updateNodeData(id, { aluSrc, memRead, memToReg, memWrite, size, branch, regWrite });
+    updateNodeData(id, { aluSrc, memRead, toReg, memWrite, size, branch, regWrite, jump });
   }, [instMemIn]);
 
   return (
@@ -81,12 +82,19 @@ function Control({ id, data }: NodeProps<ControlNode>) {
       <div className='name'>{data.label}</div>
       {/* {data.aluSrc}
       {data.memRead}
-      {data.memToReg}
+      {data.toReg}
       {data.memWrite}
       {data.branch}
       {data.size}
       {data.regWrite} */}
       <div className='outputs'>
+        <div className='port'>
+          <Handle
+            className='handle' type="source" position={Position.Right} id='jump' />
+          <div className="label">
+            jump
+          </div>
+        </div>
         <div className='port'>
           <Handle
             className='handle' type="source" position={Position.Right} id='branch' />
@@ -98,7 +106,7 @@ function Control({ id, data }: NodeProps<ControlNode>) {
           <Handle
             className='handle' type="source" position={Position.Right} id='mem-to-reg' />
           <div className="label">
-            memToReg
+            toReg
 
           </div></div>
         <div className="port">
