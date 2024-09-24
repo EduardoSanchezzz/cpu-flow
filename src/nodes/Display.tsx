@@ -4,10 +4,18 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isDataMemNode, isInstDecodeNode, isRegListNode, type AppNode, } from './types';
+import { isClockNode, isDataMemNode, isInstDecodeNode, isRegListNode, type AppNode, } from './types';
 
 function Display() {
   // inputs
+  const clockConnections = useHandleConnections({
+    type: 'source',
+    id: 'clk',
+    nodeId: 'clock'
+  });
+  const clockNodesData = useNodesData<AppNode>(clockConnections.map((connection) => connection.source),);
+  const clockNode = clockNodesData.filter(isClockNode);
+
   const regConnections = useHandleConnections({
     type: 'target',
     id: 'read-data1',
@@ -40,6 +48,9 @@ function Display() {
 
   const reg1 = parseInt(instDecodeNode[0]?.data.readAddress1)
   const reg2 = parseInt(instDecodeNode[0]?.data.readAddress2)
+  const reg3 = parseInt(instDecodeNode[0]?.data.writeAddress);
+
+  const clock = clockNode[0]?.data.clk;
 
   const display2BitHex = (decStr: string): string => {
     if (!decStr) { return ''; }
@@ -67,7 +78,7 @@ function Display() {
           return (
             <div className='reg-display' key={i + 'reg'}>
               x{i}
-              <li style={{ backgroundColor: i == reg1 ? '#d6eaff' : i == reg2 ? '#d6eaff' : '' }} key={i}>0x{display32BitHex(item)}</li>
+              <li className={i == reg1 ? 'reg1-display' : i == reg2 ? 'reg2-display' :   (i == reg3) && !clock ? 'reg3-display' : '' } key={i}>0x{display32BitHex(item)}</li>
             </div>
           );
         })}
@@ -84,7 +95,7 @@ function Display() {
                 <li key={i + 1}>{display2BitHex(dataMem[i + 1])}</li>
                 <li key={i}>{display2BitHex(item)}</li>
               </div>
-              <div key={i + 'data-index'}>{i * 8}</div>
+              <div key={i + 'data-index'} className='data-display-index'>{i}</div>
             </div>
           );
         })}

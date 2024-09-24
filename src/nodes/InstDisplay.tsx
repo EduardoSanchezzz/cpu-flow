@@ -20,6 +20,7 @@ function InstDisplay() {
   const clockNodesData = useNodesData<AppNode>(clockConnections.map((connection) => connection.source),);
   const clockNode = clockNodesData.filter(isClockNode);
   const step = clockNode[0]?.data.step;
+  const clock = clockNode[0]?.data.clk;
 
   // inputs
   const connections = useHandleConnections({
@@ -50,7 +51,7 @@ function InstDisplay() {
       INSTRUCTIONS
       {instructions.map((inst, i) => {
         return (
-          <div key={i} style={{padding:'2px', backgroundColor: i == step ? '#d6eaff' : ''}}>
+          <div key={i} className={i == step ? clock ? 'inst-display-inner-high' : 'inst-display-inner-low' : 'inst-display-inner'}>
             <Instruction
               instruction={inst}
               updateInstruction={updateInsts}
@@ -192,28 +193,28 @@ function Instruction({
         <label>name</label>
       </div>}
       {rd != null && 
-      <div className='inst-param'>
+      <div className='inst-param rd'>
         <select onChange={(e)=>{setRd(parseInt(e.target.value))}} value={rd}>
           {Object.keys(REGLIST).map((item, i)=> {return <option key={i}>{item}</option>})}
         </select>
         <label>rd</label>
       </div>}
       {rs1 != null && 
-      <div className='inst-param'>
+      <div className='inst-param rs1'>
         <select onChange={(e)=>{setRs1(parseInt(e.target.value))}} value={rs1}>
           {Object.keys(REGLIST).map((item, i)=> {return <option key={i}>{item}</option>})}
         </select>
         <label>rs1</label>
       </div>}
       {rs2 != null && 
-      <div className='inst-param'>
+      <div className='inst-param rs2'>
         <select onChange={(e)=>{setRs2(parseInt(e.target.value))}} value={rs2}>
           {Object.keys(REGLIST).map((item, i)=> {return <option key={i}>{item}</option>})}
         </select>
         <label>rs2</label>
       </div>}
       {imm != null &&
-       <div className='inst-param'>
+       <div className='inst-param imm'>
         <input value={imm} onChange={updateImm} />
         <label>imm</label>
        </div>}

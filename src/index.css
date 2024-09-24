@@ -212,6 +212,7 @@ body,
 }
 
 .reg-display li {
+  transition: all 0.5s linear;
   list-style-type: none;
   background-color: #ececec;
   border-radius: 5%;
@@ -220,6 +221,42 @@ body,
   width: 70px;
   margin: 1px;
 }
+@keyframes big {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.reg1-display {
+  animation: big 1s linear forwards;
+  background-color: #1db8b3a2 !important;
+}
+.rs1 select{
+  background-color: #1db8b3a2 !important;
+}
+
+.reg2-display {
+  animation: big 1s linear forwards;
+  background-color: #56f5f080 !important;
+}
+.rs2 select {
+  background-color: #56f5f080 !important;
+}
+
+.reg3-display {
+  animation: big 1s linear forwards;
+  background-color: #e150e67f !important;
+}
+.rd select {
+  background-color: #e150e67f !important;
+}
+
+/* #DBBADD imm-val */
 
 .reg-display {
   display: flex;
@@ -247,11 +284,32 @@ body,
   text-align: center;
   width: 20px;
 }
+.data-display-index {
+  font-size: 9px;
+  color: #747474;
+}
 
 .inst-display {
   background-color: #f8f8f8;
   padding: 20px;
   border-radius: 3%;
+}
+.inst-display-inner {
+  padding: 2px;
+  transition: all 0.5s linear;
+  border-radius: 5%;
+}
+.inst-display-inner-high {
+  transition: all 0.5s linear;
+  padding: 2px;
+  background-color: #56e0f6;
+  border-radius: 5%;
+}
+.inst-display-inner-low {
+  transition: all 0.5s linear;
+  padding: 2px;
+  background-color: #d6faff;
+  border-radius: 5%;
 }
 
 .inst-display-inst {
