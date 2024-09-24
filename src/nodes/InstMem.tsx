@@ -32,7 +32,7 @@ function InstMem({ id, data }: NodeProps<InstMemNode>) {
       updateNodeData(id, { out: 'x' });
       return;
     }
-    const address = parseInt(PCIn) / 32;
+    const address = parseInt(PCIn) / 4;
     const outputNum = data.instructions[address];
 
     const output = outputNum.toString();

@@ -63,16 +63,10 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
     const addressNum = parseInt(address);
     const sizeNum = parseInt(size);
 
-    const index = addressNum / 8;
-
     if (memRead == '1') {
-      if ((addressNum % 8) != 0) {
-        console.log('address not byte aligned ' + address);
-        return;
-      }
       let readDataMem = '';
       for (let i = 0; i < sizeNum; ++i) {
-        readDataMem = makeDecStrNBitsLong(data.dataMem[index + i], 8) + readDataMem;
+        readDataMem = makeDecStrNBitsLong(data.dataMem[addressNum + i], 8) + readDataMem;
         console.log(readDataMem)
       }
       readDataMem = parseInt(readDataMem, 2).toString()
@@ -92,17 +86,11 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
     const writeDataNum = parseInt(writeData);
     const sizeNum = parseInt(size);
 
-    if ((addressNum % 8) != 0) {
-      alert('address not byte aligned ' + address);
-      return;
-    }
-
-    const index = addressNum / 8;
 
     for (let i = 0; i < sizeNum; ++i) {
       const writeDataByte = (writeDataNum >> (8 * i)) & 0b1111_1111;
       console.log(writeDataByte);
-      newDataMem[index + i] = writeDataByte.toString();
+      newDataMem[addressNum + i] = writeDataByte.toString();
     }
 
     updateNodeData(id, {

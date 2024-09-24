@@ -34,7 +34,7 @@ function AddyAdder({ id }: NodeProps<AddyAdderNode>) {
     }
 
     const pcInNum = parseInt(pcIn);
-    const outputNum = pcInNum + 32;
+    const outputNum = pcInNum + 4;
 
     const output = outputNum.toString();
     updateNodeData(id, { out: output });
