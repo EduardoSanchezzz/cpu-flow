@@ -11,7 +11,7 @@ import {
 import { type AppNode, BranchControlNode, isAluNode, isControlNode } from './types';
 
 import bgSvg from '../assets/BranchControl.svg';
-import { BRANCHCODES } from '../utils';
+import { BRANCHCODES, TIMEOUT } from '../utils';
 
 function BranchControl({ id, data }: NodeProps<BranchControlNode>) {
     const { updateNodeData } = useReactFlow();
@@ -40,7 +40,9 @@ function BranchControl({ id, data }: NodeProps<BranchControlNode>) {
     useEffect(() => {
 
         if (branch == 'x') {
-            updateNodeData(id, { branchSelect: 'x' });
+            setTimeout(() => {
+                updateNodeData(id, { branchSelect: 'x' });
+            }, TIMEOUT);
             return;
         }
         let outputBool;
@@ -69,7 +71,9 @@ function BranchControl({ id, data }: NodeProps<BranchControlNode>) {
                 break;
         }
         const output = outputBool ? '1' : '0';
-        updateNodeData(id, { out: output });
+        setTimeout(() => {
+            updateNodeData(id, { out: output });
+        }, TIMEOUT);
     }, [zero, sign, branch]);
 
     return (

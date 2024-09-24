@@ -11,6 +11,7 @@ import {
 import { isInstDecodeNode, type AppNode, RegListNode, isControlNode, isDataMuxNode, isClockNode } from './types';
 
 import bgSvg from '../assets/RegList.svg';
+import { TIMEOUT } from '../utils';
 
 function RegList({ id, data }: NodeProps<RegListNode>) {
   const { updateNodeData } = useReactFlow();
@@ -58,10 +59,12 @@ function RegList({ id, data }: NodeProps<RegListNode>) {
   // update outputs
   useEffect(() => {
     if (readAddress1 == 'x') {
-      updateNodeData(id, {
-        readData1: 'x',
-        readData2: 'x',
-      });
+      setTimeout(() => {
+        updateNodeData(id, {
+          readData1: 'x',
+          readData2: 'x',
+        });
+      }, TIMEOUT);
       return;
     }
 
@@ -74,10 +77,12 @@ function RegList({ id, data }: NodeProps<RegListNode>) {
     const readData1 = readData1Num;
     const readData2 = readData2Num;
 
-    updateNodeData(id, {
-      readData1,
-      readData2
-    });
+    setTimeout(() => {
+      updateNodeData(id, {
+        readData1,
+        readData2
+      });
+    }, TIMEOUT);
   }, [readAddress1, readAddress2]);
 
   useEffect(() => {
@@ -88,9 +93,11 @@ function RegList({ id, data }: NodeProps<RegListNode>) {
 
     newRegList[writeAddressNum] = writeDataNum;
 
-    updateNodeData(id, {
-      regList: newRegList
-    });
+    setTimeout(() => {
+      updateNodeData(id, {
+        regList: newRegList
+      });
+    }, TIMEOUT);
   }, [clock, regWrite, writeData, writeAddress])
 
   return (

@@ -1,10 +1,11 @@
 import { BaseEdge, EdgeLabelRenderer, EdgeProps, getStraightPath, useHandleConnections, useNodesData, useReactFlow } from '@xyflow/react';
 import { AppNode } from '../nodes/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { dataEdge } from './index';
 
 export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, source, sourceHandleId, data }: EdgeProps<dataEdge> ) {
   const { updateEdgeData } = useReactFlow();
+  const [primary, setPrimary] = useState(false);
   const offsetX = data?.offsetX ?? 15;
   const offsetY = data?.offsetY ?? 100;
 
@@ -21,17 +22,23 @@ export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, sourc
   });
 
   const nodesData = useNodesData<AppNode>(connections.map((connection) => connection.source),);
+  // @ts-ignore
+  const value = nodesData[0]?.data[data?.outputName]
   useEffect(() => {
-    // @ts-ignore
-    updateEdgeData(id, { value: nodesData[0]?.data[data?.outputName]});
+    updateEdgeData(id, { value });
+    if (value != 'x') {setPrimary(!primary);}
+    // console.table({id, value, primary})
   }, [nodesData]);
 
   const val = data?.value ?? 'err';
   const text = typeof val == 'object' ? 'err' : val;
+
+  const color1 = '#999';
+  const color2 = '#999';
  
   return (
     <>
-      <BaseEdge id={id} path={path} />
+      <BaseEdge id={id} path={path} style={{stroke: primary ? color1 : color2, transition: 'all 1ms linear'}} />
       <EdgeLabelRenderer>
         <div
           style={{
@@ -42,7 +49,7 @@ export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, sourc
             borderRadius: 5,
             fontSize: 15,
             fontWeight: 400,
-            color: '#999',
+            color: primary ? color1 : color2,
           }}
           className="nodrag nopan"
         >

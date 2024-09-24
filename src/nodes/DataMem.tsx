@@ -11,7 +11,7 @@ import {
 import { type AppNode, DataMemNode, isControlNode, isAluNode, isRegListNode, isClockNode } from './types';
 
 import bgSvg from '../assets/DataMem.svg';
-import { makeDecStrNBitsLong } from '../utils';
+import { makeDecStrNBitsLong, TIMEOUT } from '../utils';
 
 function DataMem({ id, data }: NodeProps<DataMemNode>) {
   const { updateNodeData } = useReactFlow();
@@ -56,7 +56,9 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
   // update outputs
   useEffect(() => {
     if (address == 'x' || size == 'x') {
-      updateNodeData(id, { readDataMem: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { readDataMem: 'x' });
+      }, TIMEOUT);
       return;
     }
 
@@ -70,14 +72,18 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
         console.log(readDataMem)
       }
       readDataMem = parseInt(readDataMem, 2).toString()
-      updateNodeData(id, { readDataMem });
+      setTimeout(() => {
+        updateNodeData(id, { readDataMem });
+      }, TIMEOUT);
     }
 
   }, [address, memRead, size]);
 
   useEffect(() => {
     if (address == 'x' || size == 'x') {
-      updateNodeData(id, { readDataMem: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { readDataMem: 'x' });
+      }, TIMEOUT);
       return;
     }
     if (clock == 1 || memWrite != '1') return;
@@ -93,9 +99,11 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
       newDataMem[addressNum + i] = writeDataByte.toString();
     }
 
-    updateNodeData(id, {
-      dataMem: newDataMem
-    });
+    setTimeout(() => {
+      updateNodeData(id, {
+        dataMem: newDataMem
+      });
+    }, TIMEOUT);
   }, [clock, memWrite, writeData, address, size])
 
   return (

@@ -48,6 +48,8 @@ const LOAD_OP = 0b000_0011;
 const S_OP = 0b010_0011;
 const B_OP = 0b110_0011;
 
+export const TIMEOUT = 0;
+
 export const TYPES = new Map<number|"opcode", string>();
 TYPES.set(R_OP, 'R');
 TYPES.set(R_IMM_OP, 'I');

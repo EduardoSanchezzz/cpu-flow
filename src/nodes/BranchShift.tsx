@@ -11,6 +11,7 @@ import {
 import { type AppNode, BranchShiftNode, isInstDecodeNode } from './types';
 
 import bgSvg from '../assets/Circle.svg';
+import { TIMEOUT } from '../utils';
 
 function BranchShift({ id }: NodeProps<BranchShiftNode>) {
   const { updateNodeData } = useReactFlow();
@@ -29,7 +30,9 @@ function BranchShift({ id }: NodeProps<BranchShiftNode>) {
   const imm = instDecodeNode[0]?.data.immVal;
   useEffect(() => {
     if (imm == 'x') {
-      updateNodeData(id, { out: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { out: 'x' });
+      }, TIMEOUT);
       return;
     }
 
@@ -37,7 +40,9 @@ function BranchShift({ id }: NodeProps<BranchShiftNode>) {
     const outputNum = immNum * 2;
 
     const output = outputNum.toString();
-    updateNodeData(id, { out: output });
+    setTimeout(() => {
+      updateNodeData(id, { out: output });
+    }, TIMEOUT);
   }, [imm]);
 
   return (

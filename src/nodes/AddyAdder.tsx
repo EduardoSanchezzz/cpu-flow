@@ -11,6 +11,7 @@ import {
 import { isPCNode, type AppNode, AddyAdderNode } from './types';
 
 import bgSvg from '../assets/Adder.svg';
+import { TIMEOUT } from '../utils';
 
 function AddyAdder({ id }: NodeProps<AddyAdderNode>) {
   const { updateNodeData } = useReactFlow();
@@ -29,7 +30,9 @@ function AddyAdder({ id }: NodeProps<AddyAdderNode>) {
   const pcIn = pcNode[0]?.data.address;
   useEffect(() => {
     if (pcIn == 'x') {
-      updateNodeData(id, { out: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { out: 'x' });
+      }, TIMEOUT);
       return;
     }
 
@@ -37,7 +40,9 @@ function AddyAdder({ id }: NodeProps<AddyAdderNode>) {
     const outputNum = pcInNum + 4;
 
     const output = outputNum.toString();
-    updateNodeData(id, { out: output });
+    setTimeout(() => {
+      updateNodeData(id, { out: output });
+    }, TIMEOUT);
   }, [pcIn]);
 
   return (

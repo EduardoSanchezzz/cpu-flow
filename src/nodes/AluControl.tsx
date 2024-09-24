@@ -11,7 +11,7 @@ import {
 import { isInstDecodeNode, type AppNode, AluControlNode } from './types';
 
 import bgSvg from '../assets/AluControl.svg';
-import { INSTRUCTIONS, TYPES } from '../utils';
+import { INSTRUCTIONS, TIMEOUT, TYPES } from '../utils';
 
 function AluControl({ id, data }: NodeProps<AluControlNode>) {
   const { updateNodeData } = useReactFlow();
@@ -32,7 +32,9 @@ function AluControl({ id, data }: NodeProps<AluControlNode>) {
   // update outputs
   useEffect(() => {
     if (opcode == 'x') {
-      updateNodeData(id, { aluCode: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { aluCode: 'x' });
+      }, TIMEOUT);
       return;
     }
     const type = TYPES.get(parseInt(opcode));
@@ -43,11 +45,13 @@ function AluControl({ id, data }: NodeProps<AluControlNode>) {
     const instId = type === 'R' ? rId : regId;
 
     const { op } = { ...INSTRUCTIONS[instId] };
-    
-    console.log({funct7, funct3, opcode})
+
+    console.log({ funct7, funct3, opcode })
     const aluCode = op.toString();
 
-    updateNodeData(id, { aluCode });
+    setTimeout(() => {
+      updateNodeData(id, { aluCode });
+    }, TIMEOUT);
   }, [opcode, funct3, funct7]);
 
   return (

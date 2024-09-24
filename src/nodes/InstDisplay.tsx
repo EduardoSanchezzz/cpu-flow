@@ -7,7 +7,7 @@ import {
 
 import { isClockNode, isInstMemNode, type AppNode } from './types';
 
-import { convertToNBitString, INST_NAMES, INSTRUCTIONS, TYPES } from '../utils';
+import { convertToNBitString, INST_NAMES, INSTRUCTIONS, TIMEOUT, TYPES } from '../utils';
 
 function InstDisplay() {
   const { updateNodeData } = useReactFlow();
@@ -31,7 +31,7 @@ function InstDisplay() {
   const nodesData = useNodesData<AppNode>(connections.map((connection) => connection.source),);
 
   const InstMemNode = nodesData.filter(isInstMemNode);
-  
+
   const instMem = InstMemNode[0]?.data;
   // end inputs
 
@@ -41,7 +41,9 @@ function InstDisplay() {
     const newArr = [...instructions];
 
     newArr[i] = inst;
-    updateNodeData('inst-mem', {instructions: [...newArr]});
+    setTimeout(() => {
+      updateNodeData('inst-mem', { instructions: [...newArr] });
+    }, TIMEOUT);
   }
 
   return (
@@ -56,7 +58,7 @@ function InstDisplay() {
               instruction={inst}
               updateInstruction={updateInsts}
               index={i}
-              key={i+'inst'}
+              key={i + 'inst'}
             />
           </div>
         )
@@ -92,16 +94,16 @@ function Instruction({
   }
   useEffect(() => {
     const type = getType(instruction);
-    const op = instruction &  0b000_0000_00000_00000_000_00000_111_1111;
+    const op = instruction & 0b000_0000_00000_00000_000_00000_111_1111;
     const r0 = (instruction & 0b000_0000_00000_00000_000_11111_000_0000) >> 7;
     const r1 = (instruction & 0b000_0000_00000_11111_000_00000_000_0000) >> 15
     const r2 = (instruction & 0b000_0000_11111_00000_000_00000_000_0000) >> 20;
     const funct3 = (instruction & 0b000_0000_00000_00000_111_00000_000_0000) >> 12;
     const funct7 = (instruction & 0b111_1111_00000_00000_000_00000_000_0000) >> 25;
-    
+
     const regId = op + (funct3 << 7);
     const rId = op + (funct3 << 7) + (funct7 << 10);
-    
+
     switch (type) {
       case 'R':
         setName(INSTRUCTIONS[rId].name)
@@ -139,12 +141,12 @@ function Instruction({
 
   }, [instruction]);
 
-  useEffect(()=> {
-    if (name == null) {return;}
+  useEffect(() => {
+    if (name == null) { return; }
     const id = convertToNBitString(parseInt(INST_NAMES[name]), 17);
-    const op = id.slice(10,17);
-    const funct3 = id.slice(7,10);
-    const funct7 = id.slice(0,7);
+    const op = id.slice(10, 17);
+    const funct3 = id.slice(7, 10);
+    const funct7 = id.slice(0, 7);
     const r0 = convertToNBitString(rd, 5)
     const r1 = convertToNBitString(rs1, 5)
     const r2 = convertToNBitString(rs2, 5)
@@ -154,7 +156,7 @@ function Instruction({
 
     let instStr = ''
 
-    switch(type){
+    switch (type) {
       case 'R':
         instStr = funct7 + r2 + r1 + funct3 + r0 + op;
         break;
@@ -162,7 +164,7 @@ function Instruction({
         instStr = immStr + r1 + funct3 + r0 + op;
         break;
       case 'S':
-        instStr = immStr.slice(0,7) + r2 + r1 + funct3 + immStr.slice(7,12) + op;
+        instStr = immStr.slice(0, 7) + r2 + r1 + funct3 + immStr.slice(7, 12) + op;
         break;
       default:
         console.log('error')
@@ -174,10 +176,10 @@ function Instruction({
   }, [name, rs1, rs2, rd, imm])
 
   const REGLIST = [...Array(32).keys()]
-  const updateImm = (e:any) => {
+  const updateImm = (e: any) => {
     const newImm = parseInt(e.target.value);
-    if (Number.isNaN(newImm)) {setImm(0); return;}
-    if (Math.abs(newImm) > 2**11 - 1){
+    if (Number.isNaN(newImm)) { setImm(0); return; }
+    if (Math.abs(newImm) > 2 ** 11 - 1) {
       return;
     }
     setImm(newImm);
@@ -185,39 +187,39 @@ function Instruction({
 
   return (
     <div className='inst-display-inst'>
-      {name != null && 
-      <div className='inst-param'>
-        <select onChange={(e)=>{setName(e.target.value)}} value={name}>
-          {Object.keys(INST_NAMES).map((item, i)=> {return <option key={i}>{item}</option>})}
-        </select>
-        <label>name</label>
-      </div>}
-      {rd != null && 
-      <div className='inst-param rd'>
-        <select onChange={(e)=>{setRd(parseInt(e.target.value))}} value={rd}>
-          {Object.keys(REGLIST).map((item, i)=> {return <option key={i}>{item}</option>})}
-        </select>
-        <label>rd</label>
-      </div>}
-      {rs1 != null && 
-      <div className='inst-param rs1'>
-        <select onChange={(e)=>{setRs1(parseInt(e.target.value))}} value={rs1}>
-          {Object.keys(REGLIST).map((item, i)=> {return <option key={i}>{item}</option>})}
-        </select>
-        <label>rs1</label>
-      </div>}
-      {rs2 != null && 
-      <div className='inst-param rs2'>
-        <select onChange={(e)=>{setRs2(parseInt(e.target.value))}} value={rs2}>
-          {Object.keys(REGLIST).map((item, i)=> {return <option key={i}>{item}</option>})}
-        </select>
-        <label>rs2</label>
-      </div>}
+      {name != null &&
+        <div className='inst-param'>
+          <select onChange={(e) => { setName(e.target.value) }} value={name}>
+            {Object.keys(INST_NAMES).map((item, i) => { return <option key={i}>{item}</option> })}
+          </select>
+          <label>name</label>
+        </div>}
+      {rd != null &&
+        <div className='inst-param rd'>
+          <select onChange={(e) => { setRd(parseInt(e.target.value)) }} value={rd}>
+            {Object.keys(REGLIST).map((item, i) => { return <option key={i}>{item}</option> })}
+          </select>
+          <label>rd</label>
+        </div>}
+      {rs1 != null &&
+        <div className='inst-param rs1'>
+          <select onChange={(e) => { setRs1(parseInt(e.target.value)) }} value={rs1}>
+            {Object.keys(REGLIST).map((item, i) => { return <option key={i}>{item}</option> })}
+          </select>
+          <label>rs1</label>
+        </div>}
+      {rs2 != null &&
+        <div className='inst-param rs2'>
+          <select onChange={(e) => { setRs2(parseInt(e.target.value)) }} value={rs2}>
+            {Object.keys(REGLIST).map((item, i) => { return <option key={i}>{item}</option> })}
+          </select>
+          <label>rs2</label>
+        </div>}
       {imm != null &&
-       <div className='inst-param imm'>
-        <input value={imm} onChange={updateImm} />
-        <label>imm</label>
-       </div>}
+        <div className='inst-param imm'>
+          <input value={imm} onChange={updateImm} />
+          <label>imm</label>
+        </div>}
     </div>
   );
 }

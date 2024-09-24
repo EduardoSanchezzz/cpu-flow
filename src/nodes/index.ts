@@ -94,13 +94,13 @@ export const initialNodes: AppNode[] = [
   {
     id: 'alu-mux',
     type: 'alu-mux',
-    data: { out: '' },
+    data: { out: 'x' },
     position: { x: 725, y: 500 },
   },
   {
     id: 'alu',
     type: 'alu',
-    data: { out: '', zero: '', sign: '' },
+    data: { out: 'x', zero: 'x', sign: 'x' },
     position: { x: 800, y: 400 },
   },
 
@@ -122,13 +122,13 @@ export const initialNodes: AppNode[] = [
   {
     id: 'data-mux',
     type: 'data-mux',
-    data: { out: '' },
+    data: { out: 'x' },
     position: { x: 1100, y: 400 },
   },
   {
     id: 'alu-control',
     type: 'alu-control',
-    data: { label: 'ALU Control', aluCode: '' },
+    data: { label: 'ALU Control', aluCode: 'x' },
     position: { x: 600, y: 650 },
   },
   {

@@ -11,6 +11,7 @@ import {
 import { isAddyAdderNode, type AppNode, AddyMuxNode, isBranchAdderNode, isBranchControlNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
+import { TIMEOUT } from '../utils';
 
 function AddyMux({ id }: NodeProps<AddyMuxNode>) {
   const { updateNodeData } = useReactFlow();
@@ -48,18 +49,15 @@ function AddyMux({ id }: NodeProps<AddyMuxNode>) {
   const select = ControlNode[0]?.data.branchSelect;
   useEffect(() => {
 
-    // if (controlIn == 'x') {
-    //   updateNodeData(id, { out: 'x' });
-    //   return;
-    // }
-
     const selectNum = parseInt(select);
     const output = !selectNum ? addyAdderIn : branchAdderIn;
 
     // this one should never be high impedance honestly except at initial
     const forcedOutput = output == 'x' ? '0' : output;
 
+    setTimeout(() => { 
     updateNodeData(id, { out: forcedOutput });
+  }, TIMEOUT);
   }, [addyAdderIn, branchAdderIn, select]);
 
   return (

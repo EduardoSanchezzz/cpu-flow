@@ -11,7 +11,7 @@ import {
 import { isAluNode, type AppNode, DataMuxNode, isControlNode, isDataMemNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
-import { TOREGCODES } from '../utils';
+import { TIMEOUT, TOREGCODES } from '../utils';
 
 function DataMux({ id }: NodeProps<DataMuxNode>) {
   const { updateNodeData } = useReactFlow();
@@ -53,13 +53,15 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
   // update outputs
   useEffect(() => {
     if (select == 'x') {
-      updateNodeData(id, { out: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { out: 'x' });
+      }, TIMEOUT);
       return;
     }
     const selectNum = parseInt(select);
     let output;
 
-    switch(TOREGCODES.getName(selectNum)) {
+    switch (TOREGCODES.getName(selectNum)) {
       case 'alu':
         output = alu;
         break;
@@ -79,9 +81,11 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
         output = auipc;
         break;
       default:
-        output= 'err'
+        output = 'err'
     }
-    updateNodeData(id, { out: output });
+    setTimeout(() => {
+      updateNodeData(id, { out: output });
+    }, TIMEOUT);
   }, [alu, data, select]);
 
   return (

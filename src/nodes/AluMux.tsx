@@ -11,6 +11,7 @@ import {
 import { isRegListNode, isInstDecodeNode, type AppNode, AluMuxNode, isControlNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
+import { TIMEOUT } from '../utils';
 
 function AluMux({ id }: NodeProps<AluMuxNode>) {
   const { updateNodeData } = useReactFlow();
@@ -23,7 +24,7 @@ function AluMux({ id }: NodeProps<AluMuxNode>) {
   const regNodesData1 = useNodesData<AppNode>(regConnections.map((connection) => connection.source),);
 
   const regNode = regNodesData1.filter(isRegListNode);
-  
+
   const instDecodeConnections = useHandleConnections({
     type: 'target',
     id: 'imm-val'
@@ -39,7 +40,7 @@ function AluMux({ id }: NodeProps<AluMuxNode>) {
   const controlNodesData = useNodesData<AppNode>(controlConnections.map((connection) => connection.source),);
 
   const controlNode = controlNodesData.filter(isControlNode);
-  
+
   const input0 = regNode[0]?.data.readData2;
   const input1 = instDecodeNode[0]?.data.immVal;
   const select = controlNode[0]?.data.aluSrc;
@@ -49,13 +50,17 @@ function AluMux({ id }: NodeProps<AluMuxNode>) {
   useEffect(() => {
 
     if (select == 'x') {
-      updateNodeData(id, { out: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { out: 'x' });
+      }, TIMEOUT);
       return;
     }
     const selectNum = parseInt(select);
 
     const output = !selectNum ? input0 : input1;
-    updateNodeData(id, { out: output });
+    setTimeout(() => {
+      updateNodeData(id, { out: output });
+    }, TIMEOUT);
   }, [input0, input1, select]);
 
   return (

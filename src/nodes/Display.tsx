@@ -66,12 +66,10 @@ function Display() {
   const reg2 = parseInt(instDecodeNode[0]?.data.readAddress2)
   const reg3 = parseInt(instDecodeNode[0]?.data.writeAddress);
   const regWrite = parseInt(ControlNode[0].data.regWrite);
-  const memWrite = parseInt(ControlNode[0].data.memWrite);
   const memRead = parseInt(ControlNode[0].data.memRead);
   const size = parseInt(ControlNode[0].data.size);
   const memAddy = parseInt(aluNode[0]?.data.out);
 
-  console.table({ size, memAddy, memRead })
 
   const clock = clockNode[0]?.data.clk;
 

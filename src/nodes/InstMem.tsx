@@ -11,6 +11,7 @@ import {
 import { isPCNode, type AppNode, InstMemNode } from './types';
 
 import bgSvg from '../assets/InstMem.svg';
+import { TIMEOUT } from '../utils';
 
 function InstMem({ id, data }: NodeProps<InstMemNode>) {
   const { updateNodeData } = useReactFlow();
@@ -29,14 +30,18 @@ function InstMem({ id, data }: NodeProps<InstMemNode>) {
   // update outputs
   useEffect(() => {
     if (PCIn == 'x') {
-      updateNodeData(id, { out: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { out: 'x' });
+      }, TIMEOUT);
       return;
     }
     const address = parseInt(PCIn) / 4;
     const outputNum = data.instructions[address];
 
     const output = outputNum.toString();
-    updateNodeData(id, { instruction: output });
+    setTimeout(() => {
+      updateNodeData(id, { instruction: output });
+    }, TIMEOUT);
   }, [PCIn]);
 
   return (

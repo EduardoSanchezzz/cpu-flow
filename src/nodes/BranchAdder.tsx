@@ -11,6 +11,7 @@ import {
 import { isPCNode, type AppNode, BranchAdderNode, isJumpMuxNode } from './types';
 
 import bgSvg from '../assets/Adder.svg';
+import { TIMEOUT } from '../utils';
 
 function BranchAdder({ id }: NodeProps<BranchAdderNode>) {
   const { updateNodeData } = useReactFlow();
@@ -37,7 +38,9 @@ function BranchAdder({ id }: NodeProps<BranchAdderNode>) {
   const jumpIn = jumpMuxNode[0]?.data.out;
   useEffect(() => {
     if (pcIn == 'x' || jumpIn == 'x') {
-      updateNodeData(id, { out: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { out: 'x' });
+      }, TIMEOUT);
       return;
     }
 
@@ -46,7 +49,9 @@ function BranchAdder({ id }: NodeProps<BranchAdderNode>) {
     const outputNum = pcInNum + jumpInNum;
 
     const output = outputNum.toString();
-    updateNodeData(id, { out: output });
+    setTimeout(() => {
+      updateNodeData(id, { out: output });
+    }, TIMEOUT);
   }, [pcIn, jumpIn]);
 
   return (

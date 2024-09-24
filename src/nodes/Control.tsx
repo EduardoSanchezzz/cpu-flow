@@ -11,7 +11,7 @@ import {
 import { isInstMemNode, type AppNode, ControlNode } from './types';
 
 import bgSvg from '../assets/Control.svg';
-import { INSTRUCTIONS, TYPES } from '../utils';
+import { INSTRUCTIONS, TIMEOUT, TYPES } from '../utils';
 
 function Control({ id, data }: NodeProps<ControlNode>) {
   const { updateNodeData } = useReactFlow();
@@ -30,16 +30,18 @@ function Control({ id, data }: NodeProps<ControlNode>) {
   // update outputs
   useEffect(() => {
     if (instMemIn == 'x') {
-      updateNodeData(id, {
-        branch: 'x',
-        regWrite: 'x',
-        memRead: 'x',
-        toReg: 'x',
-        memWrite: 'x',
-        size: 'x',
-        aluSrc: 'x',
-        jump: 'x',
-      });
+      setTimeout(() => {
+        updateNodeData(id, {
+          branch: 'x',
+          regWrite: 'x',
+          memRead: 'x',
+          toReg: 'x',
+          memWrite: 'x',
+          size: 'x',
+          aluSrc: 'x',
+          jump: 'x',
+        });
+      }, TIMEOUT);
       return;
     }
     const instruction = parseInt(instMemIn);
@@ -56,7 +58,9 @@ function Control({ id, data }: NodeProps<ControlNode>) {
 
     const { aluSrc, memRead, toReg, memWrite, size, branch, regWrite, jump } = { ...INSTRUCTIONS[instId] }
 
-    updateNodeData(id, { aluSrc, memRead, toReg, memWrite, size, branch, regWrite, jump });
+    setTimeout(() => {
+      updateNodeData(id, { aluSrc, memRead, toReg, memWrite, size, branch, regWrite, jump });
+    }, TIMEOUT);
   }, [instMemIn]);
 
   return (

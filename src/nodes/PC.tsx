@@ -11,6 +11,7 @@ import {
 import bgSvg from '../assets/PC.svg'
 
 import { isAddyMuxNode, isClockNode, type AppNode } from './types';
+import { TIMEOUT } from '../utils';
 
 function PC({ id, data }: NodeProps<Node<{ label: string, address: number }>>) {
   const { updateNodeData } = useReactFlow();
@@ -33,9 +34,12 @@ function PC({ id, data }: NodeProps<Node<{ label: string, address: number }>>) {
 
   // update node data
   useEffect(() => {
-    if (!!clock) {
+    if (!clock) { return; }
+
+    setTimeout(() => {
       updateNodeData(id, { address: adderNode[0]?.data.out });
-    }
+    }, TIMEOUT);
+
   }, [clock]);
 
   return (

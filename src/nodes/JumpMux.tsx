@@ -11,6 +11,7 @@ import {
 import { isAluNode, type AppNode, JumpMuxNode, isControlNode, isBranchShiftNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
+import { TIMEOUT } from '../utils';
 
 function JumpMux({ id }: NodeProps<JumpMuxNode>) {
   const { updateNodeData } = useReactFlow();
@@ -49,13 +50,17 @@ function JumpMux({ id }: NodeProps<JumpMuxNode>) {
   // update outputs
   useEffect(() => {
     if (select == 'x') {
-      updateNodeData(id, { out: 'x' });
+      setTimeout(() => {
+        updateNodeData(id, { out: 'x' });
+      }, TIMEOUT);
       return;
     }
     const selectNum = parseInt(select);
 
     const output = !selectNum ? input0 : input1;
-    updateNodeData(id, { out: output });
+    setTimeout(() => {
+      updateNodeData(id, { out: output });
+    }, TIMEOUT);
   }, [input0, input1, select]);
 
   return (
@@ -70,7 +75,7 @@ function JumpMux({ id }: NodeProps<JumpMuxNode>) {
           className='handle'
           type="target"
           position={Position.Bottom}
-          style={{position: 'absolute', transform: 'translate(0%, -255%)'}}
+          style={{ position: 'absolute', transform: 'translate(0%, -255%)' }}
           id="jump"
         />
       </div>

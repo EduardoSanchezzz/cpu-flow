@@ -11,7 +11,7 @@ import {
 import { isAluMuxNode, isRegListNode, type AppNode, AluNode, isAluControlNode } from './types';
 
 import bgSvg from '../assets/ALU.svg';
-import { ALUCODES } from '../utils';
+import { ALUCODES, TIMEOUT } from '../utils';
 
 function Alu({ id }: NodeProps<AluNode>) {
   const { updateNodeData } = useReactFlow();
@@ -47,7 +47,9 @@ function Alu({ id }: NodeProps<AluNode>) {
   useEffect(() => {
 
     if (input1 == 'x' || input2 == 'x' || aluCode == 'x') {
+      setTimeout(() => { 
       updateNodeData(id, { out: 'x', zero: 'x', sign: 'x' });
+    }, TIMEOUT);
       return;
     }
     const inputNum1 = parseInt(input1);
@@ -75,7 +77,9 @@ function Alu({ id }: NodeProps<AluNode>) {
     const output = outputNum.toString();
     const zero = outputNum == 0 ? '1' : '0';
     const sign = outputNum < 0 ? '1' : '0';
+    setTimeout(() => { 
     updateNodeData(id, { out: output, zero, sign });
+  }, TIMEOUT);
   }, [input1, input2, aluCode]);
 
   return (
