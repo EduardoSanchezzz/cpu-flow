@@ -46,7 +46,9 @@ body,
 .mux .inputs,
 .mux .outputs,
 .alu .inputs,
-.alu .outputs {
+.alu .outputs,
+.shift .inputs,
+.shift .outputs {
   margin: 0;
 }
 
@@ -191,7 +193,7 @@ body,
   max-width: 144px;
 }
 
-.alu-control .name {
+.alu-control .name, .branch-control .name {
   background: linear-gradient(51.95deg, #909090 42.51%, #9B99FF 79.58%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -234,26 +236,29 @@ body,
 }
 .reg1-display {
   animation: big 1s linear forwards;
-  background-color: #1db8b3a2 !important;
+  background-color: #A1EEBD !important;
 }
 .rs1 select{
-  background-color: #1db8b3a2 !important;
+  background-color: #bfffd6 !important;
 }
 
 .reg2-display {
   animation: big 1s linear forwards;
-  background-color: #56f5f080 !important;
+  background-color: #F6F7C4 !important;
 }
 .rs2 select {
-  background-color: #56f5f080 !important;
+  background-color: #F6F7C4 !important;
 }
 
 .reg3-display {
   animation: big 1s linear forwards;
-  background-color: #e150e67f !important;
+  background-color: #F6D6D6 !important;
 }
 .rd select {
-  background-color: #e150e67f !important;
+  background-color: #F6D6D6 !important;
+}
+.imm input {
+  background-color: #f7dfc8 !important;
 }
 
 /* #DBBADD imm-val */
@@ -288,6 +293,16 @@ body,
   font-size: 9px;
   color: #747474;
 }
+.highlight-data-read {
+  transition: all 0.5s linear;
+  background-color: #ffa74f;
+  border-radius: 5%;
+}
+.highlight-data-write {
+  transition: all 0.5s linear;
+  background-color: #ffe84f;
+  border-radius: 5%;
+}
 
 .inst-display {
   background-color: #f8f8f8;
@@ -302,13 +317,13 @@ body,
 .inst-display-inner-high {
   transition: all 0.5s linear;
   padding: 2px;
-  background-color: #56e0f6;
+  background-color: #d6dbff;
   border-radius: 5%;
 }
 .inst-display-inner-low {
   transition: all 0.5s linear;
   padding: 2px;
-  background-color: #d6faff;
+  background-color: #e2fafb;
   border-radius: 5%;
 }
 
