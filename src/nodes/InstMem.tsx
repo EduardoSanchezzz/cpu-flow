@@ -31,8 +31,15 @@ function InstMem({ id, data }: NodeProps<InstMemNode>) {
   useEffect(() => {
     if (PCIn == 'x') {
       setTimeout(() => {
-        updateNodeData(id, { out: 'x' });
+        updateNodeData(id, { instruction: 'x' });
       }, TIMEOUT);
+      return;
+    }
+    if (parseInt(PCIn) % 4 != 0) {
+      alert('instruction address not 4 byte aligned, RESETTING')
+      // RESET
+      updateNodeData('pc', { address: 'x' });
+      updateNodeData('clock', { clk: 0, step: -1 });
       return;
     }
     const address = parseInt(PCIn) / 4;

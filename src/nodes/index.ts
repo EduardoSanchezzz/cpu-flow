@@ -155,12 +155,12 @@ export const initialNodes: AppNode[] = [
     data: { label: 'Branch Control', branchSelect: 'x' },
     position: { x: 970, y: 150 },
   },
-  {
-    id: 'branch-shift',
-    type: 'branch-shift',
-    data: { label: 'Branch Shift', out: 'x' },
-    position: { x: 700, y: 40 },
-  },
+  // {
+  //   id: 'branch-shift',
+  //   type: 'branch-shift',
+  //   data: { label: 'Branch Shift', out: 'x' },
+  //   position: { x: 700, y: 40 },
+  // },
   {
     id: 'jump-mux',
     type: 'jump-mux',

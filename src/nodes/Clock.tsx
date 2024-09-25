@@ -5,6 +5,11 @@ import { ClockNode } from './types';
 function Clock({ id, data }: NodeProps<ClockNode>) {
   const { updateNodeData } = useReactFlow();
 
+  const reset = () => {
+    updateNodeData('pc', { address: 'x' });
+    updateNodeData('clock', { clk: 0, step: -1 });
+}
+
   return (
     <div
       className='clock'
@@ -17,9 +22,11 @@ function Clock({ id, data }: NodeProps<ClockNode>) {
       // the exoression for the clock step is a lil weird but it just increments the step only on positive clock edge
         onClick={() => updateNodeData(id, { clk: !!data.clk ? 0 : 1, step: Math.floor(data.step + 1 - 0.5*data.clk) })}
         value={data.clk}
+        className='step'
       >
         Step
       </button>
+      <button className='reset' onClick={reset}>reset</button>
       <Handle
         className='handle' type="source"
         position={Position.Bottom}

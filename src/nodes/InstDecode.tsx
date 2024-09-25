@@ -38,7 +38,8 @@ function InstDecode({ id, data }: NodeProps<InstDecodeNode>) {
           writeAddress: 'x',
           opcode: 'x',
           funct3: 'x',
-          funct7: 'x'
+          funct7: 'x',
+          immVal: 'x',
         });
       }, TIMEOUT);
       return;

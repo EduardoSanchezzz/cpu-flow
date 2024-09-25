@@ -69,7 +69,7 @@ function BranchControl({ id, data }: NodeProps<BranchControlNode>) {
                 break;
         }
         const output = outputBool ? '1' : '0';
-        console.table({zero, sign, branch, output, outputBool})
+        // console.table({zero, sign, branch, output, outputBool})
         setTimeout(() => {
             updateNodeData(id, { branchSelect: output });
         }, TIMEOUT);

@@ -8,7 +8,7 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isAluNode, type AppNode, JumpMuxNode, isControlNode, isBranchShiftNode } from './types';
+import { isAluNode, type AppNode, JumpMuxNode, isControlNode, isInstDecodeNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
 import { TIMEOUT } from '../utils';
@@ -25,25 +25,24 @@ function JumpMux({ id }: NodeProps<JumpMuxNode>) {
 
   const aluNode = aluNodesData1.filter(isAluNode);
 
-  // FIX data
-  const BranchShiftConnections = useHandleConnections({
+  const instDecodeConnections = useHandleConnections({
     type: 'target',
-    id: 'branch-shift-out'
+    id: 'imm-val'
   });
-  const BranchShiftNodesData = useNodesData<AppNode>(BranchShiftConnections.map((connection) => connection.source),);
+  const instDecodeData = useNodesData<AppNode>(instDecodeConnections.map((connection) => connection.source),);
 
-  const BranchShiftNode = BranchShiftNodesData.filter(isBranchShiftNode);
+  const instDecodeNode = instDecodeData.filter(isInstDecodeNode);
 
   const controlConnections = useHandleConnections({
     type: 'target',
-    id: 'mem-to-reg'
+    id: 'jump'
   });
   const controlNodesData = useNodesData<AppNode>(controlConnections.map((connection) => connection.source),);
 
   const controlNode = controlNodesData.filter(isControlNode);
 
-  const input0 = aluNode[0]?.data.out;
-  const input1 = BranchShiftNode[0]?.data.out;
+  const input0 = instDecodeNode[0]?.data.immVal;
+  const input1 = aluNode[0]?.data.out;
   const select = controlNode[0]?.data.jump;
   // end inputs
 
@@ -56,6 +55,7 @@ function JumpMux({ id }: NodeProps<JumpMuxNode>) {
       return;
     }
     const selectNum = parseInt(select);
+    console.log(selectNum);
 
     const output = !selectNum ? input0 : input1;
     setTimeout(() => {
@@ -85,7 +85,7 @@ function JumpMux({ id }: NodeProps<JumpMuxNode>) {
             className='handle'
             type="target"
             position={Position.Left}
-            id="branch-shift-out"
+            id="imm-val"
           />
         </div>
         <div className="port">

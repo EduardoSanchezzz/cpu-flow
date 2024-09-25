@@ -339,19 +339,10 @@ export const initialEdges: AppEdge[] = [
     data: {value: '', outputName: 'out', offsetX: 30, offsetY: 0}
   },
   {
-    id: 'branch-shift_jump-mux',
-    type: 'data',
-    source: 'branch-shift',
-    target: 'jump-mux',
-    sourceHandle: 'branch-shift-out',
-    targetHandle: 'branch-shift-out',
-    data: {value: '', outputName: 'out', offsetX: 15, offsetY: 0}
-  },
-  {
-    id: 'inst-decode_branch-shift',
+    id: 'inst-decode_jump-mux',
     type: 'data',
     source: 'inst-decode',
-    target: 'branch-shift',
+    target: 'jump-mux',
     sourceHandle: 'imm-val',
     targetHandle: 'imm-val',
     data: {value: '', outputName: 'immVal', offsetX: 45, offsetY: -470}
