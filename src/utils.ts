@@ -81,12 +81,12 @@ export const getJImmVal = (inst:number):number => {
     const b21_10 = inst >> 21 & 0b11_1111_1111;
     
     // immediate bits i(immbit)
+    const i1 = b21_10 << 1;
+    const i11 = b20 << 11;
     const i12 = b12_8 << 12;
-    const i20 = b20 << 20;
-    const i21 = b21_10 << 21;
-    const i0 = 0b0000_0000_0000;
+    const i0 = 0b0;
 
-    const immValAbs = (i12 | i20 | i21 | i0);
+    const immValAbs = (i12 | i11 | i1 | i0);
     const immVal = !!sign ? -immValAbs : immValAbs;
 
     return immVal;
@@ -210,6 +210,11 @@ const JUMP_CTRL:CTRL = {
 }
 
 export const INSTRUCTIONS:Record<number, INST> =  {
+    0: {
+        ...R_CTRL,
+        name: 'NOP',
+        op: ALUCODES.getCode('ADD'),
+    },
     // R_TYPES
     0b0000000_000_0110011: {
         ...R_CTRL,

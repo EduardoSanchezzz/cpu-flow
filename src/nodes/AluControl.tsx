@@ -41,8 +41,9 @@ function AluControl({ id, data }: NodeProps<AluControlNode>) {
 
     const rId = (parseInt(funct7) << 10) + (parseInt(funct3) << 7) + parseInt(opcode);
     const regId = (parseInt(funct3) << 7) + parseInt(opcode);
+    const ujId = parseInt(opcode);
 
-    const instId = type === 'R' ? rId : regId;
+    const instId = type === 'R' ? rId : ((type == 'U') || (type == 'J')) ? ujId : regId;
 
     const { op } = { ...INSTRUCTIONS[instId] };
 

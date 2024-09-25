@@ -8,7 +8,7 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isAluNode, type AppNode, DataMuxNode, isControlNode, isDataMemNode } from './types';
+import { isAluNode, type AppNode, DataMuxNode, isControlNode, isDataMemNode, isAddyAdderNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
 import { TIMEOUT, TOREGCODES } from '../utils';
@@ -41,10 +41,18 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
 
   const controlNode = controlNodesData.filter(isControlNode);
 
+  const addyAdderConnections = useHandleConnections({
+    type: 'target',
+    id: 'addy-adder-out'
+  });
+  const addyAdderNodesData = useNodesData<AppNode>(addyAdderConnections.map((connection) => connection.source),);
+
+  const AddyAdderNode = addyAdderNodesData.filter(isAddyAdderNode);
+
   const alu = aluNode[0]?.data.out;
   const data = dataMemNode[0]?.data.readDataMem;
   const slt = aluNode[0]?.data.sign;
-  const jump = '0';
+  const jump = AddyAdderNode[0]?.data.out;
   const lui = '0';
   const auipc = '0';
   const select = controlNode[0]?.data.toReg;

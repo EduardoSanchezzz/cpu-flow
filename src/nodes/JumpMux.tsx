@@ -55,7 +55,6 @@ function JumpMux({ id }: NodeProps<JumpMuxNode>) {
       return;
     }
     const selectNum = parseInt(select);
-    console.log(selectNum);
 
     const output = !selectNum ? input0 : input1;
     setTimeout(() => {

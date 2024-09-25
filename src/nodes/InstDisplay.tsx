@@ -113,6 +113,15 @@ function Instruction({
 
     const regId = op + (funct3 << 7);
     const rId = op + (funct3 << 7) + (funct7 << 10);
+    const ujId = op;
+    if (!((rId in INSTRUCTIONS) || (regId in INSTRUCTIONS) || (ujId in INSTRUCTIONS))){
+      setName('NOP');
+      setImm(null);
+      setRd(null);
+      setRs1(null);
+      setRs2(null);
+      return;
+    }
 
     switch (type) {
       case 'R':
@@ -153,14 +162,14 @@ function Instruction({
         setRd(null);
         break;
       case 'J':
-        setName(INSTRUCTIONS[regId].name);
+        setName(INSTRUCTIONS[ujId].name);
         setRs1(null);
         setRs2(null);
         setImm(getJImmVal(instruction));
         setRd(r0);
         break;
       case 'U':
-        setName(INSTRUCTIONS[regId].name);
+        setName(INSTRUCTIONS[ujId].name);
         setRs1(null);
         setRs2(null);
         setImm(getUImmVal(instruction));
@@ -208,6 +217,7 @@ function Instruction({
         instStr = jImmStr.slice(0, 1) + jImmStr.slice(10, 20) + jImmStr.slice(9, 10) + jImmStr.slice(1, 9) + r0 + op;
         break;
       default:
+        console.table({type, op, name})
         console.log('error')
 
     }

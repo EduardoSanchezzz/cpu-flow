@@ -52,9 +52,10 @@ function Control({ id, data }: NodeProps<ControlNode>) {
 
     const rId = opcodeNum + (funct3Num << 7) + (funct7Num << 10);
     const regId = opcodeNum + (funct3Num << 7);
+    const ujId = opcodeNum;
 
     const type = TYPES.get(opcodeNum);
-    const instId = type === 'R' ? rId : regId;
+    const instId = type === 'R' ? rId : ((type == 'U') || (type == 'J')) ? ujId : regId;
 
     const { aluSrc, memRead, toReg, memWrite, size, branch, regWrite, jump } = { ...INSTRUCTIONS[instId] }
 
