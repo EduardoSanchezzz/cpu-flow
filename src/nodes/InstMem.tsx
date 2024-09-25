@@ -43,6 +43,10 @@ function InstMem({ id, data }: NodeProps<InstMemNode>) {
       return;
     }
     const address = parseInt(PCIn) / 4;
+    if (address > data.instructions.length - 1) {
+      updateNodeData(id, { instruction: 'x' });
+      return;
+    }
     const outputNum = data.instructions[address];
 
     const output = outputNum.toString();
