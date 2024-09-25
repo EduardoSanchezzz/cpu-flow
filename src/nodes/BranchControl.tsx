@@ -26,7 +26,7 @@ function BranchControl({ id, data }: NodeProps<BranchControlNode>) {
 
     const aluConnections = useHandleConnections({
         type: 'target',
-        id: 'zero'
+        id: 'alu-zero'
     });
     const aluNodesData1 = useNodesData<AppNode>(aluConnections.map((connection) => connection.source),);
     const aluNode = aluNodesData1.filter(isAluNode);
@@ -35,10 +35,8 @@ function BranchControl({ id, data }: NodeProps<BranchControlNode>) {
     const zero = aluNode[0]?.data.zero;
     const sign = aluNode[0]?.data.sign;
     const branch = ControlNode[0]?.data.branch;
-
     // update outputs
     useEffect(() => {
-
         if (branch == 'x') {
             setTimeout(() => {
                 updateNodeData(id, { branchSelect: 'x' });
@@ -51,16 +49,16 @@ function BranchControl({ id, data }: NodeProps<BranchControlNode>) {
                 outputBool = false;
                 break;
             case 'zero':
-                outputBool = !!zero;
+                outputBool = zero == '1';
                 break;
             case 'notzero':
-                outputBool = !zero;
+                outputBool = zero != '1';
                 break;
             case 'signbit':
-                outputBool = !!sign;
+                outputBool = sign == '1';
                 break;
             case 'notsignbit':
-                outputBool = !sign;
+                outputBool = sign != '1';
                 break;
             case 'jump':
                 outputBool = true;
@@ -71,8 +69,9 @@ function BranchControl({ id, data }: NodeProps<BranchControlNode>) {
                 break;
         }
         const output = outputBool ? '1' : '0';
+        console.table({zero, sign, branch, output, outputBool})
         setTimeout(() => {
-            updateNodeData(id, { out: output });
+            updateNodeData(id, { branchSelect: output });
         }, TIMEOUT);
     }, [zero, sign, branch]);
 

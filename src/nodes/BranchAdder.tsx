@@ -24,9 +24,10 @@ function BranchAdder({ id }: NodeProps<BranchAdderNode>) {
   const nodesData1 = useNodesData<AppNode>(connections1.map((connection) => connection.source),);
 
   const pcNode = nodesData1.filter(isPCNode);
+
   const jumpMuxConnections = useHandleConnections({
     type: 'target',
-    id: 'address'
+    id: 'jump-mux-out'
   });
   const jumpMuxNodesData = useNodesData<AppNode>(jumpMuxConnections.map((connection) => connection.source),);
 

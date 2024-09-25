@@ -216,7 +216,6 @@ body,
 .reg-display li {
   transition: all 0.5s linear;
   list-style-type: none;
-  background-color: #ececec;
   border-radius: 5%;
   text-align: center;
   padding: 2px;
@@ -233,6 +232,12 @@ body,
   to {
     transform: scale(1);
   }
+}
+.regx-display{
+  background-color: #ececec;
+}
+.inst-name select{
+  background-color: #b2eaf8;
 }
 .reg1-display {
   animation: big 1s linear forwards;
@@ -305,7 +310,7 @@ body,
 }
 
 .inst-display {
-  background-color: #f8f8f8;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 3%;
 }
@@ -317,13 +322,13 @@ body,
 .inst-display-inner-high {
   transition: all 0.5s linear;
   padding: 2px;
-  background-color: #d6dbff;
+  background-color: #e7e9f9;
   border-radius: 5%;
 }
 .inst-display-inner-low {
   transition: all 0.5s linear;
   padding: 2px;
-  background-color: #e2fafb;
+  background-color: #e2f6fb;
   border-radius: 5%;
 }
 
@@ -337,7 +342,7 @@ body,
 .inst-display-inst select {
   border: none;
   padding: 5px;
-  background-color: #ececec;
+  /* background-color: #ececec; */
   width: 60px;
   border-radius: 5%;
 }
@@ -345,7 +350,7 @@ body,
 .inst-display-inst input {
   border: none;
   padding: 5px;
-  background-color: #ececec;
+  /* background-color: #ececec; */
   width: 50px;
   text-align: right;
   border-radius: 5%;

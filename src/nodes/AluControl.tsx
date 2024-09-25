@@ -46,7 +46,6 @@ function AluControl({ id, data }: NodeProps<AluControlNode>) {
 
     const { op } = { ...INSTRUCTIONS[instId] };
 
-    console.log({ funct7, funct3, opcode })
     const aluCode = op.toString();
 
     setTimeout(() => {

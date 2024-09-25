@@ -5,9 +5,9 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isClockNode, isInstMemNode, type AppNode } from './types';
+import { isClockNode, isInstMemNode, isPCNode, type AppNode } from './types';
 
-import { convertToNBitString, INST_NAMES, INSTRUCTIONS, TIMEOUT, TYPES } from '../utils';
+import { convertToNBitString, getBImmVal, getIImmVal, getJImmVal, getSImmVal, getUImmVal, INST_NAMES, INSTRUCTIONS, TIMEOUT, TYPES } from '../utils';
 
 function InstDisplay() {
   const { updateNodeData } = useReactFlow();
@@ -23,6 +23,17 @@ function InstDisplay() {
   const clock = clockNode[0]?.data.clk;
 
   // inputs
+  const pcConnections = useHandleConnections({
+    type: 'source',
+    id: 'address',
+    nodeId: 'pc'
+  });
+  const pcNodesData = useNodesData<AppNode>(pcConnections.map((connection) => connection.source),);
+
+  const PCNode = pcNodesData.filter(isPCNode);
+  const PCIn = PCNode[0]?.data.address;
+  const index = parseInt(PCIn) / 4;
+
   const connections = useHandleConnections({
     type: 'source',
     id: 'instruction',
@@ -53,7 +64,7 @@ function InstDisplay() {
       INSTRUCTIONS
       {instructions.map((inst, i) => {
         return (
-          <div key={i} className={i == step ? clock ? 'inst-display-inner-high' : 'inst-display-inner-low' : 'inst-display-inner'}>
+          <div key={i} className={i == index ? clock ? 'inst-display-inner-high' : 'inst-display-inner-low' : 'inst-display-inner'}>
             <Instruction
               instruction={inst}
               updateInstruction={updateInsts}
@@ -121,21 +132,40 @@ function Instruction({
         setRd(r0);
         // setF3(funct3);
         setRs1(r1);
-        setImm((instruction & 0b1111_1111_1111_00000_000_00000_000_0000) >> 20);
+        setImm(getIImmVal(instruction));
         // setF7(null);
         setRs2(null);
         break;
       case 'S':
-        setName(INSTRUCTIONS[regId].name)
-        const imm1 = (instruction & 0b000_0000_00000_00000_000_11111_000_0000) >> 7;
-        const imm2 = (instruction & 0b111_1111_00000_00000_000_00000_000_0000) >> 20;
+        setName(INSTRUCTIONS[regId].name);
         // setOpcode(op);
         // setF3(funct3);
         setRs1(r1);
         setRs2(r2);
-        setImm(imm1 + imm2);
+        setImm(getSImmVal(instruction));
         // setF7(null);
         setRd(null);
+        break;
+      case 'B':
+        setName(INSTRUCTIONS[regId].name);
+        setRs1(r1);
+        setRs2(r2);
+        setImm(getBImmVal(instruction));
+        setRd(null);
+        break;
+      case 'J':
+        setName(INSTRUCTIONS[regId].name);
+        setRs1(null);
+        setRs2(null);
+        setImm(getJImmVal(instruction));
+        setRd(r0);
+        break;
+      case 'U':
+        setName(INSTRUCTIONS[regId].name);
+        setRs1(null);
+        setRs2(null);
+        setImm(getUImmVal(instruction));
+        setRd(r0);
         break;
     }
 
@@ -151,6 +181,9 @@ function Instruction({
     const r1 = convertToNBitString(rs1, 5)
     const r2 = convertToNBitString(rs2, 5)
     const immStr = convertToNBitString(imm, 12);
+    const bImmStr = convertToNBitString(imm, 13);
+    const jImmStr = convertToNBitString(imm, 21);
+    const uImmStr = convertToNBitString(imm, 20);
 
     const type = TYPES.get(parseInt(op, 2));
 
@@ -166,6 +199,15 @@ function Instruction({
       case 'S':
         instStr = immStr.slice(0, 7) + r2 + r1 + funct3 + immStr.slice(7, 12) + op;
         break;
+      case 'B':
+        instStr = bImmStr.slice(0, 1) + bImmStr.slice(2, 8) + r2 + r1 + funct3 + bImmStr.slice(8, 12) + bImmStr.slice(1, 2) + op;
+        break;
+      case 'U':
+        instStr = uImmStr.slice(0, 20) + r0 + op;
+        break;
+      case 'J':
+        instStr = jImmStr.slice(0, 1) + jImmStr.slice(10, 20) + jImmStr.slice(9, 10) + jImmStr.slice(1, 9) + r0 + op;
+        break;
       default:
         console.log('error')
 
@@ -179,8 +221,27 @@ function Instruction({
   const updateImm = (e: any) => {
     const newImm = parseInt(e.target.value);
     if (Number.isNaN(newImm)) { setImm(0); return; }
-    if (Math.abs(newImm) > 2 ** 11 - 1) {
-      return;
+    const type = getType(instruction);
+    switch (type) {
+      case 'B':
+        if ((Math.abs(newImm) > 2 ** 12 - 1) || newImm % 2 != 0) {
+          return;
+        }
+        break;
+      case 'J':
+        if ((Math.abs(newImm) > 2 ** 20 - 1) || newImm % 2 != 0) {
+          return;
+        }
+        break;
+      case 'U':
+        if (Math.abs(newImm) > 2 ** 20 - 1) {
+          return;
+        }
+        break;
+      default:
+        if (Math.abs(newImm) > 2 ** 11 - 1) {
+          return;
+        }
     }
     setImm(newImm);
   }
@@ -188,7 +249,7 @@ function Instruction({
   return (
     <div className='inst-display-inst'>
       {name != null &&
-        <div className='inst-param'>
+        <div className='inst-param inst-name'>
           <select onChange={(e) => { setName(e.target.value) }} value={name}>
             {Object.keys(INST_NAMES).map((item, i) => { return <option key={i}>{item}</option> })}
           </select>

@@ -24,11 +24,13 @@ export const signExtend = (out:number):number => {
 }
 export const convertToNBitString = (num:number|null, N:number):string => {
     if (num == null) return '';
-    let NBitStr = num.toString(2);
+    let NBitStr = Math.abs(num).toString(2);
+    const leadBit = num < 0 ? '1' : '0'
 
-    while (NBitStr.length < N) {
-        NBitStr = '0' + NBitStr
+    while (NBitStr.length < N - 1) {
+        NBitStr = '0' + NBitStr;
     }
+    NBitStr = leadBit + NBitStr;
 
     return NBitStr;
 }
@@ -41,12 +43,70 @@ export const makeDecStrNBitsLong = (str:string, N:number):string => {
 
     return NBitStr;
 }
+export const getIImmVal = (inst:number):number => {
+    const sign = inst >> 31 & 0b1;
+    let immValNum = inst >> 20 & 0x7ff;
+    immValNum = !!sign ? -immValNum : immValNum;
+    return immValNum;
+}
+export const getSImmVal = (inst:number):number => {
+    const sign = inst >> 31 & 0b1;
+
+    let immValNum = ((inst >> 20) & 0b0111_1110_0000) | ((inst >> 7) & 0b1_1111);
+    immValNum = !!sign ? -immValNum : immValNum;
+
+    return immValNum;
+}
+export const getBImmVal = (inst:number):number => {
+    const sign = inst >> 31 & 0b1;
+    const b7 = inst >> 7 & 0b1;
+    const b25_6 = inst >> 25 & 0b11_1111;
+    const b8_4 = inst >> 8 & 0b1111;
+    
+    const i11 = b7 << 11;
+    const i5 = b25_6 << 5;
+    const i1 = b8_4 << 1;
+    const i0 = 0;
+    const immValAbs = (i11 | i5 | i1 | i0);
+    const immVal = !!sign ? -immValAbs : immValAbs;
+
+    return immVal;
+}
+export const getJImmVal = (inst:number):number => {
+    const sign = inst >> 31 & 0b1;
+
+    // instructions b(instbit)_(size)
+    const b12_8 = inst >> 12 & 0b1111_1111;
+    const b20 = inst >> 20 & 0b1;
+    const b21_10 = inst >> 21 & 0b11_1111_1111;
+    
+    // immediate bits i(immbit)
+    const i12 = b12_8 << 12;
+    const i20 = b20 << 20;
+    const i21 = b21_10 << 21;
+    const i0 = 0b0000_0000_0000;
+
+    const immValAbs = (i12 | i20 | i21 | i0);
+    const immVal = !!sign ? -immValAbs : immValAbs;
+
+    return immVal;
+}
+export const getUImmVal = (inst:number):number => {
+    const sign = inst >> 31 & 0b1;
+
+    let immValNum = inst & 0x7f_ff_f0_00;
+
+    immValNum = !!sign ? -immValNum : immValNum;
+    return immValNum;
+}
 
 const R_OP = 0b011_0011;
 const R_IMM_OP = 0b001_0011;
 const LOAD_OP = 0b000_0011;
 const S_OP = 0b010_0011;
 const B_OP = 0b110_0011;
+const JAL_OP = 0b110_1111;
+const JALR_OP = 0b110_0111;
 
 export const TIMEOUT = 0;
 
@@ -54,8 +114,10 @@ export const TYPES = new Map<number|"opcode", string>();
 TYPES.set(R_OP, 'R');
 TYPES.set(R_IMM_OP, 'I');
 TYPES.set(LOAD_OP, 'I');
+TYPES.set(JALR_OP, 'I');
 TYPES.set(S_OP, 'S');
 TYPES.set(B_OP, 'B');
+TYPES.set(JAL_OP, 'J');
 
 type CTRL = {
     aluSrc: string,
@@ -98,7 +160,7 @@ export const TOREGCODES = new TwoWayMap({
 
 const R_CTRL:CTRL = {
     aluSrc: '0',
-    toReg: '0',
+    toReg: TOREGCODES.getCode('alu').toString(),
     memRead: '0',
     memWrite: '0',
     regWrite: '1',
@@ -108,7 +170,7 @@ const R_CTRL:CTRL = {
 }
 const LOAD_CTRL:CTRL = {
     aluSrc: '1',
-    toReg: '1',
+    toReg: TOREGCODES.getCode('data').toString(),
     memRead: '1',
     memWrite: '0',
     regWrite: '1',
@@ -132,7 +194,17 @@ const BRANCH_CTRL:CTRL = {
     memRead: '0',
     memWrite: '0',
     regWrite: '0',
-    branch: '1',
+    branch: '0',
+    size: 'x',
+    jump: '0',
+}
+const JUMP_CTRL:CTRL = {
+    aluSrc: '0',
+    toReg: TOREGCODES.getCode('jump').toString(),
+    memRead: '0',
+    memWrite: '0',
+    regWrite: '1',
+    branch: BRANCHCODES.getCode('jump').toString(),
     size: 'x',
     jump: '0',
 }
@@ -204,7 +276,39 @@ export const INSTRUCTIONS:Record<number, INST> =  {
         ...BRANCH_CTRL,
         name: 'BEQ',
         op: ALUCODES.getCode('SUB'),
-    }
+        branch: BRANCHCODES.getCode('zero').toString()
+    },
+    0b001_1100011: {
+        ...BRANCH_CTRL,
+        name: 'BNE',
+        op: ALUCODES.getCode('SUB'),
+        branch: BRANCHCODES.getCode('notzero').toString()
+    },
+    0b100_1100011: {
+        ...BRANCH_CTRL,
+        name: 'BLT',
+        op: ALUCODES.getCode('SUB'),
+        branch: BRANCHCODES.getCode('signbit').toString()
+    },
+    0b101_1100011: {
+        ...BRANCH_CTRL,
+        name: 'BGE',
+        op: ALUCODES.getCode('SUB'),
+        branch: BRANCHCODES.getCode('notsignbit').toString()
+    },
+
+    // jump
+    0b1101111: {
+        ...JUMP_CTRL,
+        name: 'JAL',
+        op: ALUCODES.getCode('ADD'),
+    },
+    0b1100111: {
+        ...JUMP_CTRL,
+        name: 'JALR',
+        op: ALUCODES.getCode('ADD'),
+        jump: '1',
+    },
 
 }
 

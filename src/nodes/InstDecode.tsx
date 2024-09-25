@@ -11,7 +11,7 @@ import {
 import { isInstMemNode, type AppNode, InstDecodeNode } from './types';
 
 import bgSvg from '../assets/InstDecode.svg';
-import { signExtend, TIMEOUT, TYPES } from '../utils';
+import { getBImmVal, getIImmVal, getJImmVal, getSImmVal, getUImmVal, signExtend, TIMEOUT, TYPES } from '../utils';
 
 function InstDecode({ id, data }: NodeProps<InstDecodeNode>) {
   const { updateNodeData } = useReactFlow();
@@ -56,20 +56,21 @@ function InstDecode({ id, data }: NodeProps<InstDecodeNode>) {
 
     switch (TYPES.get(opcodeNum)) {
       case "I":
-        immValNum = instruction >> 20;
+        immValNum = getIImmVal(instruction);
         break;
       case "S":
-        immValNum = ((instruction >> 20) & 0b1111_1110_0000) + ((instruction >> 7) & 0b1_1111);
+        immValNum = getSImmVal(instruction);
         break;
       case "B":
-        let b12 = (instruction >> 20) & 0b1000_0000_0000;
-        let b11 = (instruction << 3) & 0b0100_0000_0000;
-        let b10to5 = (instruction >> 21) & 0b0011_1111_0000;
-        let b4to0 = (instruction >> 8) & 0b0000_0000_1111;
-        immValNum = b12 + b11 + b10to5 + b4to0;
+        immValNum = getBImmVal(instruction);
+        break;
+      case "J":
+        immValNum = getJImmVal(instruction);
+        break;
+      case "U":
+        immValNum = getUImmVal(instruction);
         break;
     }
-    immValNum = signExtend(immValNum);
 
     const readAddress1 = readAddress1Num.toString();
     const readAddress2 = readAddress2Num.toString();

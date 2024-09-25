@@ -38,7 +38,9 @@ export default function DataEdge({ id, sourceX, sourceY, targetX, targetY, sourc
  
   return (
     <>
-      <BaseEdge id={id} path={path} style={{stroke: primary ? color1 : color2, transition: 'all 1ms linear'}} />
+      <BaseEdge id={id} path={path} 
+      // style={{stroke: primary ? color1 : color2, transition: 'all 1ms linear'}} 
+      />
       <EdgeLabelRenderer>
         <div
           style={{

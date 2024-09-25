@@ -374,6 +374,15 @@ export const initialEdges: AppEdge[] = [
     targetHandle: 'alu-sign',
     data: {value: '', outputName: 'sign', offsetX: 15, offsetY: -70}
   },
+  {
+    id: 'addy-adder_data-mux',
+    type: 'data',
+    source: 'addy-adder',
+    target: 'data-mux',
+    sourceHandle: 'addy-adder-out',
+    targetHandle: 'addy-adder-out',
+    data: {value: '', outputName: 'out', offsetX: 15, offsetY: 600}
+  },
 ];
 
 export const edgeTypes = {

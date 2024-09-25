@@ -94,21 +94,21 @@ function Display() {
       className='display'
     >
       <div>
-        REG
+        REGISTER LIST
         {regList.map((item, i) => {
           return (
             <div className='reg-display' key={i + 'reg'}>
               x{i}
               <li className={i == reg1 ? 'reg1-display' :
                 i == reg2 ? 'reg2-display' :
-                  (i == reg3) && !clock && !!regWrite ? 'reg3-display' : ''}
+                  (i == reg3) && !clock && !!regWrite ? 'reg3-display' : 'regx-display'}
                 key={i}>0x{display32BitHex(item)}</li>
             </div>
           );
         })}
       </div>
       <div>
-        DATA
+        DATA MEMORY
         {dataMem.map((item, i) => {
           if ((i % 4) != 0) { return; }
           return (
