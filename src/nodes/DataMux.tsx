@@ -8,7 +8,7 @@ import {
   useNodesData,
 } from '@xyflow/react';
 
-import { isAluNode, type AppNode, DataMuxNode, isControlNode, isDataMemNode, isAddyAdderNode } from './types';
+import { isAluNode, type AppNode, DataMuxNode, isControlNode, isDataMemNode, isAddyAdderNode, isInstDecodeNode } from './types';
 
 import bgSvg from '../assets/Mux.svg';
 import { TIMEOUT, TOREGCODES } from '../utils';
@@ -49,11 +49,19 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
 
   const AddyAdderNode = addyAdderNodesData.filter(isAddyAdderNode);
 
+  const instDecodeConnections = useHandleConnections({
+    type: 'target',
+    id: 'imm-val'
+  });
+  const instDecodeNodesData = useNodesData<AppNode>(instDecodeConnections.map((connection) => connection.source),);
+
+  const instDecodeNode = instDecodeNodesData.filter(isInstDecodeNode);
+
   const alu = aluNode[0]?.data.out;
   const data = dataMemNode[0]?.data.readDataMem;
   const slt = aluNode[0]?.data.sign;
   const jump = AddyAdderNode[0]?.data.out;
-  const lui = '0';
+  const lui = instDecodeNode[0]?.data.immVal;
   const auipc = '0';
   const select = controlNode[0]?.data.toReg;
   // end inputs
@@ -149,7 +157,7 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
             className='handle'
             type="target"
             position={Position.Left}
-            id="lui"
+            id="imm-val"
           />
         </div>
         <div className="port">

@@ -172,7 +172,7 @@ function Instruction({
         setName(INSTRUCTIONS[ujId].name);
         setRs1(null);
         setRs2(null);
-        setImm(getUImmVal(instruction));
+        setImm(getUImmVal(instruction, true));
         setRd(r0);
         break;
     }
@@ -243,7 +243,7 @@ function Instruction({
         }
         break;
       case 'U':
-        if (Math.abs(newImm) > 2 ** 20 - 1) {
+        if (Math.abs(newImm) > 2 ** 19 - 1) {
           return;
         }
         break;

@@ -374,6 +374,15 @@ export const initialEdges: AppEdge[] = [
     targetHandle: 'addy-adder-out',
     data: {value: '', outputName: 'out', offsetX: 15, offsetY: 600}
   },
+  {
+    id: 'inst-decode_data-mux',
+    type: 'data',
+    source: 'inst-decode',
+    target: 'data-mux',
+    sourceHandle: 'imm-val',
+    targetHandle: 'imm-val',
+    data: {value: '', outputName: 'immVal', offsetX: 45, offsetY: 80}
+  },
 ];
 
 export const edgeTypes = {

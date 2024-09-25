@@ -69,7 +69,7 @@ function InstDecode({ id, data }: NodeProps<InstDecodeNode>) {
         immValNum = getJImmVal(instruction);
         break;
       case "U":
-        immValNum = getUImmVal(instruction);
+        immValNum = getUImmVal(instruction, false);
         break;
     }
 

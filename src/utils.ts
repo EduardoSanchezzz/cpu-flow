@@ -91,13 +91,15 @@ export const getJImmVal = (inst:number):number => {
 
     return immVal;
 }
-export const getUImmVal = (inst:number):number => {
+export const getUImmVal = (inst:number, shift:boolean):number => {
     const sign = inst >> 31 & 0b1;
 
     let immValNum = inst & 0x7f_ff_f0_00;
 
     immValNum = !!sign ? -immValNum : immValNum;
-    return immValNum;
+
+    const retVal = shift ? immValNum >> 12 : immValNum; 
+    return retVal;
 }
 
 const R_OP = 0b011_0011;
@@ -107,6 +109,8 @@ const S_OP = 0b010_0011;
 const B_OP = 0b110_0011;
 const JAL_OP = 0b110_1111;
 const JALR_OP = 0b110_0111;
+const LUI_OP = 0b011_0111;
+const AUI_OP = 0b001_0111;
 
 export const TIMEOUT = 0;
 
@@ -118,6 +122,8 @@ TYPES.set(JALR_OP, 'I');
 TYPES.set(S_OP, 'S');
 TYPES.set(B_OP, 'B');
 TYPES.set(JAL_OP, 'J');
+TYPES.set(LUI_OP, 'U');
+TYPES.set(AUI_OP, 'U');
 
 type CTRL = {
     aluSrc: string,
@@ -198,6 +204,17 @@ const BRANCH_CTRL:CTRL = {
     size: 'x',
     jump: '0',
 }
+const UPPER_CTRL:CTRL = {
+    aluSrc: 'x',
+    toReg: 'x',
+    memRead: '0',
+    memWrite: '0',
+    regWrite: '1',
+    branch: '0',
+    size: 'x',
+    jump: '0',
+}
+
 const JUMP_CTRL:CTRL = {
     aluSrc: '0',
     toReg: TOREGCODES.getCode('jump').toString(),
@@ -306,6 +323,7 @@ export const INSTRUCTIONS:Record<number, INST> =  {
     0b1101111: {
         ...JUMP_CTRL,
         name: 'JAL',
+        // dont care
         op: ALUCODES.getCode('ADD'),
     },
     0b1100111: {
@@ -314,6 +332,21 @@ export const INSTRUCTIONS:Record<number, INST> =  {
         op: ALUCODES.getCode('ADD'),
         jump: '1',
     },
+    // upper
+    0b011_0111: {
+        ...UPPER_CTRL,
+        name: 'LUI',
+        // dont care
+        op: ALUCODES.getCode('ADD'),
+        toReg: TOREGCODES.getCode('lui').toString()
+    },
+    // 0b001_0111: {
+    //     ...UPPER_CTRL,
+    //     name: 'AUIPC',
+    //     // dont care
+    //     op: ALUCODES.getCode('ADD'),
+    //     toReg: TOREGCODES.getCode('auipc').toString()
+    // },
 
 }
 
