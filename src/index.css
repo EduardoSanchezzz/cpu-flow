@@ -313,6 +313,7 @@ body,
   background-color: #ffffff;
   padding: 20px;
   border-radius: 3%;
+  cursor: default;
 }
 .inst-display-inner {
   padding: 2px;
@@ -345,6 +346,7 @@ body,
   /* background-color: #ececec; */
   width: 60px;
   border-radius: 5%;
+  cursor: pointer;
 }
 
 .inst-display-inst input {
@@ -354,6 +356,7 @@ body,
   width: 50px;
   text-align: right;
   border-radius: 5%;
+  cursor: pointer;
 }
 
 .inst-param {
@@ -391,4 +394,15 @@ body,
 }
 .step:hover {
   background-color: #e0e0e0;
+}
+.new-inst{
+  transition: all 0.5s linear;
+  padding: 4px 10px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5%;
+  cursor: pointer;
+}
+.new-inst:hover {
+  background-color: #d5d5d5;
 }

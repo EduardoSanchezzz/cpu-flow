@@ -102,6 +102,8 @@ export const getUImmVal = (inst:number, shift:boolean):number => {
     return retVal;
 }
 
+export const NOP_INST = 0b0000_0000_0000_0000_0000_0000_0001_0011
+
 const R_OP = 0b011_0011;
 const R_IMM_OP = 0b001_0011;
 const LOAD_OP = 0b000_0011;

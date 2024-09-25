@@ -92,6 +92,7 @@ function RegList({ id, data }: NodeProps<RegListNode>) {
     const writeDataNum = parseInt(writeData);
 
     newRegList[writeAddressNum] = writeDataNum;
+    newRegList[0] = 0;
 
     setTimeout(() => {
       updateNodeData(id, {

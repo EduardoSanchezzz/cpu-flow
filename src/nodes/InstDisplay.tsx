@@ -7,7 +7,7 @@ import {
 
 import { isClockNode, isInstMemNode, isPCNode, type AppNode } from './types';
 
-import { convertToNBitString, getBImmVal, getIImmVal, getJImmVal, getSImmVal, getUImmVal, INST_NAMES, INSTRUCTIONS, TIMEOUT, TYPES } from '../utils';
+import { convertToNBitString, getBImmVal, getIImmVal, getJImmVal, getSImmVal, getUImmVal, INST_NAMES, INSTRUCTIONS, NOP_INST, TIMEOUT, TYPES } from '../utils';
 
 function InstDisplay() {
   const { updateNodeData } = useReactFlow();
@@ -55,6 +55,13 @@ function InstDisplay() {
       updateNodeData('inst-mem', { instructions: [...newArr] });
     }, TIMEOUT);
   }
+  const newInst = () => {
+    const newArr = [...instructions];
+    newArr.push(NOP_INST);
+    setTimeout(() => {
+      updateNodeData('inst-mem', { instructions: [...newArr] });
+    }, TIMEOUT);
+  }
 
   return (
     <div
@@ -73,6 +80,7 @@ function InstDisplay() {
           </div>
         )
       })}
+      <button onClick={newInst} className='new-inst'>+</button>
     </div>
   );
 }
@@ -95,6 +103,7 @@ function Instruction({
   // const [f3, setF3] = useState<number | null>(null);
   // const [f7, setF7] = useState<number | null>(null);
   const [imm, setImm] = useState<number | null>(null);
+  const [immVal, setImmVal] = useState<number>(0);
   const [name, setName] = useState<string | null>(null);
 
   const getType = (inst: number) => {
@@ -226,6 +235,11 @@ function Instruction({
     updateInstruction(index, parseInt(instStr, 2))
   }, [name, rs1, rs2, rd, imm])
 
+  useEffect(()=> {
+    if (imm == null){return;}
+    setImmVal(imm)
+  }, [imm])
+
   const REGLIST = [...Array(32).keys()]
   const updateImm = (e: any) => {
     const newImm = parseInt(e.target.value);
@@ -234,21 +248,25 @@ function Instruction({
     switch (type) {
       case 'B':
         if ((Math.abs(newImm) > 2 ** 12 - 1) || newImm % 2 != 0) {
+          setImmVal(imm ?? 0)
           return;
         }
         break;
       case 'J':
         if ((Math.abs(newImm) > 2 ** 20 - 1) || newImm % 2 != 0) {
+          setImmVal(imm ?? 0)
           return;
         }
         break;
       case 'U':
         if (Math.abs(newImm) > 2 ** 19 - 1) {
+          setImmVal(imm ?? 0)
           return;
         }
         break;
       default:
         if (Math.abs(newImm) > 2 ** 11 - 1) {
+          setImmVal(imm ?? 0)
           return;
         }
     }
@@ -287,7 +305,7 @@ function Instruction({
         </div>}
       {imm != null &&
         <div className='inst-param imm'>
-          <input value={imm} onChange={updateImm} />
+          <input  onBlur={updateImm} defaultValue={imm} value={immVal} onChange={(e:any)=>setImmVal(e.target.value)} />
           <label>imm</label>
         </div>}
     </div>
