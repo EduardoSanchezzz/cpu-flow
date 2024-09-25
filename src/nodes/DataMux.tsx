@@ -59,7 +59,7 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
       return;
     }
     const selectNum = parseInt(select);
-    let output;
+    let output:string;
 
     switch (TOREGCODES.getName(selectNum)) {
       case 'alu':

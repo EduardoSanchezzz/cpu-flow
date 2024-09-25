@@ -19,7 +19,6 @@ function InstDisplay() {
   });
   const clockNodesData = useNodesData<AppNode>(clockConnections.map((connection) => connection.source),);
   const clockNode = clockNodesData.filter(isClockNode);
-  const step = clockNode[0]?.data.step;
   const clock = clockNode[0]?.data.clk;
 
   // inputs

@@ -11,7 +11,7 @@ import {
 import { isInstMemNode, type AppNode, InstDecodeNode } from './types';
 
 import bgSvg from '../assets/InstDecode.svg';
-import { getBImmVal, getIImmVal, getJImmVal, getSImmVal, getUImmVal, signExtend, TIMEOUT, TYPES } from '../utils';
+import { getBImmVal, getIImmVal, getJImmVal, getSImmVal, getUImmVal, TIMEOUT, TYPES } from '../utils';
 
 function InstDecode({ id, data }: NodeProps<InstDecodeNode>) {
   const { updateNodeData } = useReactFlow();
