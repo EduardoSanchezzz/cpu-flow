@@ -26,6 +26,10 @@ export default function App() {
       fitView
       nodesDraggable={false}
       nodesConnectable={false}
+      zoomOnDoubleClick={false}
+      preventScrolling={false}
+      zoomOnScroll={false}
+      panOnDrag={false}
       // elementsSelectable={false}
       // nodesFocusable={false}
     >

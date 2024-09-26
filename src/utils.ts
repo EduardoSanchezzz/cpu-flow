@@ -22,6 +22,18 @@ export const signExtend = (out:number):number => {
     }
     return out;
 }
+export const numToSignedNBitHexStr = (num: number, N:number): string => {
+    // ((-128 << 24) >>> 24).toString(16)
+    let hexStr = ((num << (32-N)) >>> (32-N)).toString(16);
+    while (hexStr.length < N/4) {
+      hexStr = '0' + hexStr;
+    }
+    return hexStr;
+  }
+  export const signedNBitHexStrToNum = (str: string, N:number): number => {
+    // ~~(parseInt('80',16)<<24)>>24
+    return ~~(parseInt(str, 16)<<(32-N))>>(32-N);
+  }
 export const convertToNBitString = (num:number|null, N:number):string => {
     if (num == null) return '';
     let NBitStr = Math.abs(num).toString(2);

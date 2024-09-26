@@ -1,12 +1,15 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import {
   useHandleConnections,
   useNodesData,
+  useReactFlow,
 } from '@xyflow/react';
 
 import { isAluNode, isClockNode, isControlNode, isDataMemNode, isInstDecodeNode, isRegListNode, type AppNode, } from './types';
+import { numToSignedNBitHexStr, signedNBitHexStrToNum, TIMEOUT } from '../utils';
 
 function Display() {
+  const { updateNodeData } = useReactFlow();
   // inputs
   const clockConnections = useHandleConnections({
     type: 'source',
@@ -73,72 +76,61 @@ function Display() {
 
   const clock = clockNode[0]?.data.clk;
 
-  const display2BitHex = (decStr: string): string => {
-    if (!decStr) { return ''; }
-    let out = parseInt(decStr).toString(16)
-    while (out.length < 2) {
-      out = '0' + out;
-    }
-    return out;
+  const updateRegVal = (i: number, regVal: number) => {
+    const newArr = [...regList];
+    newArr[i] = regVal;
+    newArr[0] = 0;
+    setTimeout(() => {
+      updateNodeData('reg-list', { regList: [...newArr] });
+    }, TIMEOUT);
   }
-  const display32BitHex = (dec: number): string => {
-    let out = dec.toString(16)
-    while (out.length < 8) {
-      out = '0' + out;
-    }
-    return out;
+  const updateDataval = (i: number, cellVal: string) => {
+    const newArr = [...dataMem];
+    newArr[i] = cellVal;
+    setTimeout(() => {
+      updateNodeData('data-mem', { dataMem: [...newArr] });
+    }, TIMEOUT);
   }
 
   return (
-    <div
-      className='display'
-    >
-      <div>
+    <div className='display'>
+      <div className='reg-display-container'>
         REGISTER LIST
         {regList.map((item, i) => {
           return (
-            <div className='reg-display' key={i + 'reg'}>
-              x{i}
-              <li className={i == reg1 ? 'reg1-display' :
-                i == reg2 ? 'reg2-display' :
-                  (i == reg3) && !clock && !!regWrite ? 'reg3-display' : 'regx-display'}
-                key={i}>0x{display32BitHex(item)}</li>
-            </div>
+            <Register
+              key={i}
+              index={i}
+              regVal={item}
+              updateRegVal={updateRegVal}
+              regType={
+                i == reg1 ? 'reg1-display' :
+                  i == reg2 ? 'reg2-display' :
+                    (i == reg3) && !clock && !!regWrite ? 'reg3-display' :
+                      'regx-display'
+              }
+            />
           );
         })}
       </div>
-      <div>
-        DATA MEMORY
+      <div className='data-display-container'>
+        DATA MEMORY DISPLAY
         {dataMem.map((item, i) => {
-          if ((i % 4) != 0) { return; }
+          // if ((i % 4) != 0) { return; }
           return (
-            <div className="data-display-container" key={i + 'data-container'}>
-              <div className='data-display' key={i + 'data'}>
-                <li
-                  className={((i + 3) >= memAddy) && ((i + 3) < (memAddy + size)) ?
-                    !!memRead ? 'highlight-data-read' : !clock ? 'highlight-data-write' : '' :
-                    ''}
-                  key={i + 3}>{display2BitHex(dataMem[i + 3])}</li>
-                <li
-                  className={((i + 2) >= memAddy) && ((i + 2) < (memAddy + size)) ?
-                    !!memRead ? 'highlight-data-read' : !clock ? 'highlight-data-write' : '' :
-                    ''}
-                  key={i + 2}>{display2BitHex(dataMem[i + 2])}</li>
-                <li
-                  className={((i + 1) >= memAddy) && ((i + 1) < (memAddy + size)) ?
-                    !!memRead ? 'highlight-data-read' : !clock ? 'highlight-data-write' : '' :
-                    ''}
-                  key={i + 1}>
-                  {display2BitHex(dataMem[i + 1])}
-                </li>
-                <li
-                  className={(i >= memAddy) && (i < (memAddy + size)) ?
-                    !!memRead ? 'highlight-data-read' : !clock ? 'highlight-data-write' : '' :
-                    ''}
-                  key={i}>{display2BitHex(item)}</li>
-              </div>
-              <div key={i + 'data-index'} className='data-display-index'>{i}</div>
-            </div>
+            //   <div key={i + 'data-index'} className='data-display-index'>{i}</div>
+            // </div>
+            <DataCell
+              key={i}
+              index={i}
+              cellVal={item}
+              updateCellVal={updateDataval}
+              cellType={
+                (i >= memAddy) && (i < (memAddy + size)) ?
+                  !!memRead ? 'data-read-display' : !clock ? 'data-write-display' :
+                    'data-cell-display' : 'data-cell-display'
+              }
+            />
           );
         })}
       </div>
@@ -147,3 +139,75 @@ function Display() {
 }
 
 export default memo(Display);
+
+function Register({
+  regVal,
+  updateRegVal,
+  index,
+  regType
+}: {
+  regVal: number,
+  updateRegVal: (i: number, regVal: number) => void,
+  index: number,
+  regType: string
+}) {
+  const [regDisplay, setRegDisplay] = useState('');
+
+  const updateReg = (e: any) => {
+    let newReg = signedNBitHexStrToNum(e.target.value, 32);
+    if (index == 0) {
+      newReg = 0;
+    }
+    if (newReg === undefined) {
+      setRegDisplay(numToSignedNBitHexStr(regVal, 32));
+      return;
+    }
+    updateRegVal(index, newReg);
+    setRegDisplay(numToSignedNBitHexStr(newReg, 32));
+  }
+  useEffect(() => {
+    setRegDisplay(numToSignedNBitHexStr(regVal, 32));
+  }, [regVal])
+
+  return (
+    <div className="reg-display">
+      <div className="reg-addy">x{index}</div>
+      <input type="text" className={regType} value={regDisplay} onBlur={updateReg} onChange={(e) => setRegDisplay(e.target.value)} />
+    </div>
+  )
+
+}
+function DataCell({
+  cellVal,
+  updateCellVal,
+  index,
+  cellType
+}: {
+  cellVal: string,
+  updateCellVal: (i: number, cellVal: string) => void,
+  index: number,
+  cellType: string
+}) {
+  const [cellDisplay, setCellDisplay] = useState('');
+
+  const updateCell = (e: any) => {
+    const newCellNum = signedNBitHexStrToNum(e.target.value, 8);
+    const newCell = newCellNum.toString();
+    const newCellDisp = numToSignedNBitHexStr(newCellNum, 8);
+    if (newCellNum === undefined) {
+      setCellDisplay(numToSignedNBitHexStr(parseInt(cellVal), 8));
+      return;
+    }
+    updateCellVal(index, newCell);
+    setCellDisplay(newCellDisp);
+  }
+  useEffect(() => {
+    const cellVallNum = parseInt(cellVal);
+    setCellDisplay(numToSignedNBitHexStr(cellVallNum, 8));
+  }, [cellVal])
+
+  return (
+    <input type="text" className={cellType} value={cellDisplay} onBlur={updateCell} onChange={(e) => setCellDisplay(e.target.value)} />
+  )
+
+}
