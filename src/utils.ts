@@ -158,8 +158,12 @@ interface INST extends CTRL {
 export const ALUCODES = new TwoWayMap({
     'AND': 0b0000,
     'OR': 0b0001,
-    'ADD': 0b0010,
-    'SUB': 0b0110,
+    'XOR': 0b0010,
+    'ADD': 0b0011,
+    'SUB': 0b0100,
+    'SLL': 0b0101,
+    'SRL': 0b0110,
+    'SRA': 0b0111,
 });
 export const BRANCHCODES = new TwoWayMap({
     'nobranch': 0b000,
@@ -180,6 +184,16 @@ export const TOREGCODES = new TwoWayMap({
 
 const R_CTRL:CTRL = {
     aluSrc: '0',
+    toReg: TOREGCODES.getCode('alu').toString(),
+    memRead: '0',
+    memWrite: '0',
+    regWrite: '1',
+    branch: '0',
+    size: 'x',
+    jump: '0',
+}
+const RIMM_CTRL:CTRL = {
+    aluSrc: '1',
     toReg: TOREGCODES.getCode('alu').toString(),
     memRead: '0',
     memWrite: '0',
@@ -266,6 +280,62 @@ export const INSTRUCTIONS:Record<number, INST> =  {
         ...R_CTRL,
         name: 'AND',
         op: ALUCODES.getCode('AND'),
+    },
+    0b0000000_001_0110011: {
+        ...R_CTRL,
+        name: 'SLL',
+        op: ALUCODES.getCode('SLL'),
+    },
+    0b0000000_100_0110011: {
+        ...R_CTRL,
+        name: 'XOR',
+        op: ALUCODES.getCode('XOR'),
+    },
+    0b0000000_101_0110011: {
+        ...R_CTRL,
+        name: 'SRL',
+        op: ALUCODES.getCode('SRL'),
+    },
+    0b0100000_101_0110011: {
+        ...R_CTRL,
+        name: 'SRA',
+        op: ALUCODES.getCode('SRA'),
+    },
+
+    // SLT
+    0b0000000_010_0110011: {
+        ...R_CTRL,
+        name: 'SLT',
+        op: ALUCODES.getCode('SUB'),
+        toReg: TOREGCODES.getCode('slt').toString()
+    },
+    0b010_0010011:{
+        ...RIMM_CTRL,
+        name: 'SLTI',
+        op: ALUCODES.getCode('SUB'),
+        toReg: TOREGCODES.getCode('slt').toString()
+    },
+
+    // R Immediates
+    0b000_0010011:{
+        ...RIMM_CTRL,
+        name: 'ADDI',
+        op: ALUCODES.getCode('ADD')
+    },
+    0b100_0010011:{
+        ...RIMM_CTRL,
+        name: 'XORI',
+        op: ALUCODES.getCode('XOR')
+    },
+    0b110_0010011:{
+        ...RIMM_CTRL,
+        name: 'ORI',
+        op: ALUCODES.getCode('OR')
+    },
+    0b111_0010011:{
+        ...RIMM_CTRL,
+        name: 'ANDI',
+        op: ALUCODES.getCode('AND')
     },
 
     // Loads

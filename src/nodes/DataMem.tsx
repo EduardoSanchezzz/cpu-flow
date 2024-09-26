@@ -69,7 +69,6 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
       let readDataMem = '';
       for (let i = 0; i < sizeNum; ++i) {
         readDataMem = makeDecStrNBitsLong(data.dataMem[addressNum + i], 8) + readDataMem;
-        console.log(readDataMem)
       }
       readDataMem = parseInt(readDataMem, 2).toString()
       setTimeout(() => {
@@ -95,7 +94,6 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
 
     for (let i = 0; i < sizeNum; ++i) {
       const writeDataByte = (writeDataNum >> (8 * i)) & 0b1111_1111;
-      console.log(writeDataByte);
       newDataMem[addressNum + i] = writeDataByte.toString();
     }
 

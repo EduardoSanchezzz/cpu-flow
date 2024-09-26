@@ -70,6 +70,18 @@ function Alu({ id }: NodeProps<AluNode>) {
       case ('OR'):
         outputNum = inputNum1 | inputNum2;
         break;
+      case ('XOR'):
+        outputNum = inputNum1 ^ inputNum2;
+        break;
+      case ('SLL'):
+        outputNum = inputNum1 << (inputNum2 & 0b1_1111);
+        break;
+      case ('SRL'):
+        outputNum = inputNum1 >> (inputNum2 & 0b1_1111);
+        break;
+      case ('SRA'):
+        outputNum = inputNum1 >>> (inputNum2 & 0b1_1111);
+        break;
       default:
         console.log('unrecognized alu code: ', aluCodeNum.toString(2))
     }

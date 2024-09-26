@@ -33,7 +33,7 @@ export default function App() {
       // elementsSelectable={false}
       // nodesFocusable={false}
     >
-      <MiniMap />
+      {/* <MiniMap /> */}
       <Controls 
       showInteractive={false}/>
     </ReactFlow>

@@ -247,6 +247,7 @@ body,
 }
 .inst-name select{
   background-color: #b2eaf8;
+  width: 65px !important;
 }
 .reg1-display {
   animation: big 1s linear forwards;

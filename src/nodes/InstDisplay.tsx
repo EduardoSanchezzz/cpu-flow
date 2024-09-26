@@ -123,7 +123,7 @@ function Instruction({
     const regId = op + (funct3 << 7);
     const rId = op + (funct3 << 7) + (funct7 << 10);
     const ujId = op;
-    if (!((rId in INSTRUCTIONS) || (regId in INSTRUCTIONS) || (ujId in INSTRUCTIONS))){
+    if (!((rId in INSTRUCTIONS) || (regId in INSTRUCTIONS) || (ujId in INSTRUCTIONS))) {
       setName('NOP');
       setImm(null);
       setRd(null);
@@ -196,7 +196,9 @@ function Instruction({
     const funct7 = id.slice(0, 7);
     const r0 = convertToNBitString(rd, 5)
     const r1 = convertToNBitString(rs1, 5)
-    const r2 = convertToNBitString(rs2, 5)
+    const r2 = convertToNBitString(rs2, 5);
+
+    // convert these to signed
     const immStr = convertToNBitString(imm, 12);
     const bImmStr = convertToNBitString(imm, 13);
     const jImmStr = convertToNBitString(imm, 21);
@@ -226,17 +228,26 @@ function Instruction({
         instStr = jImmStr.slice(0, 1) + jImmStr.slice(10, 20) + jImmStr.slice(9, 10) + jImmStr.slice(1, 9) + r0 + op;
         break;
       default:
-        console.table({type, op, name})
+        console.table({ type, op, name })
         console.log('error')
 
     }
     // console.table({op, funct3, funct7, r0, r1, r2, immStr, type, id, instStr})
 
     updateInstruction(index, parseInt(instStr, 2))
-  }, [name, rs1, rs2, rd, imm])
+  }, [rs1, rs2, rd, imm])
 
-  useEffect(()=> {
-    if (imm == null){return;}
+  const updateName = (e:any) => {
+    const newName = e.target.value;
+    setName(newName);
+    setRs1(0);
+    setRs2(0);
+    setImm(0);
+    setRd(0);
+  }
+
+  useEffect(() => {
+    if (imm == null) { return; }
     setImmVal(imm)
   }, [imm])
 
@@ -277,7 +288,7 @@ function Instruction({
     <div className='inst-display-inst'>
       {name != null &&
         <div className='inst-param inst-name'>
-          <select onChange={(e) => { setName(e.target.value) }} value={name}>
+          <select onChange={updateName} value={name}>
             {Object.keys(INST_NAMES).map((item, i) => { return <option key={i}>{item}</option> })}
           </select>
           <label>name</label>
@@ -305,7 +316,7 @@ function Instruction({
         </div>}
       {imm != null &&
         <div className='inst-param imm'>
-          <input  onBlur={updateImm} defaultValue={imm} value={immVal} onChange={(e:any)=>setImmVal(e.target.value)} />
+          <input onBlur={updateImm} value={immVal} onChange={(e: any) => setImmVal(e.target.value)} />
           <label>imm</label>
         </div>}
     </div>
