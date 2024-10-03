@@ -16,10 +16,10 @@ import AluControl from './AluControl';
 import DataMem from './DataMem';
 import Display from './Display';
 import InstDisplay from './InstDisplay';
-import BranchShift from './BranchShift';
 import BranchControl from './BranchControl';
 import BranchAdder from './BranchAdder';
 import JumpMux from './JumpMux';
+import Title from './Title';
 
 const INSTRUCTIONS = [
   0b0000000_00001_00000_000_00010_0110011, //add x0 + x1 to x2
@@ -44,19 +44,19 @@ export const initialNodes: AppNode[] = [
     id: 'clock',
     type: 'clock',
     data: { label: 'Clock', clk: 0, step:-1 },
-    position: { x: 0, y: 0 },
+    position: { x: 1200, y: 0 },
   },
   {
     id: 'pc',
     type: 'pc',
     data: { label: 'Program Counter', address: 'x' },
-    position: { x: 0, y: 300 },
+    position: { x: 0, y: 314 },
   },
   {
     id: 'addy-adder',
     type: 'addy-adder',
     data: { out: 'x' },
-    position: { x: 200, y: 0 },
+    position: { x: 146, y: 0 },
   },
   {
     id: 'addy-mux',
@@ -68,7 +68,7 @@ export const initialNodes: AppNode[] = [
     id: 'inst-mem',
     type: 'inst-mem',
     data: { label: 'Instruction Memory', instruction: 'x', instructions: INSTRUCTIONS },
-    position: { x: 150, y: 300 },
+    position: { x: 140, y: 300 },
   },
   {
     id: 'inst-decode',
@@ -92,19 +92,19 @@ export const initialNodes: AppNode[] = [
       readData2: 'x',
       regList: REGLIST,
      },
-    position: { x: 550, y: 400 },
+    position: { x: 540, y: 400 },
   },
   {
     id: 'alu-mux',
     type: 'alu-mux',
     data: { out: 'x' },
-    position: { x: 725, y: 500 },
+    position: { x: 700, y: 500 },
   },
   {
     id: 'alu',
     type: 'alu',
     data: { out: 'x', zero: 'x', sign: 'x' },
-    position: { x: 800, y: 400 },
+    position: { x: 770, y: 400 },
   },
 
   {
@@ -120,13 +120,13 @@ export const initialNodes: AppNode[] = [
       branch: 'x',
       jump: 'x',
      },
-    position: { x: 320, y: 100 },
+    position: { x: 320, y: 150 },
   },
   {
     id: 'data-mux',
     type: 'data-mux',
     data: { out: 'x' },
-    position: { x: 1100, y: 400 },
+    position: { x: 1120, y: 400 },
   },
   {
     id: 'alu-control',
@@ -138,43 +138,43 @@ export const initialNodes: AppNode[] = [
     id: 'data-mem',
     type: 'data-mem',
     data: { label: 'Data Memory', readDataMem: 'x', dataMem: DATAMEM },
-    position: { x: 940, y: 420 },
+    position: { x: 924, y: 420 },
   },
   {
     id: 'display',
     type: 'display',
-    position: { x: 1200, y: 0 },
+    position: { x: 1200, y: 400 },
     data: {}
   },
   {
     id: 'inst-display',
     type: 'inst-display',
-    position: { x: 0, y: 500 },
+    position: { x: 1200, y: 100 },
     data: {}
   },
   {
     id: 'branch-control',
     type: 'branch-control',
     data: { label: 'Branch Control', branchSelect: 'x' },
-    position: { x: 970, y: 150 },
+    position: { x: 950, y: 250 },
   },
-  // {
-  //   id: 'branch-shift',
-  //   type: 'branch-shift',
-  //   data: { label: 'Branch Shift', out: 'x' },
-  //   position: { x: 700, y: 40 },
-  // },
+  {
+    id: 'title',
+    type: 'title',
+    data:{},
+    position: { x: 0, y: 600 },
+  },
   {
     id: 'jump-mux',
     type: 'jump-mux',
     data: { out: 'x' },
-    position: { x: 800, y: 30 },
+    position: { x: 700, y: 30 },
   },
   {
     id: 'branch-adder',
     type: 'branch-adder',
     data: { out: 'x' },
-    position: { x: 950, y: 50 },
+    position: { x: 850, y: 50 },
   },
 
 ];
@@ -196,7 +196,7 @@ export const nodeTypes = {
   'data-mem': DataMem,
   'display': Display,
   'inst-display': InstDisplay,
-  'branch-shift': BranchShift,
+  'title': Title,
   'branch-control': BranchControl,
   'branch-adder': BranchAdder,
   'jump-mux': JumpMux,

@@ -85,6 +85,18 @@ function InstMem({ id, data }: NodeProps<InstMemNode>) {
           </div>
         </div>
       </div>
+      <div className='more-info'>
+        ?
+        <div className='tooltip'>
+          <div className='tt-title'>Instruction Memory</div>
+          <div>component simulates a read-only memory (ROM) that holds the instructions of the program</div>
+          <div>If the provided PC address is not aligned to 4 bytes, an alert is triggered, and the PC is reset</div>
+          <div className='tt-subtitle'>Inputs</div>
+          <div><span className='tt-param'>Address: </span>address from the Program Counter</div>
+          <div className='tt-subtitle'>Output</div>
+          <div><span className='tt-param'>Instruction: </span>instruction fetched from memory at the specified address</div>
+        </div>
+      </div>
     </div>
   );
 }

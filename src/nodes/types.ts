@@ -3,7 +3,7 @@ import type { Node, BuiltInNode } from '@xyflow/react';
 export type AppNode = BuiltInNode | PCNode | ClockNode | AddyAdderNode|
 AddyMuxNode | InstMemNode | InstDecodeNode | RegListNode | AluMuxNode |
 AluNode | ControlNode | DataMuxNode | AluControlNode | DataMemNode | DisplayNode |
-InstDisplayNode | BranchControlNode | BranchShiftNode | JumpMuxNode | BranchAdderNode;
+InstDisplayNode | BranchControlNode | TitleNode | JumpMuxNode | BranchAdderNode;
 
 export type PCNode = Node<{label: string, address: string}, 'pc'>;
 export function isPCNode(node: any): node is PCNode {
@@ -98,10 +98,8 @@ export type JumpMuxNode = Node<{out: string,}, 'jump-mux'>;
 export function isJumpMuxNode(node: any): node is JumpMuxNode {
     return node.type === 'jump-mux';
 }
-export type BranchShiftNode = Node<{label:string, out: string,}, 'branch-shift'>;
-export function isBranchShiftNode(node: any): node is BranchShiftNode {
-    return node.type === 'branch-shift';
-}
+export type TitleNode = Node<{}, 'title'>;
+
 export type BranchAdderNode = Node<{out: string,}, 'branch-adder'>;
 export function isBranchAdderNode(node: any): node is BranchAdderNode {
     return node.type === 'branch-adder';

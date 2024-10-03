@@ -1,7 +1,6 @@
 import {
   ReactFlow,
   Controls,
-  MiniMap,
   useNodesState,
   useEdgesState,
 } from '@xyflow/react';

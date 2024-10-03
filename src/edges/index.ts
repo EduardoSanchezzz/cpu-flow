@@ -13,6 +13,10 @@ export const initialEdges: AppEdge[] = [
     target: 'pc',
     sourceHandle: 'clk',
     targetHandle: 'clk',
+    style: {
+      strokeWidth: 0,
+      stroke: '#FF0072',
+    },
   },
   {
     id: 'pc_addyadder',
@@ -66,7 +70,7 @@ export const initialEdges: AppEdge[] = [
     target: 'reg-list',
     sourceHandle: 'read-reg1',
     targetHandle: 'read-reg1',
-    data: {value: '', outputName: 'readAddress1', offsetX: 15, offsetY: 0}
+    data: {value: '', outputName: 'readAddress1', offsetX: 5, offsetY: 0}
   },
   {
     id: 'inst-decode_reg-list2',
@@ -84,7 +88,7 @@ export const initialEdges: AppEdge[] = [
     target: 'reg-list',
     sourceHandle: 'write-reg',
     targetHandle: 'write-reg',
-    data: {value: '', outputName: 'writeAddress', offsetX: 15, offsetY: 0}
+    data: {value: '', outputName: 'writeAddress', offsetX: 25, offsetY: 0}
   },
   {
     id: 'reg-list_alu-mux',
@@ -93,7 +97,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-mux',
     sourceHandle: 'read-data2',
     targetHandle: 'read-data2',
-    data: {value: '', outputName: 'readData2', offsetX: 15, offsetY: 0}
+    data: {value: '', outputName: 'readData2', offsetX: 5, offsetY: 0}
   },
   {
     id: 'inst-decode_alu-mux',
@@ -192,7 +196,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'alu-out',
     targetHandle: 'alu-out',
-    data: {value: '', outputName: 'out', offsetX: 18, offsetY: -130}
+    data: {value: '', outputName: 'out', offsetX: 25, offsetY: -123}
   },
   {
     id: 'alu_data-mem',
@@ -201,7 +205,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mem',
     sourceHandle: 'alu-out',
     targetHandle: 'alu-out',
-    data: {value: '', outputName: 'out', offsetX: 18, offsetY: -10}
+    data: {value: '', outputName: 'out', offsetX: 25, offsetY: 0}
   },
   {
     id: 'reg-list_data-mem',
@@ -219,7 +223,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'read-data-mem',
     targetHandle: 'read-data-mem',
-    data: {value: '', outputName: 'readDataMem', offsetX: 5, offsetY: 0}
+    data: {value: '', outputName: 'readDataMem', offsetX: 25, offsetY: 0}
   },
   {
     id: 'data-mux_reg-list',
@@ -237,7 +241,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-control',
     sourceHandle: 'opcode',
     targetHandle: 'opcode',
-    data: {value: '', outputName: 'opcode', offsetX: 33, offsetY: 193}
+    data: {value: '', outputName: 'opcode', offsetX: 36, offsetY: 193}
   },
   {
     id: 'inst-decode_alu-control2',
@@ -246,7 +250,7 @@ export const initialEdges: AppEdge[] = [
     target: 'alu-control',
     sourceHandle: 'funct3',
     targetHandle: 'funct3',
-    data: {value: '', outputName: 'funct3', offsetX: 25, offsetY: 190}
+    data: {value: '', outputName: 'funct3', offsetX: 26, offsetY: 190}
   },
   {
     id: 'inst-decode_alu-control3',
@@ -282,7 +286,7 @@ export const initialEdges: AppEdge[] = [
     target: 'branch-control',
     sourceHandle: 'alu-zero',
     targetHandle: 'alu-zero',
-    data: {value: '', outputName: 'zero', offsetX: 12, offsetY: -270}
+    data: {value: '', outputName: 'zero', offsetX: 5, offsetY: -166}
   },
   {
     id: 'alu_branch-control1',
@@ -291,7 +295,7 @@ export const initialEdges: AppEdge[] = [
     target: 'branch-control',
     sourceHandle: 'alu-sign',
     targetHandle: 'alu-sign',
-    data: {value: '', outputName: 'sign', offsetX: 16, offsetY: -290}
+    data: {value: '', outputName: 'sign', offsetX: 15, offsetY: -195}
   },
   {
     id: 'control_branch-control',
@@ -327,7 +331,7 @@ export const initialEdges: AppEdge[] = [
     target: 'branch-adder',
     sourceHandle: 'address',
     targetHandle: 'address',
-    data: {value: '', outputName: 'address', offsetX: 15, offsetY: -200}
+    data: {value: '', outputName: 'address', offsetX: 15, offsetY: -225}
   },
   {
     id: 'branch-adder_addy-mux',
@@ -354,7 +358,7 @@ export const initialEdges: AppEdge[] = [
     target: 'jump-mux',
     sourceHandle: 'alu-out',
     targetHandle: 'alu-out',
-    data: {value: '', outputName: 'out', offsetX: 18, offsetY: -300}
+    data: {value: '', outputName: 'out', offsetX: 25, offsetY: -200}
   },
   {
     id: 'alu_data-mux1',
@@ -363,7 +367,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'alu-sign',
     targetHandle: 'alu-sign',
-    data: {value: '', outputName: 'sign', offsetX: 15, offsetY: -70}
+    data: {value: '', outputName: 'sign', offsetX: 15, offsetY: -90}
   },
   {
     id: 'addy-adder_data-mux',
@@ -372,7 +376,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'addy-adder-out',
     targetHandle: 'addy-adder-out',
-    data: {value: '', outputName: 'out', offsetX: 15, offsetY: 600}
+    data: {value: '', outputName: 'out', offsetX: 15, offsetY: 700}
   },
   {
     id: 'inst-decode_data-mux',
@@ -381,7 +385,7 @@ export const initialEdges: AppEdge[] = [
     target: 'data-mux',
     sourceHandle: 'imm-val',
     targetHandle: 'imm-val',
-    data: {value: '', outputName: 'immVal', offsetX: 45, offsetY: 80}
+    data: {value: '', outputName: 'immVal', offsetX: 45, offsetY: 85}
   },
 ];
 

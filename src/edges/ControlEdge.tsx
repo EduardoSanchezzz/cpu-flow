@@ -1,4 +1,4 @@
-import { BaseEdge, EdgeLabelRenderer, EdgeProps, getSimpleBezierPath, useHandleConnections, useNodesData, useReactFlow } from '@xyflow/react';
+import { BaseEdge, EdgeLabelRenderer, EdgeProps, getSimpleBezierPath, getSmoothStepPath, getStraightPath, useHandleConnections, useNodesData, useReactFlow } from '@xyflow/react';
 import { AppNode } from '../nodes/types';
 import { useEffect } from 'react';
 import { controlEdge } from './index';
@@ -11,6 +11,16 @@ export default function ControlEdge({ id, sourceX, sourceY, targetX, targetY, so
     targetX,
     targetY,
   });
+  const offsetX = 100;
+  const [path1] = getStraightPath({
+    sourceX, sourceY, 
+    targetX: targetX, targetY: sourceY
+  })
+  const [path2] = getStraightPath({
+    sourceX: targetX, sourceY, 
+    targetX, targetY
+  })
+  const path = path1+path2;
   const connections = useHandleConnections({
     type: 'source',
     nodeId: source,
@@ -28,7 +38,7 @@ export default function ControlEdge({ id, sourceX, sourceY, targetX, targetY, so
  
   return (
     <>
-      <BaseEdge id={id} path={edgePath} style = {{stroke: '#9dd6f5'}} />
+      <BaseEdge id={id} path={path} style = {{stroke: '#9dd6f5'}} />
       <EdgeLabelRenderer>
         <div
           style={{

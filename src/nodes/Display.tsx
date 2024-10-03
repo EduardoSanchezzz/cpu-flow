@@ -94,45 +94,49 @@ function Display() {
 
   return (
     <div className='display'>
-      <div className='reg-display-container'>
-        REGISTER LIST
-        {regList.map((item, i) => {
-          return (
-            <Register
-              key={i}
-              index={i}
-              regVal={item}
-              updateRegVal={updateRegVal}
-              regType={
-                i == reg1 ? 'reg1-display' :
-                  i == reg2 ? 'reg2-display' :
-                    (i == reg3) && !clock && !!regWrite ? 'reg3-display' :
-                      'regx-display'
-              }
-            />
-          );
-        })}
+      <div className="reg-display-container-container">
+        <div className="display-title">REGISTER LIST</div>
+        <div className='reg-display-container'>
+          {regList.map((item, i) => {
+            return (
+              <Register
+                key={i}
+                index={i}
+                regVal={item}
+                updateRegVal={updateRegVal}
+                regType={
+                  i == reg1 ? 'reg1-display' :
+                    i == reg2 ? 'reg2-display' :
+                      (i == reg3) && !clock && !!regWrite ? 'reg3-display' :
+                        'regx-display'
+                }
+              />
+            );
+          })}
+        </div>
       </div>
-      <div className='data-display-container'>
-        DATA MEMORY DISPLAY
-        {dataMem.map((item, i) => {
-          // if ((i % 4) != 0) { return; }
-          return (
-            //   <div key={i + 'data-index'} className='data-display-index'>{i}</div>
-            // </div>
-            <DataCell
-              key={i}
-              index={i}
-              cellVal={item}
-              updateCellVal={updateDataval}
-              cellType={
-                (i >= memAddy) && (i < (memAddy + size)) ?
-                  !!memRead ? 'data-read-display' : !clock ? 'data-write-display' :
-                    'data-cell-display' : 'data-cell-display'
-              }
-            />
-          );
-        })}
+      <div className="data-display-container-container">
+        <div className="display-title">DATA MEMORY</div>
+        <div className='data-display-container'>
+          {dataMem.map((item, i) => {
+            // if ((i % 4) != 0) { return; }
+            return (
+              //   <div key={i + 'data-index'} className='data-display-index'>{i}</div>
+              // </div>
+              <DataCell
+                key={i}
+                index={i}
+                cellVal={item}
+                updateCellVal={updateDataval}
+                cellType={
+                  (i >= memAddy) && (i < (memAddy + size)) ?
+                    !!memRead ? 'data-read-display' : !clock ? 'data-write-display' :
+                      'data-cell-display' : 'data-cell-display'
+                }
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

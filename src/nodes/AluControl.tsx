@@ -111,6 +111,19 @@ function AluControl({ id, data }: NodeProps<AluControlNode>) {
           </div>
         </div>
       </div>
+      <div className='more-info'>
+        ?
+        <div className='tooltip'>
+          <div className='tt-title'>ALU Control</div>
+          <div>generates the correct ALU operation code based on the decoded instruction</div>
+          <div className='tt-subtitle'>Inputs</div>
+          <div><span className='tt-param'>opcode: </span>Specifies the type of instruction and operation</div>
+          <div><span className='tt-param'>funct3: </span>3 bit value to identify instruction</div>
+          <div><span className='tt-param'>funct7: </span>7 bit value to identify instruction</div>
+          <div className='tt-subtitle'>Output</div>
+          <div><span className='tt-param'>ALU Code: </span>Control signal indicating the ALU operation to perform</div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
 
 import { isAluNode, type AppNode, DataMuxNode, isControlNode, isDataMemNode, isAddyAdderNode, isInstDecodeNode } from './types';
 
-import bgSvg from '../assets/Mux.svg';
+import bgSvg from '../assets/RegMux.svg';
 import { TIMEOUT, TOREGCODES } from '../utils';
 
 function DataMux({ id }: NodeProps<DataMuxNode>) {
@@ -125,6 +125,14 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
             className='handle'
             type="target"
             position={Position.Left}
+            id="alu-sign"
+          />
+        </div>
+        <div className="port">
+          <Handle
+            className='handle'
+            type="target"
+            position={Position.Left}
             id="alu-out"
           />
         </div>
@@ -134,14 +142,6 @@ function DataMux({ id }: NodeProps<DataMuxNode>) {
             type="target"
             position={Position.Left}
             id="read-data-mem"
-          />
-        </div>
-        <div className="port">
-          <Handle
-            className='handle'
-            type="target"
-            position={Position.Left}
-            id="alu-sign"
           />
         </div>
         <div className="port">

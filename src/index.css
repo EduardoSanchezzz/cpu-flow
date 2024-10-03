@@ -13,6 +13,7 @@ body,
 }
 
 .container {
+  position: relative;
   height: min-content;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -20,6 +21,7 @@ body,
   grid-template-areas:
     "inputs control outputs"
     "name name name";
+  cursor: default;
 }
 
 .bg {
@@ -209,25 +211,29 @@ body,
   gap: 10px;
   font-size: 12px;
   /* background-color: #f8f8f8; */
-  padding: 20px;
   border-radius: 1%;
   cursor: default;
 }
 .reg-display-container, .data-display-container {
-  height: 70vh;
+  height: 40vh;
   overflow: scroll;
+}
+.reg-display-container-container, .data-display-container-container {
+  padding: 10px;
+  border-radius: 3%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .regx-display, .reg1-display, .reg2-display, .reg3-display {
   font-family: 'Zen Kaku Gothic Antique';
-  font-size: 12px;
+  font-size: 15px;
   border: none;
   transition: all 0.5s linear;
   list-style-type: none;
   border-radius: 5%;
   text-align: center;
   padding: 2px;
-  width: 70px;
+  width: 90px;
   margin: 1px;
   /* letter-spacing: 1px; */
 }
@@ -283,14 +289,13 @@ body,
   flex-direction: row;
   justify-content: space-between;
   gap: 2px;
-  max-width: 95px;
 }
 .data-display-container {
   display: flex;
   flex-direction: row-reverse;
   flex-wrap: wrap;
-  height: min-content;
   width: 120px;
+  /* max-height: 35vh; */
 }
 
 .data-cell-display, .data-read-display, .data-write-display {
@@ -326,6 +331,7 @@ body,
   cursor: default;
   max-height: 30vh;
   overflow: scroll;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 .inst-display-inner {
   padding: 2px;
@@ -380,19 +386,15 @@ body,
 
 .clock {
   /* background: #f8f8f8; */
-  color: #222;
   padding: 10px;
-  font-size: 15px;
   border-radius: 5%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 70px;
-  /* gap: 15px; */
-  border: 2px solid #e3e3e3;
-  font-weight: 600;
+  gap: 15px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .clock button {
@@ -403,7 +405,6 @@ body,
   cursor: pointer;
 }
 .reset {
-  margin-top: 15px;
   padding: 10px 15px; 
   border: 1px solid #f98080;
   background-color: #ff9a9a;
@@ -451,4 +452,135 @@ body,
 }
 .new-inst:hover {
   background-color: #d5d5d5;
+}
+.more-info {
+  transition: all 0.25s linear;
+  position: absolute;
+  bottom: 16px;
+  left: 12px;
+  border-radius: 15%;
+  /* border: 1px solid #bbb; */
+  padding: 0 8px;
+  font-size: 14px;
+  /* color: #bbb; */
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+.tooltip {
+  font-weight: 400;
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  color: #000;
+  padding: 6px 10px;
+  border-radius: 5%;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  max-height: 150px;
+  max-width: 300px;
+  overflow: scroll;
+  width: max-content;
+  z-index: 1;
+
+  font-size: 12px;
+  color: #666;
+
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+.more-info:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  top: 25px;
+}
+.more-info:hover {
+  color: #fff;
+  background-color: #000;
+}
+.tt-title{
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}
+.tt-subtitle{
+  font-size: 14px;
+  font-weight: 500;
+  color: #222;
+}
+.tt-param{
+  font-weight: 500;
+  color: #444;
+}
+.tt-ctrl {
+  color: rgb(42, 44, 72);
+}
+.tt-ctrl-txt {
+  color: rgb(68, 72, 110);
+}
+.react-flow__node:hover {
+  z-index: 1 !important;
+}
+.alu .more-info {
+  bottom: 27px;
+}
+
+.alu-control .more-info:hover .tooltip {
+  top: -75px;
+  left: -165px;
+}
+.pc .more-info:hover .tooltip {
+  left: 100px;
+}
+.pc .more-info {
+  bottom: 20px;
+  left: 10px;
+}
+.clock .display-title {
+  justify-self: start;
+  align-self: flex-start;
+}
+.display-title {
+  font-size: 16px;
+  font-weight: 700;
+  padding-bottom: 8px;
+}
+.inst-display .more-info {
+  left: 280px;
+  bottom: 250px;
+}
+.inst-display .more-info:hover .tooltip {
+  left: -110px;
+}
+a {
+  text-decoration: none;
+}
+
+.title {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background-color: #FFF;
+  border-radius: 5%;
+  width: 180px;
+  cursor: default;
+}
+.title-text {
+  font-size: 32px;
+  font-weight: 600;
+}
+.title .more-info {
+  font-size: 25px;
+  left: 170px;
+  bottom: 22px;
+  padding: 3px 13px;
+}
+.title .more-info:hover .tooltip {
+  left: 85px;
+  top: -65px;
+  font-size: 15px;
+  max-width: 500px;
 }

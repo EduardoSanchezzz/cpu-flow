@@ -175,6 +175,23 @@ function DataMem({ id, data }: NodeProps<DataMemNode>) {
         </div>
 
       </div></div>
+      <div className='more-info'>
+        ?
+        <div className='tooltip'>
+          <div className='tt-title'>Data Memory</div>
+          <div>stores and retrieves data during program execution </div>
+          <div>Note: writes occur on negative clock edges</div>
+          <div className='tt-subtitle'>Inputs</div>
+          <div><span className='tt-param'>Address:</span> Specifies the memory location for read/write operations</div>
+          <div><span className='tt-param'>Write Data:</span> Data to be stored in memory at the given address</div>
+          <div className='tt-subtitle'>Output</div>
+          <div><span className='tt-param'>Read Data:</span> Data read from memory at the specified address</div>
+          <div className='tt-subtitle tt-ctrl'>Control</div>
+          <div className='tt-ctrl-txt'><span className='tt-param tt-ctrl'>MemRead:</span> Signal to perform a memory read operation</div>
+          <div className='tt-ctrl-txt'><span className='tt-param tt-ctrl'>MemWrite:</span> Signal to perform a memory write operation</div>
+          <div className='tt-ctrl-txt'><span className='tt-param tt-ctrl'>Size:</span> Defines the size of the data to be read or written in bytes</div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -83,6 +83,19 @@ function PC({ id, data }: NodeProps<Node<{ label: string, address: number }>>) {
           </div>
         </div>
       </div>
+      <div className='more-info'>
+        ?
+        <div className='tooltip'>
+          <div className='tt-title'>Program Counter</div>
+          <div>register that holds the address of the next instruction to be executed</div>
+          <div className='tt-subtitle'>Inputs</div>
+          <div><span className='tt-param'>Next Address: </span>receives the next instruction address from the address multiplexer</div>
+          <div className='tt-subtitle'>Output</div>
+          <div><span className='tt-param'>Instruction Address: </span>output provides the current address of the instruction</div>
+          <div className='tt-subtitle tt-ctrl'>Control</div>
+          <div className='tt-ctrl-txt'><span className='tt-param tt-ctrl'>Clock: </span>On each clock pulse, the PC updates to the new address</div>
+        </div>
+      </div>
     </div>
   );
 }

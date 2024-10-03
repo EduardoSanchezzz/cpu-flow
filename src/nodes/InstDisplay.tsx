@@ -67,7 +67,7 @@ function InstDisplay() {
     <div
       className='inst-display'
     >
-      INSTRUCTIONS
+      <div className="display-title">INSTRUCTIONS</div>
       {instructions.map((inst, i) => {
         return (
           <div key={i} className={i == index ? clock ? 'inst-display-inner-high' : 'inst-display-inner-low' : 'inst-display-inner'}>
@@ -81,6 +81,43 @@ function InstDisplay() {
         )
       })}
       <button onClick={newInst} className='new-inst'>+</button>
+      <div className='more-info'>
+        ?
+        <div className='tooltip'>
+          <div className='tt-title'>Instructions</div>
+          <div><a href='https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf#page=21' target='_blank' >RISC-V Instruction Specs</a></div>
+          <div className='tt-subtitle'>Integer Register-Immediate Operations</div>
+          <div><span className='tt-param'>ADDI, SUBI, SLTI, XORI, ORI, ANDI </span></div>
+          <div>Does respective operation on values stored in register rs1 and immediate value encoded in bits 31-20 of instruction, then stores the result in register rd</div>
+          <div><a href="https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf#page=25" target='_blank'>I Type Instructions</a></div>
+          <div className='tt-subtitle'>Integer Register-Register Operations</div>
+          <div><span className='tt-param'>ADD, SUB, SLL, SLT, XOR, SRL, SRA, OR, AND </span></div>
+          <div>Does respective operation on values stored in register rs1 and rs2, then stores the result in register rd</div>
+          <div><a href="https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf#page=26" target='_blank'>R Type Instructions</a></div>
+          <div className='tt-subtitle'>Unconditional Jumps</div>
+          <div><span className='tt-param'>JAL, JALR </span></div>
+          <div>JAL adds signed 21 bit number to current PC and jumps to that address in instruction memory, then stores pc+4 in register rd</div>
+          <div>JALR adds signed 12 bit number and value in register rs1 to PC and jumps to that address in instruction memory, then stores pc+4 in register rd</div>
+          <div><a href="https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf#page=27" target='_blank'>Jump Instructions</a></div>
+          <div className='tt-subtitle'>Conditional Jumps</div>
+          <div><span className='tt-param'>BEQ, BNE, BGE, BLT </span></div>
+          <div>Compares the values in registers rs1 and rs2, if the respective condition is true (equal, not equal, greater than or equal, less than) then the immediate value encoded in the instruction is added to the current pc</div>
+          <div><a href="https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf#page=29" target='_blank'>B Type Instructions</a></div>
+          <div className='tt-subtitle'>Loads</div>
+          <div><span className='tt-param'>LB, LH, LW</span></div>
+          <div>Value in register rs1 is added to the immediate value encoded in instruction. This is used as the read address for the data memory, and the value at that address is stored in register rd</div>
+          <div>LB - 1 Byte</div>
+          <div>LH - 2 Byte</div>
+          <div>LW - 4 Byte</div>
+          <div className='tt-subtitle'>Store</div>
+          <div><span className='tt-param'>SB, SH, SW</span></div>
+          <div>Value in register rs1 is added to the immediate value encoded in instruction. This is used as the write address for the data memory, and the value in register rs2 is stored at that address</div>
+          <div>SB - 1 Byte</div>
+          <div>SH - 2 Byte</div>
+          <div>SW - 4 Byte</div>
+          <div><a href="https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf#page=29" target='_blank'>Loads and Stores</a></div>
+        </div>
+      </div>
     </div>
   );
 }

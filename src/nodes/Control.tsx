@@ -150,6 +150,24 @@ function Control({ id, data }: NodeProps<ControlNode>) {
           </div>
         </div>
       </div>
+      <div className='more-info'>
+        ?
+        <div className='tooltip'>
+          <div className='tt-title'>Control Unit</div>
+          <div>generates control signals based on the instruction, determining the behavior of various parts of the processor</div>
+          <div className='tt-subtitle'>Inputs</div>
+          <div><span className='tt-param'>Instruction: </span>binary instruction from the instruction memory</div>
+          <div className='tt-subtitle'>Outputs</div>
+          <div><span className='tt-param'>aluSrc: </span>Selects ALU input 2 source (rs2 or immediate value from instruction)</div>
+          <div><span className='tt-param'>memRead: </span>Enables memory read operation</div>
+          <div><span className='tt-param'>memWrite: </span>Enables memory write operation</div>
+          <div><span className='tt-param'>toReg: </span>Selects data source to be written to register</div>
+          <div><span className='tt-param'>branch: </span>Indicates a branch instruction (conditional jump)</div>
+          <div><span className='tt-param'>jump: </span>Indicates a jump instruction</div>
+          <div><span className='tt-param'>size: </span>Defines the size in bytes for memory operations</div>
+          <div><span className='tt-param'>regWrite: </span>Enables writing to the register</div>
+        </div>
+      </div>
     </div>
   );
 }

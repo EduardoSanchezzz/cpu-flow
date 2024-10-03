@@ -179,6 +179,23 @@ function RegList({ id, data }: NodeProps<RegListNode>) {
           </div>
         </div>
       </div>
+      <div className='more-info'>
+        ?
+        <div className='tooltip'>
+          <div className='tt-title'>Register List</div>
+          <div>stores a list of 32 32-bit registers</div>
+          <div className='tt-subtitle'>Inputs</div>
+          <div><span className='tt-param'>Read Register 1: </span>5-bit address of the first register to read (rs1)</div>
+          <div><span className='tt-param'>Read Register 2: </span>5-bit address of the second register to read (rs2)</div>
+          <div><span className='tt-param'>Write Register: </span>5-bit address of the register to write to (rd)</div>
+          <div><span className='tt-param'>Write Data: </span>32-bit value to be written into the write register</div>
+          <div className='tt-subtitle'>Outputs</div>
+          <div><span className='tt-param'>Read Data 1: </span>value read from the first register(rs1)</div>
+          <div><span className='tt-param'>Read Data 2: </span>value read from the second register(rs2)</div>
+          <div className='tt-subtitle tt-ctrl'>Control</div>
+          <div className='tt-ctrl-txt'><span className='tt-param tt-ctrl'>Reg Write: </span>control signal that enables or disables writing to the register file</div>
+        </div>
+      </div>
     </div>
   );
 }

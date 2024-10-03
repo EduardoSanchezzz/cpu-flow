@@ -122,43 +122,67 @@ function InstDecode({ id, data }: NodeProps<InstDecodeNode>) {
           <div className="label">
             Read Reg 1
           </div>
-        </div>     <div className="port">
+        </div>
+        <div className="port">
           <Handle
             className='handle' type="source" position={Position.Right} id='read-reg2' />
           <div className="label">
             Read Reg 2
           </div>
-        </div>     <div className="port">
+        </div>
+        <div className="port">
           <Handle
             className='handle' type="source" position={Position.Right} id='write-reg' />
           <div className="label">
             Write Reg
           </div>
-        </div>     <div className="port">
+        </div>
+        <div className="port">
           <Handle
             className='handle' type="source" position={Position.Right} id='opcode' />
           <div className="label">
             opcode
           </div>
-        </div>     <div className="port">
+        </div>
+        <div className="port">
           <Handle
             className='handle' type="source" position={Position.Right} id='funct3' />
           <div className="label">
             funct3
           </div>
-        </div>     <div className="port">
+        </div>
+        <div className="port">
           <Handle
             className='handle' type="source" position={Position.Right} id='funct7' />
           <div className="label">
             funct7
           </div>
-        </div>     <div className="port">
+        </div>
+        <div className="port">
           <Handle
             className='handle' type="source" position={Position.Right} id='imm-val' />
           <div className="label">
             Imm Value
           </div>
-        </div>   </div>
+        </div>
+      </div>
+      <div className='more-info'>
+        ?
+        <div className='tooltip'>
+          <div className='tt-title'>Instruction Decode</div>
+          <div>decodes a binary instruction into its relevant parts</div>
+          <div className='tt-subtitle'>Inputs</div>
+          <div><span className='tt-param'>Instruction: </span>32-bit binary instruction from the instruction memory</div>
+          <div className='tt-subtitle'>Output</div>
+          <div><span className='tt-param'>Read Reg 1: </span>Address of the first source register; bits 15-19</div>
+          <div><span className='tt-param'>Read Reg 2: </span>Address of the second source register; bits 20-24</div>
+          <div><span className='tt-param'>Write Reg: </span>Address of destination register; bits; bits 7-11</div>
+          <div><span className='tt-param'>opcode: </span>type identifier used in all instructions; bits 0-6</div>
+          <div><span className='tt-param'>funct3: </span>bits 12-14</div>
+          <div><span className='tt-param'>funct7: </span>for R-type instructions; bits 25-31</div>
+          <div><span className='tt-param'>Imm Value: </span>12, 20, or 32 bit immediate value extracted from instruction based on type (I, S, B, J, or U)</div>
+        </div>
+      </div>
     </div>
   );
 }
